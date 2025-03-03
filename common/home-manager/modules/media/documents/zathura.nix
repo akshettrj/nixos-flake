@@ -33,7 +33,6 @@
           scroll-page-aware = "true";
           scroll-full-overlap = 1.0e-2;
           zoom-min = 10;
-          sandbox = "none";
           guioptions = "";
           adjust-open = "width";
           render-loading = "false";
