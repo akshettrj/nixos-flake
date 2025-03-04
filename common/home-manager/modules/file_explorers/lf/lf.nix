@@ -10,7 +10,7 @@
       pro_shells = config.propheci.shells;
       pro_theming = config.propheci.theming;
 
-      shells_meta = import ../../../../metadata/programs/shells/metadata.nix { inherit pkgs; };
+      shells_meta = import ../../../../metadata/programs/shells.nix { inherit pkgs; };
     in
     lib.mkIf config.propheci.programs.file_explorers.lf.enable {
       programs.lf = {

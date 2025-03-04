@@ -9,7 +9,7 @@
     pro_screenlocks = config.propheci.programs.screenlocks;
     pro_theming = config.propheci.theming;
 
-    screenlocks_meta = import ../../../metadata/programs/screenlocks/metadata.nix {
+    screenlocks_meta = import ../../../metadata/programs/screenlocks.nix {
       inherit config inputs pkgs;
     };
   in

@@ -18,9 +18,9 @@
     pro_terminals = config.propheci.programs.terminals;
     pro_user = config.propheci.user;
 
-    browsers_meta = import ../metadata/programs/browsers/metadata.nix {inherit pkgs;};
-    editors_meta = import ../metadata/programs/editors/metadata.nix {inherit config inputs pkgs;};
-    terminals_meta = import ../metadata/programs/terminals/metadata.nix {inherit config inputs pkgs;};
+    browsers_meta = import ../metadata/programs/browsers.nix {inherit pkgs;};
+    editors_meta = import ../metadata/programs/editors.nix {inherit config inputs pkgs;};
+    terminals_meta = import ../metadata/programs/terminals.nix {inherit config inputs pkgs;};
   in {
     programs.home-manager.enable = true;
 

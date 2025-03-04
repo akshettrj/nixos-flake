@@ -8,7 +8,7 @@
   config = let
     pro_editors = config.propheci.programs.editors;
 
-    editors_meta = import ../../../metadata/programs/editors/metadata.nix {
+    editors_meta = import ../../../metadata/programs/editors.nix {
       inherit config inputs pkgs;
     };
   in

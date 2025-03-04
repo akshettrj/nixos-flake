@@ -10,7 +10,7 @@
     pro_deskenvs = config.propheci.desktop_environments;
     pro_file_explorers = config.propheci.programs.file_explorers;
 
-    deskenvs_meta = import ../../../../metadata/programs/desktop_environments/metadata.nix {
+    deskenvs_meta = import ../../../../metadata/programs/desktop_environments.nix {
       inherit config inputs pkgs;
     };
   in
@@ -165,7 +165,7 @@
 
           ''
           + lib.optionalString pro_file_explorers.lf.enable # sh
-          
+
           ''
 
             ###################################################
@@ -194,7 +194,7 @@
           ''
           + lib.optionalString
           (pro_deskenvs.enable && builtins.length (lib.attrNames pro_deskenvs.defaults) > 0) # sh
-          
+
           ''
 
             current_tty="$(tty)"

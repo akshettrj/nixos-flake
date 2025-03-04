@@ -8,7 +8,7 @@
   config = let
     pro_terminals = config.propheci.programs.terminals;
 
-    terminals_meta = import ../../../metadata/programs/terminals/metadata.nix {
+    terminals_meta = import ../../../metadata/programs/terminals.nix {
       inherit config inputs pkgs;
     };
   in

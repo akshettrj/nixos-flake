@@ -10,7 +10,7 @@
     pro_terminals = config.propheci.programs.terminals;
     pro_theming = config.propheci.theming;
 
-    terminals_meta = import ../../../metadata/programs/terminals/metadata.nix {
+    terminals_meta = import ../../../metadata/programs/terminals.nix {
       inherit config inputs pkgs;
     };
   in

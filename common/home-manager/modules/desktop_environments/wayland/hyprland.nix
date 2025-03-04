@@ -21,19 +21,19 @@
     pro_terminals = config.propheci.programs.terminals;
     pro_theming = config.propheci.theming;
 
-    browsers_meta = import ../../../../metadata/programs/browsers/metadata.nix {inherit pkgs;};
-    clips_meta = import ../../../../metadata/programs/clipboard_managers/metadata.nix {inherit pkgs;};
-    file_explorers_meta = import ../../../../metadata/programs/file_explorers/metadata.nix {
+    browsers_meta = import ../../../../metadata/programs/browsers.nix {inherit pkgs;};
+    clips_meta = import ../../../../metadata/programs/clipboard_managers.nix {inherit pkgs;};
+    file_explorers_meta = import ../../../../metadata/programs/file_explorers.nix {
       inherit pkgs;
     };
-    launchers_meta = import ../../../../metadata/programs/launchers/metadata.nix {inherit pkgs;};
-    screenlocks_meta = import ../../../../metadata/programs/screenlocks/metadata.nix {
+    launchers_meta = import ../../../../metadata/programs/launchers.nix {inherit pkgs;};
+    screenlocks_meta = import ../../../../metadata/programs/screenlocks.nix {
       inherit config inputs pkgs;
     };
-    ss_tools_meta = import ../../../../metadata/programs/screenshot_tools/metadata.nix {
+    ss_tools_meta = import ../../../../metadata/programs/screenshot_tools.nix {
       inherit pkgs;
     };
-    terminals_meta = import ../../../../metadata/programs/terminals/metadata.nix {
+    terminals_meta = import ../../../../metadata/programs/terminals.nix {
       inherit config inputs pkgs;
     };
 

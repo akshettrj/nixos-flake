@@ -20,7 +20,7 @@
     pro_services = config.propheci.services;
     pro_user = config.propheci.user;
 
-    shells_meta = import ../metadata/programs/shells/metadata.nix {inherit pkgs;};
+    shells_meta = import ../metadata/programs/shells.nix {inherit pkgs;};
   in {
     boot.loader.grub = {
       enable = true;

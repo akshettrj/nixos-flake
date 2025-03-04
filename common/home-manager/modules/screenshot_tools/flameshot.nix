@@ -7,7 +7,7 @@
   config = let
     pro_ss_tools = config.propheci.programs.screenshot_tools;
 
-    ss_tools_meta = import ../../../../common/metadata/programs/screenshot_tools/metadata.nix {
+    ss_tools_meta = import ../../../../common/metadata/programs/screenshot_tools.nix {
       inherit pkgs;
     };
   in
