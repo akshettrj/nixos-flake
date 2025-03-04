@@ -139,6 +139,7 @@
             enable = true;
             useMupdf = true;
           };
+          sioyek.enable = true;
         };
       };
       extra_utilities = {

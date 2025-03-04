@@ -336,6 +336,9 @@
               enable = mkOption {type = types.bool;};
               useMupdf = mkOption {type = types.bool;};
             };
+            sioyek = {
+              enable = mkOption {type = types.bool;};
+            };
           };
         };
         extra_utilities = {
