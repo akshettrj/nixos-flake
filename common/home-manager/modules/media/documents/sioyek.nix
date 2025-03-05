@@ -140,7 +140,7 @@
 
           should_use_multiple_monitors = "0";
           should_load_tutorial_when_no_other_file = "1";
-          should_launch_new_instance = "0";
+          should_launch_new_instance = "1";
           should_launch_new_window = "1";
 
           visual_mark_next_page_fraction = "0.75";
