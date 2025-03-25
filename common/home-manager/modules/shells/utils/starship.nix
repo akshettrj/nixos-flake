@@ -17,8 +17,10 @@
           add_newline = true;
           command_timeout = 1000;
 
+          format = "\${custom.ps1_osc133_prefix}$all\${custom.ps1_osc133_postfix}";
+
           character = {
-            format = "\n$symbol ";
+            format = "\n $symbol";
             success_symbol = "[󰁕](bold green)";
             error_symbol = "[󰁕](bold red)";
           };
@@ -225,6 +227,15 @@
                 "--noprofile"
                 "--norc"
               ];
+            };
+
+            ps1_osc133_prefix = {
+              command = "printf \"\\033]133;A\\007\"";
+              when = "true";
+            };
+            ps1_osc133_postfix = {
+              command = "printf \"\\033]133;B\\007\"";
+              when = "true";
             };
           };
         };
