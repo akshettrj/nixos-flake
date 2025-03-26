@@ -3,6 +3,7 @@
   inputs,
   lib,
   pkgs,
+  pkgs_passed,
   ...
 }: {
   imports = [
@@ -10,6 +11,7 @@
     ./modules
 
     inputs.nix-index-database.nixosModules.nix-index # Cached database for nix-index
+    inputs.nixpkgs.nixosModules.readOnlyPkgs
   ];
 
   config = let
@@ -133,6 +135,8 @@
         options = "--delete-older-than 7d";
       };
     };
+
+    nixpkgs.pkgs = pkgs_passed;
 
     environment.systemPackages = with pkgs; [
       # BASE + BASE-DEVEL

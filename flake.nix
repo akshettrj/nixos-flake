@@ -137,7 +137,7 @@
       alienrj = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
-          pkgs = alienrj_pkgs;
+          pkgs_passed = alienrj_pkgs;
         };
         modules = [./hosts/alienrj/configuration.nix];
       };
@@ -145,7 +145,7 @@
       oracleamperehyd = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
-          pkgs = oracleamperehyd_pkgs;
+          pkgs_passed = oracleamperehyd_pkgs;
         };
         modules = [
           ./hosts/oracleamperehyd/configuration.nix
@@ -156,7 +156,7 @@
       oracleamd1 = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
-          pkgs = oracleamd1_pkgs;
+          pkgs_passed = oracleamd1_pkgs;
         };
         modules = [./hosts/oracleamd1/configuration.nix];
       };
@@ -164,7 +164,7 @@
       raspi = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
-          pkgs = raspi_pkgs;
+          pkgs_passed = raspi_pkgs;
         };
         modules = [./hosts/raspi/configuration.nix];
       };
