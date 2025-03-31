@@ -361,6 +361,7 @@
 
               # BROWSER
               "$mainMod, F1, exec, ${browsers_meta."${pro_browsers.main}".cmd}"
+              "$mainMod SHIFT, F1, exec, ${browsers_meta."${pro_browsers.main}".cmd_shift}"
             ]
             ++ lib.optionals pro_services.pipewire.enable [
               "$mainMod, F6, exec, wpctl set-mute '@DEFAULT_AUDIO_SINK@' toggle"
