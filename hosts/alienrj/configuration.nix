@@ -2,6 +2,7 @@
   imports = [
     ./options.nix
     ./hardware-configuration.nix
+    ./specialisation.nix
     ../../common/nixos/configuration.nix
 
     "${inputs.propheci_secrets}/hosts/alienrj"
