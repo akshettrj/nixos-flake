@@ -179,7 +179,7 @@
           enable = true;
           use_official_package = false;
           font_size = 17;
-          enable_wayland = false;
+          enable_wayland = true;
         };
         alacritty = {
           enable = true;
