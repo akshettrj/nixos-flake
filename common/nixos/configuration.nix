@@ -176,6 +176,7 @@
       tmux
       unzip
       vim
+      vimv-rs
       wget
       wormhole-rs
       xdg-utils

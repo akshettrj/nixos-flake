@@ -347,8 +347,9 @@
           ueberzugpp.enable = mkEnableOption "ueberzugpp";
           obs.enable = mkEnableOption "obs";
           odesli.enable = mkEnableOption "odesli-rs";
-          pleezer.enable = mkEnableOption "drivedlgo";
+          pleezer.enable = mkEnableOption "pleezer";
           rclone.enable = mkEnableOption "rclone";
+          taggie.enable = mkEnableOption "taggie";
         };
         social_media = {
           telegram.enable = mkEnableOption "telegram";

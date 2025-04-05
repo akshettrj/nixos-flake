@@ -145,6 +145,7 @@
       extra_utilities = {
         drivedlgo.enable = true;
         pleezer.enable = true;
+        taggie.enable = true;
         ffmpeg.enable = true;
         rclone.enable = true;
         obs.enable = true;
@@ -178,7 +179,7 @@
         wezterm = {
           enable = true;
           use_official_package = false;
-          font_size = 17;
+          font_size = 10;
           enable_wayland = true;
         };
         alacritty = {
