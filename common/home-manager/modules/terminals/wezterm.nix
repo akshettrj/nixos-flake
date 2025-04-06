@@ -49,7 +49,7 @@
               lib.strings.concatStringsSep ",\n" (map (font: ''"${font.name}"'') (pro_theming.fonts.backups))
             }
                 }),
-                font_size = ${toString (pro_terminals.wezterm.font_size - 5)},
+                font_size = ${toString (pro_terminals.wezterm.font_size)},
             }
 
             config.color_scheme = "Gruvbox Dark (Gogh)"
