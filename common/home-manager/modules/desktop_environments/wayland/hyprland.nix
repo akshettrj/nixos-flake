@@ -71,6 +71,11 @@
       then inputs.hyprland.packages."${pkgs.system}".hyprland
       else pkgs.hyprland
     );
+    xdg-desktop-portal-hyprland_pkg = (
+      if pro_deskenvs.hyprland.use_official_packages
+      then inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland
+      else pkgs.xdg-desktop-portal-hyprland
+    );
 
     startup_script = let
       clipboard_manager_meta = clips_meta."${clipboard_manager}";
@@ -175,6 +180,7 @@
         enable = true;
 
         package = hyprland_pkg;
+        portalPackage = xdg-desktop-portal-hyprland_pkg;
 
         systemd = {
           enable = true;
