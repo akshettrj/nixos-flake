@@ -54,7 +54,7 @@
         };
       };
       tailscale.enable = true;
-      xdg_portal.enable = true;
+      xdg_portal.enable = false;
       telegram_bot_api = {
         enable = true;
         port = 8082;
@@ -178,9 +178,9 @@
         backup = "alacritty";
         wezterm = {
           enable = true;
-          use_official_package = false;
+          use_official_package = true;
           font_size = 10;
-          enable_wayland = true;
+          enable_wayland = false;
         };
         alacritty = {
           enable = true;
@@ -258,7 +258,7 @@
       main = "zsh";
       aliases = import ../../common/home-manager/modules/shells/aliases.nix;
       bash.enable = true;
-      fish.enable = true;
+      fish.enable = false;
       nushell.enable = true;
       zsh.enable = true;
 
@@ -275,7 +275,7 @@
       wayland.enable = true;
       hyprland = {
         enable = true;
-        use_official_packages = false;
+        use_official_packages = true;
         scroll_factor = 0.2;
         launcher = "bemenu";
         screenlock = "swaylock";
