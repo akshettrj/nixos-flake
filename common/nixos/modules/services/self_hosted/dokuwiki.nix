@@ -13,7 +13,6 @@
         webserver = "nginx";
         sites = {
           "${pro_doku.hostname}" = {
-            enable = true;
             settings = {
               # Basic Settings
               title = "The PropheC's Wiki";
