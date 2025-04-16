@@ -1585,11 +1585,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1735462915,
-        "narHash": "sha256-PzzB2yFZCI1ZETPEeB/n6gAQmaGWao8LOge2RpgrfD8=",
+        "lastModified": 1744769700,
+        "narHash": "sha256-LgeU3M61L6neYzvMFZUdbecOzegW8VrwWxBPjYwE82Q=",
         "owner": "Propheci",
         "repo": "odesli-rs",
-        "rev": "a16c57005f2db06e19a5345222c93a0bc8dbdbcb",
+        "rev": "6ae276f67ea353f3d3c6c62a85a30da1d41399dc",
         "type": "github"
       },
       "original": {

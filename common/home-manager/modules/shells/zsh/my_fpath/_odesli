@@ -44,7 +44,7 @@ _arguments "${_arguments_options[@]}" : \
 '-h[Print help]' \
 '--help[Print help]' \
 ':id -- The entity ID:_default' \
-':platform -- The Platform from which the entity ID is taken:(spotify itunes appleMusic youtube youtubeMusic google googleStore pandora deezer tidal amazonStore amazonMusic soundcloud napster yandex spinrilla audius anghami boomplay audiomack)' \
+':platform -- The Platform from which the entity ID is taken:(spotify itunes appleMusic youtube youtubeMusic google googleStore pandora deezer tidal amazonStore amazonMusic soundcloud napster yandex spinrilla audius anghami boomplay audiomack bandcamp)' \
 ':entity-type -- The entity type to search, can be album or song:(song album)' \
 && ret=0
 ;;
