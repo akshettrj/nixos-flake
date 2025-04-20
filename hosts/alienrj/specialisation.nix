@@ -1,9 +1,7 @@
-{ ... }:
-
-{
+{...}: {
   specialisation = {
     less_cores.configuration = {
-      boot.kernelParams = [ "maxcpus=5" ];
+      boot.kernelParams = ["maxcpus=5"];
     };
   };
 }

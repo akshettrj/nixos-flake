@@ -37,24 +37,28 @@
       inherit config inputs pkgs;
     };
 
-    normal_desktops = (
-      lib.range 1 9
-      |> builtins.map toString
-      |> builtins.map (ws: {
-           name = ws;
-           value = ws;
-         })
-      |> lib.listToAttrs
-    ) // { "0" = "10"; };
+    normal_desktops =
+      (
+        lib.range 1 9
+        |> builtins.map toString
+        |> builtins.map (ws: {
+          name = ws;
+          value = ws;
+        })
+        |> lib.listToAttrs
+      )
+      // {"0" = "10";};
 
-    alt_desktops = (
-      lib.range 11 19
-      |> builtins.map (ws: {
-           name = toString (ws - 10);
-           value = toString ws;
-         })
-      |> lib.listToAttrs
-    ) // { "0" = "20"; };
+    alt_desktops =
+      (
+        lib.range 11 19
+        |> builtins.map (ws: {
+          name = toString (ws - 10);
+          value = toString ws;
+        })
+        |> lib.listToAttrs
+      )
+      // {"0" = "20";};
 
     launcher = pro_deskenvs.hyprland.launcher;
     ss_tool = pro_deskenvs.hyprland.screenshot_tool;
@@ -101,7 +105,7 @@
 
               ''
               + lib.optionalString mon.enabled # sh
-
+              
               ''
 
                 for wk in ${toString mon.workspaces}; do
@@ -436,7 +440,8 @@
           ydotool = "${pkgs.ydotool}/bin/ydotool";
 
           ss_group_help = "- Escape: Abort\\n- R: Region\\n- F: Fullscreen\\n- H: This help";
-        in # hyprlang
+        in
+          # hyprlang
           ''
             # SCREENSHOTS BINDINGS
             bind = $mainMod SHIFT, S, submap, screenshot

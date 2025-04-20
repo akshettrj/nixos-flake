@@ -8,23 +8,26 @@
     pro_theming = config.propheci.theming;
   in
     lib.mkIf pro_theming.enable {
-      fonts.packages = with pkgs; [
-        noto-fonts
-        noto-fonts-cjk-sans
-        noto-fonts-cjk-serif
-        noto-fonts-color-emoji
+      fonts.packages = with pkgs;
+        [
+          noto-fonts
+          noto-fonts-cjk-sans
+          noto-fonts-cjk-serif
+          noto-fonts-color-emoji
 
-        unifont
-        liberation_ttf
-      ] ++ (
-        pkgs.lohit-fonts
-        |> lib.attrValues
-        |> (lib.filter (v: lib.typeOf v == "set"))
-      ) ++ (
-        pkgs.nerd-fonts
-        |> (lib.filterAttrs (k: v: (lib.elem k pro_theming.fonts.nerdfonts)))
-        |> lib.attrValues
-      );
+          unifont
+          liberation_ttf
+        ]
+        ++ (
+          pkgs.lohit-fonts
+          |> lib.attrValues
+          |> (lib.filter (v: lib.typeOf v == "set"))
+        )
+        ++ (
+          pkgs.nerd-fonts
+          |> (lib.filterAttrs (k: v: (lib.elem k pro_theming.fonts.nerdfonts)))
+          |> lib.attrValues
+        );
 
       fonts.fontconfig = {
         enable = true;

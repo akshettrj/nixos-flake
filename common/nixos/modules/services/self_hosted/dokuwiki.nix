@@ -34,7 +34,10 @@
               autopasswd = 0;
               passcrypt = "argon2id";
               superuser = "@admin";
-              disableactions=(if pro_doku.disable_registration then "register" else "");
+              disableactions =
+                if pro_doku.disable_registration
+                then "register"
+                else "";
 
               # Media Settings
               mediarevisions = 0;
@@ -108,4 +111,3 @@
       };
     };
 }
-

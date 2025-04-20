@@ -12,4 +12,3 @@
       environment.systemPackages = [inputs.nixur.legacyPackages."${pkgs.system}".taggie];
     };
 }
-
