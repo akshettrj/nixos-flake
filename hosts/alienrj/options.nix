@@ -151,6 +151,7 @@
         obs.enable = true;
         odesli.enable = true;
         ueberzugpp.enable = true;
+        yt-dlp.enable = true;
       };
       social_media = {
         telegram.enable = true;
