@@ -350,6 +350,7 @@
           pleezer.enable = mkEnableOption "pleezer";
           rclone.enable = mkEnableOption "rclone";
           taggie.enable = mkEnableOption "taggie";
+          yt-dlp.enable = mkEnableOption "yt-dlp";
         };
         social_media = {
           telegram.enable = mkEnableOption "telegram";

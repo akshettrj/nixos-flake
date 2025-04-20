@@ -8,5 +8,6 @@
     ./rclone.nix
     ./taggie.nix
     ./ueberzugpp.nix
+    ./yt-dlp.nix
   ];
 }
