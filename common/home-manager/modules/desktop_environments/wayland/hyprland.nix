@@ -105,7 +105,7 @@
 
               ''
               + lib.optionalString mon.enabled # sh
-              
+
               ''
 
                 for wk in ${toString mon.workspaces}; do
@@ -233,6 +233,11 @@
               tap-to-click = false;
               drag_lock = true;
             };
+          };
+
+          cursor = {
+            no_hardware_cursors = true;
+            use_cpu_buffer = 0;
           };
 
           general = {
