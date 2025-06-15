@@ -23,7 +23,7 @@
       bluetooth.enable = true;
       pulseaudio.enable = false;
       nvidia.enable = false;
-      graphics.enable = false;
+      graphics.enable = true;
     };
 
     # Various Services

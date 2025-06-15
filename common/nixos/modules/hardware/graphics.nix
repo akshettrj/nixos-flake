@@ -10,7 +10,7 @@
     lib.mkIf pro_hw.graphics.enable {
       hardware.graphics = {
         enable = true;
-        enable32Bit = true;
+        enable32Bit = false;
         extraPackages = [pkgs.mesa];
       };
 
