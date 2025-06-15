@@ -23,6 +23,7 @@
       bluetooth.enable = true;
       pulseaudio.enable = false;
       nvidia.enable = false;
+      graphics.enable = false;
     };
 
     # Various Services
@@ -108,14 +109,14 @@
         services.mpris.enable = true;
         audio = {
           mpd = {
-            enable = true;
-            ncmpcpp.enable = true;
+            enable = false;
+            ncmpcpp.enable = false;
           };
         };
         video = {
           mpv.enable = true;
           vlc.enable = false;
-          stremio.enable = true;
+          stremio.enable = false;
         };
         picture = {
           feh.enable = true;
@@ -148,7 +149,7 @@
         backup = "alacritty";
         wezterm = {
           enable = true;
-          use_official_package = true;
+          use_official_package = false;
           font_size = 10;
           enable_wayland = false;
         };
@@ -249,13 +250,13 @@
       wayland.enable = true;
       hyprland = {
         enable = true;
-        use_official_packages = true;
+        use_official_packages = false;
         scroll_factor = 0.2;
         launcher = "bemenu";
         screenlock = "swaylock";
         screenshot_tool = "hyprshot";
         clipboard_manager = "copyq";
-        # monitors = [];
+        monitors = [];
       };
     };
   };

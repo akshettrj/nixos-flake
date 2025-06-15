@@ -26,9 +26,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    disko = {
-      url = "github:nix-community/disko";
-    };
+    disko.url = "github:nix-community/disko";
+    nixos-hw.url = "github:NixOS/nixos-hardware";
 
     # Hyprland related
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";

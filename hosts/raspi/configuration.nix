@@ -9,6 +9,8 @@
     ./hardware-configuration.nix
     ../../common/nixos/configuration.nix
 
+    inputs.nixos-hw.nixosModules.raspberry-pi-4
+
     "${inputs.propheci_secrets}/hosts/raspi"
   ];
 

@@ -112,6 +112,7 @@
       hardware = {
         bluetooth.enable = mkOption {type = types.bool;};
         pulseaudio.enable = mkOption {type = types.bool;};
+        graphics.enable = mkOption {type = types.bool;};
         nvidia = {
           enable = mkOption {type = types.bool;};
           package = mkOption {
