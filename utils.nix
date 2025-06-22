@@ -32,6 +32,7 @@ rec {
       {
         inherit inputs;
         pkgs = systemPkgs.unstable;
+        pkgs_stable = systemPkgs.stable;
         config = nixosConfiguration.config;
       };
     };

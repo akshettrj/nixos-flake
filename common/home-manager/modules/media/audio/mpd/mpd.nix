@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs_stable,
   ...
 }: {
   config = let
@@ -11,6 +12,8 @@
     lib.mkIf (pro_media.enable && pro_mpd.enable) {
       services.mpd = {
         enable = true;
+        # TODO: Temporary fix due to failing nixpkgs-unstable branch
+        package = pkgs_stable.mpd;
         extraConfig = ''
           auto_update "yes"
           restore_paused "yes"
