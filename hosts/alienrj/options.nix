@@ -32,6 +32,7 @@
         enable = true;
         package = config.boot.kernelPackages.nvidiaPackages.latest;
       };
+      graphics.enable = false;
     };
 
     # Various Services
@@ -156,7 +157,7 @@
       social_media = {
         telegram.enable = true;
         discord.enable = true;
-        beeper.enable = true;
+        beeper.enable = false;
         teams.enable = true;
         zulip.enable = false;
       };
