@@ -3,7 +3,7 @@
   inputs,
   lib,
   pkgs,
-  pkgs_passed,
+  pkgs_unstable,
   ...
 }: {
   imports = [
@@ -136,7 +136,7 @@
       };
     };
 
-    nixpkgs.pkgs = pkgs_passed;
+    nixpkgs.pkgs = pkgs_unstable;
 
     environment.systemPackages = with pkgs; [
       # BASE + BASE-DEVEL

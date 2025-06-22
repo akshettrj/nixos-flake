@@ -22,6 +22,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,24 +32,12 @@
 
     # Hyprland related
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    hyprpaper = {
-      url = "github:hyprwm/hyprpaper";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    waybar = {
-      url = "github:Alexays/Waybar";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprpaper.url = "github:hyprwm/hyprpaper";
+    hyprlock.url = "github:hyprwm/hyprlock";
+    waybar.url = "github:Alexays/Waybar";
 
     # Terminals
-    wezterm = {
-      url = "github:wez/wezterm?dir=nix";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
+    wezterm.url = "github:wez/wezterm?dir=nix";
     ghostty.url = "github:ghostty-org/ghostty";
 
     # Text editors
@@ -74,12 +63,8 @@
       flake = false;
     };
 
-    watgbridge = {
-      url = "github:akshettrj/watgbridge";
-    };
-    odesli = {
-      url = "github:Propheci/odesli-rs?dir=nix";
-    };
+    watgbridge.url = "github:akshettrj/watgbridge";
+    odesli.url = "github:Propheci/odesli-rs?dir=nix";
 
     nixur.url = "github:Propheci/NixUR";
 
@@ -92,116 +77,53 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-stable,
     ...
   } @ inputs: let
-    common_overlays = [];
+    overlays = [];
 
-    alienrj_pkgs = import nixpkgs {
-      system = "x86_64-linux";
-      config = {
+    utils = import ./utils.nix { inherit nixpkgs nixpkgs-stable inputs; };
+
+    allConfigurations = utils.mkConfigurations [
+      {
+        name = "alienrj";
+        system = "x86_64-linux";
         allowUnfree = true;
-        allowUnsafe = false;
-      };
-      overlays = common_overlays;
-    };
-
-    oracleamperehyd_pkgs = import nixpkgs {
-      system = "aarch64-linux";
-      config = {
+        nixosModules = [./hosts/alienrj/configuration.nix];
+      }
+      {
+        name = "oracleamperehyd";
+        system = "aarch64-linux";
         allowUnfree = false;
-        allowUnsafe = false;
-      };
-      overlays = common_overlays;
-    };
-
-    oracleamd1_pkgs = import nixpkgs {
-      system = "x86_64-linux";
-      config = {
-        allowUnfree = false;
-        allowUnsafe = false;
-      };
-      overlays = common_overlays;
-    };
-
-    raspi_pkgs = import nixpkgs {
-      system = "aarch64-linux";
-      config = {
-        allowUnfree = false;
-        allowUnsafe = false;
-      };
-      overlays = common_overlays;
-    };
-  in rec {
-    nixosConfigurations = {
-      alienrj = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          pkgs_passed = alienrj_pkgs;
-        };
-        modules = [./hosts/alienrj/configuration.nix];
-      };
-
-      oracleamperehyd = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          pkgs_passed = oracleamperehyd_pkgs;
-        };
-        modules = [
+        nixosModules = [
           ./hosts/oracleamperehyd/configuration.nix
           inputs.disko.nixosModules.disko
         ];
-      };
+      }
+      {
+        name = "oracleamd1";
+        system = "x86_64-linux";
+        allowUnfree = false;
+        nixosModules = [./hosts/oracleamd1/configuration.nix];
+      }
+      {
+        name = "raspi";
+        system = "aarch64-linux";
+        allowUnfree = false;
+        nixosModules = [./hosts/raspi/configuration.nix];
+      }
+    ] overlays;
 
-      oracleamd1 = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          pkgs_passed = oracleamd1_pkgs;
-        };
-        modules = [./hosts/oracleamd1/configuration.nix];
-      };
+  in rec {
+    inherit allConfigurations;
 
-      raspi = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          pkgs_passed = raspi_pkgs;
-        };
-        modules = [./hosts/raspi/configuration.nix];
-      };
-    };
+    nixosConfigurations = nixpkgs.lib.mapAttrs' (name: value:
+      nixpkgs.lib.nameValuePair (name) (value.nixosConfiguration)
+    ) allConfigurations;
 
-    homeConfigurations = {
-      "${nixosConfigurations.alienrj.config.propheci.user.username}@${nixosConfigurations.alienrj.config.propheci.system.hostname}" =
-        import ./common/home-manager/homeManagerMaker.nix
-        {
-          inherit inputs;
-          pkgs = alienrj_pkgs;
-          config = nixosConfigurations.alienrj.config;
-        };
-
-      "${nixosConfigurations.oracleamperehyd.config.propheci.user.username}@${nixosConfigurations.oracleamperehyd.config.propheci.system.hostname}" =
-        import ./common/home-manager/homeManagerMaker.nix
-        {
-          inherit inputs;
-          pkgs = oracleamperehyd_pkgs;
-          config = nixosConfigurations.oracleamperehyd.config;
-        };
-
-      "${nixosConfigurations.oracleamd1.config.propheci.user.username}@${nixosConfigurations.oracleamd1.config.propheci.system.hostname}" =
-        import ./common/home-manager/homeManagerMaker.nix
-        {
-          inherit inputs;
-          pkgs = oracleamd1_pkgs;
-          config = nixosConfigurations.oracleamd1.config;
-        };
-
-      "${nixosConfigurations.raspi.config.propheci.user.username}@${nixosConfigurations.raspi.config.propheci.system.hostname}" =
-        import ./common/home-manager/homeManagerMaker.nix
-        {
-          inherit inputs;
-          pkgs = raspi_pkgs;
-          config = nixosConfigurations.raspi.config;
-        };
-    };
+    homeConfigurations = nixpkgs.lib.mapAttrs' (name: value:
+      nixpkgs.lib.nameValuePair (value.homeConfiguration.name) (value.homeConfiguration.value)
+    ) allConfigurations;
 
     templates = {
       golang = {
