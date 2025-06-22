@@ -36,14 +36,14 @@
         tcp_ports = [22];
         udp_ports = [];
       };
-      pipewire.enable = false;
+      pipewire.enable = true;
       openssh = {
         server = {
           enable = true;
           ports = [22];
           password_authentication = true;
           root_login = "prohibit-password";
-          x11_forwarding = false;
+          x11_forwarding = true;
         };
       };
       tailscale.enable = true;
