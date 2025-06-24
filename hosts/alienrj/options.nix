@@ -188,7 +188,10 @@
           enable = true;
           font_size = 11;
         };
-        ghostty.enable = false;
+        ghostty = {
+          enable = true;
+          use_official_package = false;
+        };
       };
       browsers = {
         enable = true;

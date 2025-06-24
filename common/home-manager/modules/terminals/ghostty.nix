@@ -6,13 +6,29 @@
   ...
 }: {
   config = let
+    pro_shells = config.propheci.shells;
     pro_terminals = config.propheci.programs.terminals;
+    pro_theming = config.propheci.theming;
 
     terminals_meta = import ../../../metadata/programs/terminals.nix {
       inherit config inputs pkgs;
     };
   in
     lib.mkIf (pro_terminals.enable && pro_terminals.ghostty.enable) {
-      home.packages = [terminals_meta.ghostty.pkg];
+      programs.ghostty = {
+        enable = true;
+
+        package = terminals_meta.ghostty.pkg;
+
+        enableBashIntegration = lib.mkIf pro_shells.bash.enable true;
+        enableZshIntegration = lib.mkIf pro_shells.zsh.enable true;
+        enableFishIntegration = lib.mkIf pro_shells.fish.enable true;
+
+        settings = {
+          theme = "GruvboxDark";
+          font-family = "${pro_theming.fonts.main.name}";
+          window-decoration = false;
+        };
+      };
     };
 }

@@ -82,48 +82,55 @@
   } @ inputs: let
     overlays = [];
 
-    utils = import ./utils.nix { inherit nixpkgs nixpkgs-stable inputs; };
+    utils = import ./utils.nix {inherit nixpkgs nixpkgs-stable inputs;};
 
-    allConfigurations = utils.mkConfigurations [
-      {
-        name = "alienrj";
-        system = "x86_64-linux";
-        allowUnfree = true;
-        nixosModules = [./hosts/alienrj/configuration.nix];
-      }
-      {
-        name = "oracleamperehyd";
-        system = "aarch64-linux";
-        allowUnfree = false;
-        nixosModules = [
-          ./hosts/oracleamperehyd/configuration.nix
-          inputs.disko.nixosModules.disko
-        ];
-      }
-      {
-        name = "oracleamd1";
-        system = "x86_64-linux";
-        allowUnfree = false;
-        nixosModules = [./hosts/oracleamd1/configuration.nix];
-      }
-      {
-        name = "raspi";
-        system = "aarch64-linux";
-        allowUnfree = false;
-        nixosModules = [./hosts/raspi/configuration.nix];
-      }
-    ] overlays;
-
+    allConfigurations =
+      utils.mkConfigurations [
+        {
+          name = "alienrj";
+          system = "x86_64-linux";
+          allowUnfree = true;
+          nixosModules = [./hosts/alienrj/configuration.nix];
+        }
+        {
+          name = "oracleamperehyd";
+          system = "aarch64-linux";
+          allowUnfree = false;
+          nixosModules = [
+            ./hosts/oracleamperehyd/configuration.nix
+            inputs.disko.nixosModules.disko
+          ];
+        }
+        {
+          name = "oracleamd1";
+          system = "x86_64-linux";
+          allowUnfree = false;
+          nixosModules = [./hosts/oracleamd1/configuration.nix];
+        }
+        {
+          name = "raspi";
+          system = "aarch64-linux";
+          allowUnfree = false;
+          nixosModules = [./hosts/raspi/configuration.nix];
+        }
+      ]
+      overlays;
   in rec {
     inherit allConfigurations;
 
-    nixosConfigurations = nixpkgs.lib.mapAttrs' (name: value:
-      nixpkgs.lib.nameValuePair (name) (value.nixosConfiguration)
-    ) allConfigurations;
+    nixosConfigurations =
+      nixpkgs.lib.mapAttrs' (
+        name: value:
+          nixpkgs.lib.nameValuePair name (value.nixosConfiguration)
+      )
+      allConfigurations;
 
-    homeConfigurations = nixpkgs.lib.mapAttrs' (name: value:
-      nixpkgs.lib.nameValuePair (value.homeConfiguration.name) (value.homeConfiguration.value)
-    ) allConfigurations;
+    homeConfigurations =
+      nixpkgs.lib.mapAttrs' (
+        name: value:
+          nixpkgs.lib.nameValuePair (value.homeConfiguration.name) (value.homeConfiguration.value)
+      )
+      allConfigurations;
 
     templates = {
       golang = {

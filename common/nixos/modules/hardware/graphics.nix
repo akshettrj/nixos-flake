@@ -17,4 +17,3 @@
       services.xserver.videoDrivers = ["fbdev"];
     };
 }
-
