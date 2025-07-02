@@ -120,6 +120,11 @@
             example = config.boot.kernelPackages.nvidiaPackages.stable;
           };
         };
+
+        iphone = {
+          enable = mkOption {type = types.bool;};
+          usbmuxd_package = mkOption {type = types.package;};
+        };
       };
 
       # Various Services

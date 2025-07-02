@@ -33,6 +33,10 @@
         package = config.boot.kernelPackages.nvidiaPackages.latest;
       };
       graphics.enable = false;
+      iphone = {
+        enable = true;
+        usbmuxd_package = pkgs.usbmuxd;
+      };
     };
 
     # Various Services
