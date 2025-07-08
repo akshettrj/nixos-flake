@@ -23,6 +23,7 @@
       bluetooth.enable = false;
       nvidia.enable = false;
       pulseaudio.enable = false;
+      graphics.enable = false;
     };
 
     # Various Services
@@ -161,6 +162,9 @@
         backup = "yazi";
         lf.enable = true;
         yazi.enable = true;
+      };
+      extra_utilities = {
+        taggie.enable = true;
       };
       launchers.enable = false;
       screenshot_tools.enable = false;
