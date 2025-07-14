@@ -24,6 +24,7 @@
       nvidia.enable = false;
       pulseaudio.enable = false;
       graphics.enable = false;
+      iphone.enable = false;
     };
 
     # Various Services
