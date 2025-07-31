@@ -350,12 +350,13 @@
         extra_utilities = {
           drivedlgo.enable = mkEnableOption "drivedlgo";
           ffmpeg.enable = mkEnableOption "ffmpeg";
-          ueberzugpp.enable = mkEnableOption "ueberzugpp";
           obs.enable = mkEnableOption "obs";
           odesli.enable = mkEnableOption "odesli-rs";
           pleezer.enable = mkEnableOption "pleezer";
           rclone.enable = mkEnableOption "rclone";
           taggie.enable = mkEnableOption "taggie";
+          typst.enable = mkEnableOption "typst";
+          ueberzugpp.enable = mkEnableOption "ueberzugpp";
           yt-dlp.enable = mkEnableOption "yt-dlp";
         };
         social_media = {
@@ -404,6 +405,8 @@
           ghostty = {
             enable = mkOption {type = types.bool;};
             use_official_package = mkOption {type = types.bool;};
+            background_opacity = mkOption { type = types.number; };
+            background_blur = mkOption { type = types.bool; };
           };
         };
         browsers = {

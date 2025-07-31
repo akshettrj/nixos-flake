@@ -41,7 +41,17 @@
 
     # Various Services
     services = {
-      virtualisation.enable = false;
+      virtualisation = {
+        enable = true;
+        docker = {
+          enable = true;
+          rootless = true;
+        };
+        containers = {
+          enable = true;
+          backend = "docker";
+        };
+      };
       printing.enable = false;
       firewall = {
         enable = true;
@@ -151,6 +161,7 @@
         drivedlgo.enable = true;
         pleezer.enable = true;
         taggie.enable = true;
+        typst.enable = true;
         ffmpeg.enable = true;
         rclone.enable = true;
         obs.enable = true;
@@ -180,7 +191,7 @@
       };
       terminals = {
         enable = true;
-        main = "wezterm";
+        main = "ghostty";
         backup = "alacritty";
         wezterm = {
           enable = true;
@@ -195,6 +206,8 @@
         ghostty = {
           enable = true;
           use_official_package = false;
+          background_opacity = 0.95;
+          background_blur = true;
         };
       };
       browsers = {

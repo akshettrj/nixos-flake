@@ -3,6 +3,6 @@
     ./editors
     ./screenlocks
     ./shells
-    ./utilities
+    ./utilities.nix
   ];
 }
