@@ -31,7 +31,7 @@ in {
   };
   ghostty = rec {
     pkg = ghostty_package;
-    bin = pkgs.lib.getBin pkg;
+    bin = "${pkg}/bin/ghostty";
     cmd = "${bin}";
     exec = "${cmd} -e";
   };

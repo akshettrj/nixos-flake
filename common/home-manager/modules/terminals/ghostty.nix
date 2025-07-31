@@ -28,6 +28,9 @@
           theme = "GruvboxDark";
           font-family = "${pro_theming.fonts.main.name}";
           window-decoration = false;
+          alpha-blending = "linear-corrected";
+          background-opacity = pro_terminals.ghostty.background_opacity;
+          background-blur = pro_terminals.ghostty.background_blur;
         };
       };
     };
