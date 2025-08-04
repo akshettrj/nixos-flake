@@ -61,13 +61,13 @@
       self_hosted = {
         firefly_iii = {
           enable = true;
-          hostname = "ff.propheci.xyz";
+          hostname = "ff.nfak.xyz";
           nginx.enable_ssl = true;
         };
         dokuwiki = {
           enable = true;
           disable_registration = true;
-          hostname = "wiki.propheci.xyz";
+          hostname = "wiki.nfak.xyz";
           nginx.enable_ssl = true;
         };
         vikunja = {

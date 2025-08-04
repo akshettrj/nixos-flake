@@ -191,6 +191,9 @@
         };
         nginx.enable = mkOption {type = types.bool;};
         self_hosted = {
+          mediawiki = {
+            enable = mkEnableOption "Mediawiki";
+          };
           dokuwiki = {
             enable = mkEnableOption "DokuWiki";
             disable_registration = mkOption {type = types.bool;};
