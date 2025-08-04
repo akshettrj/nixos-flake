@@ -25,9 +25,11 @@
     };
 
     hardware = {
+      graphics.enable = false;
       bluetooth.enable = false;
       nvidia.enable = false;
       pulseaudio.enable = false;
+      iphone.enable = false;
     };
 
     # Various Services
