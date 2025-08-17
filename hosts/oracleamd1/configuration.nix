@@ -1,5 +1,6 @@
 {inputs, ...}: {
   imports = [
+    ./disk-config.nix
     ./options.nix
     ./hardware-configuration.nix
     ../../common/nixos/configuration.nix
