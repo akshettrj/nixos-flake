@@ -41,7 +41,10 @@
     };
 
     networking.hostName = pro_system.hostname;
-    networking.networkmanager.enable = true;
+    networking.networkmanager = {
+      enable = true;
+      plugins = [pkgs.networkmanager-openvpn];
+    };
     networking.firewall = lib.mkIf pro_services.firewall.enable {
       enable = true;
       trustedInterfaces = ["tailscale0"];
