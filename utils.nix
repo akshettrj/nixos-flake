@@ -21,12 +21,18 @@
     stable = mkPkg {pkgsBranch = nixpkgs-stable;};
   };
 
-  mkNixosConfiguration = entry: systemPkgs:
-    nixpkgs.lib.nixosSystem {
+  mkNixosConfiguration = entry: systemPkgs: let
+    nixpkgsModule =
+      if entry.stable
+      then nixpkgs-stable
+      else nixpkgs;
+  in
+    nixpkgsModule.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
         pkgs_unstable = systemPkgs.unstable;
         pkgs_stable = systemPkgs.stable;
+        use_stable_pkgs = entry.stable;
       };
       modules = entry.nixosModules;
     };

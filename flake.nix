@@ -91,6 +91,7 @@
           system = "x86_64-linux";
           allowUnfree = true;
           nixosModules = [./hosts/alienrj/configuration.nix];
+          stable = false;
         }
         {
           name = "oracleamperehyd";
@@ -100,18 +101,24 @@
             ./hosts/oracleamperehyd/configuration.nix
             inputs.disko.nixosModules.disko
           ];
+          stable = false;
         }
         {
           name = "oracleamd1";
           system = "x86_64-linux";
           allowUnfree = false;
-          nixosModules = [./hosts/oracleamd1/configuration.nix];
+          nixosModules = [
+            ./hosts/oracleamd1/configuration.nix
+            inputs.disko.nixosModules.disko
+          ];
+          stable = false;
         }
         {
           name = "raspi";
           system = "aarch64-linux";
           allowUnfree = false;
           nixosModules = [./hosts/raspi/configuration.nix];
+          stable = false;
         }
       ]
       overlays;

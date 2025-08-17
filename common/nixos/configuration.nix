@@ -4,6 +4,8 @@
   lib,
   pkgs,
   pkgs_unstable,
+  pkgs_stable,
+  use_stable_pkgs,
   ...
 }: {
   imports = [
@@ -136,7 +138,7 @@
       };
     };
 
-    nixpkgs.pkgs = pkgs_unstable;
+    nixpkgs.pkgs = if use_stable_pkgs then pkgs_stable else pkgs_unstable;
 
     environment.systemPackages = with pkgs; [
       # BASE + BASE-DEVEL
