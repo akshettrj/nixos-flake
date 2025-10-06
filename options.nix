@@ -360,7 +360,9 @@
           taggie.enable = mkEnableOption "taggie";
           typst.enable = mkEnableOption "typst";
           ueberzugpp.enable = mkEnableOption "ueberzugpp";
-          yt-dlp.enable = mkEnableOption "yt-dlp";
+          yt-dlp.enable = mkEnableOption "YouTube-DLp";
+          gh.enable = mkEnableOption "GitHub CLI";
+          obsidian.enable = mkEnableOption "Obsidian";
         };
         social_media = {
           telegram.enable = mkEnableOption "telegram";
@@ -388,6 +390,9 @@
             nightly = mkOption {type = types.bool;};
           };
           zeditor = {
+            enable = mkOption {type = types.bool;};
+          };
+          emacs = {
             enable = mkOption {type = types.bool;};
           };
         };

@@ -85,6 +85,7 @@
       clipboard_manager_meta = clips_meta."${clipboard_manager}";
       hyprctl = "${hyprland_pkg}/bin/hyprctl";
       nm-applet = "${pkgs.networkmanagerapplet}/bin/nm-applet";
+      blueman-applet = "${pkgs.blueman}/bin/blueman-applet";
     in
       pkgs.writeShellScriptBin "start" ''
 
@@ -105,7 +106,7 @@
 
               ''
               + lib.optionalString mon.enabled # sh
-              
+
               ''
 
                 for wk in ${toString mon.workspaces}; do
@@ -117,9 +118,11 @@
 
         pidof ${clipboard_manager_meta.bin} && killall -9 ${clipboard_manager_meta.bin}
         pidof ${nm-applet} && killall -9 ${nm-applet}
+        pidof ${blueman-applet} && killall -9 ${blueman-applet}
 
         ${clipboard_manager_meta.cmd} &
         ${nm-applet} &
+        ${blueman-applet} &
 
       '';
 

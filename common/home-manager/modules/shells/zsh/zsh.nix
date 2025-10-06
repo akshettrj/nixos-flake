@@ -20,7 +20,7 @@
       programs.zsh = {
         enable = true;
 
-        dotDir = ".config/zsh";
+        dotDir = "${config.xdg.configHome}/zsh";
 
         enableVteIntegration = true;
         autosuggestion.enable = true;
@@ -165,7 +165,7 @@
 
           ''
           + lib.optionalString pro_file_explorers.lf.enable # sh
-          
+
           ''
 
             ###################################################
@@ -194,7 +194,7 @@
           ''
           + lib.optionalString
           (pro_deskenvs.enable && builtins.length (lib.attrNames pro_deskenvs.defaults) > 0) # sh
-          
+
           ''
 
             current_tty="$(tty)"

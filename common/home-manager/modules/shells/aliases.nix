@@ -7,4 +7,6 @@
   nh-build = "nh os build ~/.config/nixos-flake";
   hm-switch = "home-manager switch --flake ~/.config/nixos-flake |& nom";
   hm-news = "home-manager news --flake ~/.config/nixos-flake";
+
+  vimwiki = "nvim +'VimwikiUISelect'";
 }

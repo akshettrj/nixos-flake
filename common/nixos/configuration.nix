@@ -97,7 +97,10 @@
     };
 
     nix = {
-      nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+      nixPath = [
+        "nixpkgs=${inputs.nixpkgs}"
+        "nixpkgs-master=${inputs.nixpkgs-master}"
+      ];
       settings = {
         experimental-features = "nix-command flakes pipe-operators";
         auto-optimise-store = true;

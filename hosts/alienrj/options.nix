@@ -168,6 +168,8 @@
         odesli.enable = true;
         ueberzugpp.enable = true;
         yt-dlp.enable = true;
+        gh.enable = true;
+        obsidian.enable = true;
       };
       social_media = {
         telegram.enable = true;
@@ -188,6 +190,7 @@
           nightly = true;
         };
         zeditor.enable = false;
+        emacs.enable = true;
       };
       terminals = {
         enable = true;
@@ -297,7 +300,7 @@
       wayland.enable = true;
       hyprland = {
         enable = true;
-        use_official_packages = true;
+        use_official_packages = false;
         scroll_factor = 0.2;
         launcher = "bemenu";
         screenlock = "swaylock";

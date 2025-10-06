@@ -14,6 +14,8 @@
         settings.General.Experimental = true;
       };
 
+      services.blueman.enable = true;
+
       environment.systemPackages = [pkgs.bluetuith];
     };
 }

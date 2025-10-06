@@ -39,8 +39,15 @@
       ++ lib.optionals pro_extra_utils.ueberzugpp.enable [
         pkgs.ueberzugpp
       ]
+      ++ lib.optionals pro_extra_utils.gh.enable [
+        pkgs.gh
+      ]
       ++ lib.optionals pro_extra_utils.yt-dlp.enable [
         pkgs.yt-dlp
+      ]
+      ++ lib.optionals pro_extra_utils.obsidian.enable [
+        pkgs.obsidian
+        pkgs.obsidian-export
       ];
   };
 }
