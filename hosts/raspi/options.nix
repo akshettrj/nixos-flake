@@ -28,6 +28,7 @@
       pulseaudio.enable = false;
       nvidia.enable = false;
       graphics.enable = true;
+      iphone.enable = false;
     };
 
     # Various Services
@@ -146,6 +147,7 @@
           nightly = false;
         };
         zeditor.enable = false;
+        emacs.enable = false;
       };
       terminals = {
         enable = true;
