@@ -144,6 +144,7 @@
           mpv.enable = true;
           vlc.enable = false;
           stremio.enable = true;
+          jellyfin.enable = true;
         };
         picture = {
           feh.enable = true;
