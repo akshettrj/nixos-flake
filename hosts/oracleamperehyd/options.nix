@@ -155,6 +155,7 @@
           nightly = false;
         };
         zeditor.enable = false;
+        emacs.enable = false;
       };
       terminals.enable = false;
       browsers.enable = false;

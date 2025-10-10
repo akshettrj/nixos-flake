@@ -270,6 +270,11 @@
               enable_ssl = mkOption {type = types.bool;};
             };
           };
+          freshrss = {
+            enable = mkEnableOption "navidrome";
+            hostname = mkOption {type = types.str;};
+            base_url = mkOption {type = types.str;};
+          };
           watgbridge = {
             enable = mkEnableOption "watgbridge";
             settings = mkOption {type = types.listOf watgbridge_instance_type;};

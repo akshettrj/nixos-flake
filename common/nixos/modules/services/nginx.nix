@@ -12,7 +12,6 @@
         recommendedTlsSettings = false;
         recommendedGzipSettings = false;
         recommendedOptimisation = false;
-        recommendedZstdSettings = false;
         recommendedProxySettings = false;
         recommendedBrotliSettings = false;
       };
