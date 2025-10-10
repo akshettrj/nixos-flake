@@ -419,8 +419,8 @@
           ghostty = {
             enable = mkOption {type = types.bool;};
             use_official_package = mkOption {type = types.bool;};
-            background_opacity = mkOption { type = types.number; };
-            background_blur = mkOption { type = types.bool; };
+            background_opacity = mkOption {type = types.number;};
+            background_blur = mkOption {type = types.bool;};
           };
         };
         browsers = {
