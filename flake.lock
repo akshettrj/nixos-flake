@@ -1952,11 +1952,11 @@
         "nixpkgs": "nixpkgs_15"
       },
       "locked": {
-        "lastModified": 1753896264,
-        "narHash": "sha256-6hxffm/1QPCALXqWZN7oYxcDY4XkwOlQ02vWAJuqih4=",
+        "lastModified": 1760903108,
+        "narHash": "sha256-T5xU1yGHkIwH6tVjyq7Y8IOTmPkjvW9bC6hbTFAsVn0=",
         "owner": "akshettrj",
         "repo": "watgbridge",
-        "rev": "0c7da356d0e26d4a4191939f23c16e187d3e3a68",
+        "rev": "887c4832891139c324780942b6380f9fa176cc36",
         "type": "github"
       },
       "original": {
