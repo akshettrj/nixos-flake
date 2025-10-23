@@ -275,6 +275,11 @@
             hostname = mkOption {type = types.str;};
             base_url = mkOption {type = types.str;};
           };
+          glance = {
+            enable = mkEnableOption "navidrome";
+            hostname = mkOption {type = types.str;};
+            port = mkOption {type = types.port;};
+          };
           watgbridge = {
             enable = mkEnableOption "watgbridge";
             settings = mkOption {type = types.listOf watgbridge_instance_type;};
