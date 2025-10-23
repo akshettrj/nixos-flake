@@ -279,6 +279,7 @@
             enable = mkEnableOption "navidrome";
             hostname = mkOption {type = types.str;};
             port = mkOption {type = types.port;};
+            pages = mkOption {type = (pkgs.formats.yaml {}).type;};
           };
           watgbridge = {
             enable = mkEnableOption "watgbridge";

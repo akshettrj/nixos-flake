@@ -111,6 +111,98 @@
             }
           ];
         };
+        glance = {
+          enable = true;
+          port = 4534;
+          hostname = "glance.nfak.xyz";
+          pages = [
+            {
+              name = "HOME";
+              columns = [
+                {
+                  size = "small";
+                  widgets = [
+                    {
+                      type = "monitor";
+                      cache = "1h";
+                      title = "Self Hosted";
+                      sites = [
+                        {
+                          title = "Navidrome";
+                          url = "https://navi.nfak.xyz";
+                          icon = "di:navidrome";
+                        }
+                        {
+                          title = "Vikunja";
+                          url = "https://vikunja.nfak.xyz";
+                          icon = "di:vikunja";
+                        }
+                        {
+                          title = "Firefly III";
+                          url = "https://ff.nfak.xyz";
+                          icon = "di:firefly-iii";
+                        }
+                        {
+                          title = "FreshRSS";
+                          url = "https://rss.nfak.xyz";
+                          icon = "di:freshrss";
+                        }
+                        {
+                          title = "Wallabag";
+                          url = "https://read.cyks.in";
+                          icon = "di:wallabag";
+                        }
+                        {
+                          title = "AdGuard";
+                          url = "https://dns.nfak.xyz";
+                          icon = "di:adguard-home";
+                        }
+                      ];
+                    }
+                    {
+                      type = "server-stats";
+                      servers = [
+                        {
+                          type = "local";
+                          name = "Oracle Ampere Hyd";
+                        }
+                      ];
+                    }
+                    {
+                      type = "releases";
+                      cache = "1d";
+                      repositories = [
+                        "glanceapp/glance"
+                      ];
+                    }
+                  ];
+                }
+                {
+                  size = "full";
+                  widgets = [
+                    {
+                      type = "split-column";
+                      widgets = [
+                        {
+                          type = "weather";
+                          units = "metric";
+                          hour-format = "12h";
+                          location = "Gurugram";
+                        }
+                        {
+                          type = "weather";
+                          units = "metric";
+                          hour-format = "12h";
+                          location = "Panchkula";
+                        }
+                      ];
+                    }
+                  ];
+                }
+              ];
+            }
+          ];
+        };
       };
     };
 
