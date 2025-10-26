@@ -407,6 +407,9 @@
           emacs = {
             enable = mkOption {type = types.bool;};
           };
+          cursor = {
+            enable = mkOption {type = types.bool;};
+          };
         };
         terminals = {
           enable = mkOption {type = types.bool;};

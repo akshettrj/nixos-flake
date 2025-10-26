@@ -192,6 +192,7 @@
         };
         zeditor.enable = false;
         emacs.enable = true;
+        cursor.enable = true;
       };
       terminals = {
         enable = true;
