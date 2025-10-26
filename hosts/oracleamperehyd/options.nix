@@ -50,6 +50,19 @@
           x11_forwarding = false;
         };
       };
+      openvpn = {
+        enable = true;
+        allow_duplicate_cns = true;
+        protocol = "udp";
+        port = 1194;
+        server_name = "server";
+        dns = "cloudflare";
+        enable_unbound = false;
+        clients = ["akshett" "atlas"];
+        ca_dir = "/var/lib/openvpn";
+        network = "10.8.0.0/24";
+        cipher = "AES-256-GCM";
+      };
       tailscale.enable = true;
       xdg_portal.enable = false;
       telegram_bot_api = {
@@ -248,6 +261,7 @@
         };
         zeditor.enable = false;
         emacs.enable = false;
+        cursor.enable = false;
       };
       terminals.enable = false;
       browsers.enable = false;
