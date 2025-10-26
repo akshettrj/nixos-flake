@@ -2,6 +2,7 @@
   imports = [
     ./nginx.nix
     ./openssh.nix
+    ./openvpn.nix
     ./pipewire.nix
     ./printing.nix
     ./self_hosted

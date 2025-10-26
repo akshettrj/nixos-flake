@@ -177,6 +177,34 @@
             public_keys = mkOption {type = types.listOf (types.str);};
           };
         };
+        openvpn = {
+          enable = mkOption {type = types.bool;};
+          port = mkOption {
+            type = types.port;
+            example = 1194;
+          };
+          protocol = mkOption {type = types.enum ["udp" "tcp"];};
+          network = mkOption {
+            type = types.str;
+            example = "10.8.0.0/24";
+          };
+          dns = mkOption {type = types.enum ["system" "cloudflare" "quad9" "unbound"];};
+          enable_unbound = mkOption {type = types.bool;};
+          cipher = mkOption {
+            type = types.str;
+            example = "AES-256-GCM";
+          };
+          ca_dir = mkOption {
+            type = types.path;
+            example = "/var/lib/openvpn/pki";
+          };
+          server_name = mkOption {
+            type = types.str;
+            example = "server";
+          };
+          clients = mkOption {type = types.listOf types.str;};
+          allow_duplicate_cns = mkOption {type = types.bool; description = "Allow multiple concurrent connections using the same client certificate";};
+        };
         tailscale.enable = mkOption {type = types.bool;};
         xdg_portal.enable = mkOption {type = types.bool;};
         telegram_bot_api = {
