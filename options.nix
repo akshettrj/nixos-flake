@@ -392,6 +392,7 @@
         };
         extra_utilities = {
           drivedlgo.enable = mkEnableOption "drivedlgo";
+          librepods.enable = mkEnableOption "librepods";
           ffmpeg.enable = mkEnableOption "ffmpeg";
           obs.enable = mkEnableOption "obs";
           odesli.enable = mkEnableOption "odesli-rs";

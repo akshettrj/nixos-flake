@@ -76,6 +76,7 @@
         data_dir = user.homedir + "/.local/share/telegram-bot-api";
       };
       nginx.enable = false;
+      openvpn.enable = false;
     };
 
     # Nix/NixOS specific
@@ -160,6 +161,7 @@
       };
       extra_utilities = {
         drivedlgo.enable = true;
+        librepods.enable = true;
         pleezer.enable = true;
         taggie.enable = true;
         typst.enable = true;
