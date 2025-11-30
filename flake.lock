@@ -1554,11 +1554,11 @@
         "nixpkgs": "nixpkgs_11"
       },
       "locked": {
-        "lastModified": 1764427537,
-        "narHash": "sha256-KGsYPgmdMzFUoSNw4qE+Du0sVeefMWfbnsDrXtpw+5I=",
+        "lastModified": 1764509559,
+        "narHash": "sha256-V/BrQA8l0JXaFd9UTjA430uxNZthYNx4P50UhkAN92Y=",
         "owner": "Propheci",
         "repo": "NixUR",
-        "rev": "9c627a1297f3cbad8a0a2006d01fa28cd94cba2d",
+        "rev": "19d44c9614cb305d95177fea7f650f52438a5f68",
         "type": "github"
       },
       "original": {
