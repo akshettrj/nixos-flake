@@ -54,6 +54,7 @@
       tailscale.enable = true;
       xdg_portal.enable = false;
       telegram_bot_api.enable = false;
+      openvpn.enable = false;
     };
 
     # Nix/NixOS specific
@@ -122,6 +123,7 @@
           mpv.enable = true;
           vlc.enable = false;
           stremio.enable = false;
+          jellyfin.enable = false;
         };
         picture = {
           feh.enable = true;
@@ -148,6 +150,7 @@
         };
         zeditor.enable = false;
         emacs.enable = false;
+        cursor.enable = false;
       };
       terminals = {
         enable = true;

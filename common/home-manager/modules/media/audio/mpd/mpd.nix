@@ -30,6 +30,6 @@
         '';
       };
 
-      home.packages = [pkgs.mpc-cli];
+      home.packages = [pkgs.mpc];
     };
 }

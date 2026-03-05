@@ -214,7 +214,7 @@
               ];
             };
             mpd = let
-              mpc = "${pkgs.mpc-cli}/bin/mpc";
+              mpc = "${pkgs.mpc}/bin/mpc";
             in {
               format = "{stateIcon} [{songPosition}/{queueLength}] {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})";
               format-paused = "{stateIcon} [{songPosition}/{queueLength}] {title}";

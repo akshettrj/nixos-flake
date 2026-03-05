@@ -161,7 +161,7 @@
       };
       extra_utilities = {
         drivedlgo.enable = true;
-        librepods.enable = true;
+        librepods.enable = false;
         pleezer.enable = true;
         taggie.enable = true;
         typst.enable = true;

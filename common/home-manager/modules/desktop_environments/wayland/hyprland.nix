@@ -106,7 +106,7 @@
 
               ''
               + lib.optionalString mon.enabled # sh
-              
+
               ''
 
                 for wk in ${toString mon.workspaces}; do
@@ -390,9 +390,9 @@
               ",XF86AudioMute, exec, wpctl set-sink-mute '@DEFAULT_SINK@' toggle"
             ]
             ++ lib.optionals pro_mpd.enable [
-              "$mainMod, F9, exec, ${pkgs.mpc-cli}/bin/mpc -q prev"
-              "$mainMod, F10, exec, ${pkgs.mpc-cli}/bin/mpc -q toggle"
-              "$mainMod, F11, exec, ${pkgs.mpc-cli}/bin/mpc -q next"
+              "$mainMod, F9, exec, ${pkgs.mpc}/bin/mpc -q prev"
+              "$mainMod, F10, exec, ${pkgs.mpc}/bin/mpc -q toggle"
+              "$mainMod, F11, exec, ${pkgs.mpc}/bin/mpc -q next"
             ]
             ++ lib.optionals pro_mpris.enable [
               ",XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
