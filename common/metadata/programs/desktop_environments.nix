@@ -13,6 +13,6 @@
 in {
   hyprland = rec {
     pkg = hyprland_package;
-    cmd = "${pkg}/bin/Hyprland";
+    cmd = "${pkg}/bin/start-hyprland";
   };
 }
