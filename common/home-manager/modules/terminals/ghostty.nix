@@ -25,7 +25,7 @@
         enableFishIntegration = lib.mkIf pro_shells.fish.enable true;
 
         settings = {
-          theme = "GruvboxDark";
+          theme = "Gruvbox Dark";
           font-family = "${pro_theming.fonts.main.name}";
           window-decoration = false;
           alpha-blending = "linear-corrected";

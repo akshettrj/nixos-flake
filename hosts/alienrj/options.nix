@@ -10,10 +10,10 @@
       hostname = "alienrj";
       time_zone = "Asia/Kolkata";
       swap_devices = [
-        {
-          device = "/var/lib/swapfile";
-          size = 6 * 1024;
-        }
+        # {
+        #   device = "/var/lib/swapfile";
+        #   size = 6 * 1024;
+        # }
       ];
     };
     user = {
@@ -144,7 +144,7 @@
         video = {
           mpv.enable = true;
           vlc.enable = false;
-          stremio.enable = true;
+          stremio.enable = false;
           jellyfin.enable = true;
         };
         picture = {

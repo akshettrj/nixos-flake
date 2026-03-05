@@ -279,13 +279,13 @@
 
           master.new_status = "master";
 
-          gestures = {
-            workspace_swipe = true;
-            workspace_swipe_fingers = 3;
-            workspace_swipe_forever = true;
-            workspace_swipe_invert = false;
-            workspace_swipe_cancel_ratio = 1.0e-3;
-          };
+          # gestures = {
+          #   workspace_swipe = true;
+          #   workspace_swipe_fingers = 3;
+          #   workspace_swipe_forever = true;
+          #   workspace_swipe_invert = false;
+          #   workspace_swipe_cancel_ratio = 1.0e-3;
+          # };
 
           device = {
             name = "epic-mouse-v1";
@@ -434,13 +434,13 @@
             ",switch:on:Lid Switch, exec, ${screenlocks_meta."${screenlock}".cmd}"
           ];
 
-          windowrulev2 = [
-            "workspace 9,class:org.telegram.desktop"
-            "workspace 10,class:teams-for-linux"
-            "workspace unset,class:org.telegram.desktop,title:^(Media viewer)$"
-            "float,title:Bitwarden"
-            "workspace 10,class:Beeper"
-            "pin,class:dragon-drop"
+          windowrule = [
+            "workspace 9,match:class org.telegram.desktop"
+            "workspace 10,match:class teams-for-linux"
+            "workspace unset,match:class org.telegram.desktop,match:title ^(Media viewer)$"
+            "float on,match:title Bitwarden"
+            "workspace 10,match:class Beeper"
+            "pin on,match:class dragon-drop"
           ];
         };
 

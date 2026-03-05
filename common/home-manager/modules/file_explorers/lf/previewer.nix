@@ -45,7 +45,7 @@ in
           ;;
       */pdf)
           CACHE="''${XDG_CACHE_HOME:-$HOME/.cache}/lf/thumb.$(${pkgs.coreutils}/bin/stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(${pkgs.coreutils}/bin/readlink -f "$1")" | ${pkgs.coreutils}/bin/sha256sum | ${pkgs.coreutils}/bin/cut -d' ' -f1)"
-          [ ! -f "$CACHE.jpg" ] && ${pkgs.poppler_utils}/bin/pdftoppm -jpeg -f 1 -singlefile "$1" "$CACHE"
+          [ ! -f "$CACHE.jpg" ] && ${pkgs.poppler-utils}/bin/pdftoppm -jpeg -f 1 -singlefile "$1" "$CACHE"
           image "$CACHE.jpg" "$2" "$3" "$4" "$5" "$1"
           ;;
       *opendocument*) ${pkgs.odt2txt}/bin/odt2txt "$1" ;;
