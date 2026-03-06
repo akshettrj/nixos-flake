@@ -28,6 +28,16 @@
         open = false;
 
         nvidiaSettings = true;
+
+        prime = lib.mkIf pro_hw.nvidia.prime.enable {
+          offload = {
+            enable = true;
+            enableOffloadCmd = true;
+          };
+
+          intelBusId = pro_hw.nvidia.prime.intelBusId;
+          nvidiaBusId = pro_hw.nvidia.prime.nvidiaBusId;
+        };
       };
     };
 }

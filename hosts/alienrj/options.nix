@@ -34,6 +34,11 @@
       nvidia = {
         enable = true;
         package = config.boot.kernelPackages.nvidiaPackages.latest;
+        prime = {
+          enable = true;
+          intelBusId = "PCI:00:02.0";
+          nvidiaBusId = "PCI:01:00.0";
+        };
       };
       graphics.enable = false;
       iphone = {

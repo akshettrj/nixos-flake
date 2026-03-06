@@ -115,6 +115,11 @@
         graphics.enable = mkOption {type = types.bool;};
         nvidia = {
           enable = mkOption {type = types.bool;};
+          prime = {
+            enable = mkOption {type = types.bool;};
+            intelBusId = mkOption {type = types.str;};
+            nvidiaBusId = mkOption {type = types.str;};
+          };
           package = mkOption {
             type = types.anything;
             example = config.boot.kernelPackages.nvidiaPackages.stable;
