@@ -73,6 +73,11 @@
       url = "github:Rubikoid/nix-base";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    awcc = {
+      url = "/home/akshettrj/work/side_projects/alienfx/AWCC";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -91,7 +96,10 @@
           name = "alienrj";
           system = "x86_64-linux";
           allowUnfree = true;
-          nixosModules = [./hosts/alienrj/configuration.nix];
+          nixosModules = [
+            ./hosts/alienrj/configuration.nix
+            inputs.awcc.nixosModules.default
+          ];
           stable = false;
         }
         {

@@ -5,6 +5,9 @@
   pkgs,
   ...
 }: {
+
+  services.awcc.enable = true;
+
   propheci = rec {
     system = {
       hostname = "alienrj";
