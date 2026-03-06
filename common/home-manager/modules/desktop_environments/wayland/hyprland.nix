@@ -490,7 +490,10 @@
           ipc = "off";
           splash = false;
           wallpaper = [
-            ",${pro_theming.wallpaper}"
+            {
+              monitor = "";
+              path = pro_theming.wallpaper;
+            }
           ];
         };
       };

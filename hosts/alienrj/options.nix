@@ -319,7 +319,7 @@
             refresh_rate = 60;
             x = 0;
             y = 0;
-            additional_settings = "1.6";
+            additional_settings = "1.33";
             workspaces = lib.range 1 10;
           }
           {
@@ -329,7 +329,7 @@
             height = 1080;
             refresh_rate = 60;
             # The x value is 2560 / 1.6 (width / scaling factor)
-            x = 1602;
+            x = 1924;
             y = 0;
             additional_settings = "1";
             workspaces = lib.range 11 20;
