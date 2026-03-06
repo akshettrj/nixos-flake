@@ -36,8 +36,8 @@
         package = config.boot.kernelPackages.nvidiaPackages.latest;
         prime = {
           enable = true;
-          intelBusId = "PCI:00:02.0";
-          nvidiaBusId = "PCI:01:00.0";
+          intelBusId = "PCI:00:02:0";
+          nvidiaBusId = "PCI:01:00:0";
         };
       };
       graphics.enable = false;
@@ -140,6 +140,7 @@
     };
 
     programs = {
+      gaming.enable = true;
       media = {
         enable = true;
         services.mpris.enable = true;

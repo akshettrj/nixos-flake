@@ -395,6 +395,9 @@
             };
           };
         };
+        gaming = {
+          enable = mkOption {type = types.bool;};
+        };
         extra_utilities = {
           drivedlgo.enable = mkEnableOption "drivedlgo";
           librepods.enable = mkEnableOption "librepods";
