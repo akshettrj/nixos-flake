@@ -135,6 +135,10 @@
               icon = true;
               icon-size = pro_bars.waybar.icon_size;
             };
+            "hyprland/windowcount" = {
+              format = "[{}] window(s)";
+              separate-outputs = true;
+            };
             "hyprland/submap" = {
               format = "  󰌌  [{}]";
               always-on = true;
