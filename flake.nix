@@ -75,7 +75,7 @@
     };
 
     awcc = {
-      url = "/home/akshettrj/work/side_projects/alienfx/AWCC";
+      url = "github:akshettrj/AWCC";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -98,14 +98,17 @@
         "stb": "stb"
       },
       "locked": {
-        "lastModified": 1772804120,
-        "narHash": "sha256-UlIEhRT0pNoTtoXIIg4/F5THPiAs4RLXTcp8xi99nB8=",
-        "path": "/home/akshettrj/work/side_projects/alienfx/AWCC",
-        "type": "path"
+        "lastModified": 1772804590,
+        "narHash": "sha256-O5C52vkdEjrAtQCloEfU1ez21xBaI2NaLkT253SbImo=",
+        "owner": "akshettrj",
+        "repo": "AWCC",
+        "rev": "91693c648aeb403ed58afea0f5b7cf86a53be139",
+        "type": "github"
       },
       "original": {
-        "path": "/home/akshettrj/work/side_projects/alienfx/AWCC",
-        "type": "path"
+        "owner": "akshettrj",
+        "repo": "AWCC",
+        "type": "github"
       }
     },
     "disko": {
