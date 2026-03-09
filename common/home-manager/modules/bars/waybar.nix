@@ -307,6 +307,8 @@
                 "custom/separator"
                 "hyprland/workspaces"
                 "custom/separator"
+                "hyprland/windowcount"
+                "custom/separator"
                 "hyprland/window"
               ];
               modules-center = [
