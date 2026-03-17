@@ -53,7 +53,7 @@
       openvpn = {
         enable = true;
         allow_duplicate_cns = true;
-        protocol = "udp";
+        protocol = "tcp";
         port = 1194;
         server_name = "server";
         dns = "cloudflare";
@@ -246,6 +246,9 @@
 
     programs = {
       media = {
+        enable = false;
+      };
+      gaming = {
         enable = false;
       };
       editors = {
