@@ -53,7 +53,7 @@
       openvpn = {
         enable = true;
         allow_duplicate_cns = true;
-        protocol = "tcp";
+        protocol = "udp";
         port = 1194;
         server_name = "server";
         dns = "cloudflare";
