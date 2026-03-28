@@ -10,6 +10,7 @@
     lib.mkIf pro_explorers.yazi.enable {
       programs.yazi = {
         enable = true;
+        shellWrapperName = "y";
 
         enableBashIntegration = lib.mkIf pro_shells.bash.enable true;
         enableFishIntegration = lib.mkIf pro_shells.fish.enable true;

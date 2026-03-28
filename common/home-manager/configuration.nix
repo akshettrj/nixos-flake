@@ -53,6 +53,7 @@
       (inputs.alejandra.defaultPackage."${pkgs.system}")
     ];
 
+    home.preferXdgDirectories = true;
     xdg = {
       enable = true;
       userDirs = {
