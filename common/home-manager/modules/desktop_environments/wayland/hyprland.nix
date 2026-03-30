@@ -441,6 +441,8 @@
             "float on,match:title Bitwarden"
             "workspace 10,match:class Beeper"
             "pin on,match:class dragon-drop"
+            "float on,match:class ^(ueberzug.*)$"
+            "no_initial_focus on, match:class ^(ueberzug.*)$"
           ];
         };
 
