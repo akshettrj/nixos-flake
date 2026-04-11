@@ -264,7 +264,6 @@
         };
         zeditor.enable = false;
         emacs.enable = false;
-        cursor.enable = false;
       };
       terminals.enable = false;
       browsers.enable = false;

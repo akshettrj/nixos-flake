@@ -407,6 +407,9 @@
           skills = mkOption {
             type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
           };
+          cursor = {
+            enable = mkOption {type = types.bool;};
+          };
           gemini = {
             enable = mkOption {type = types.bool;};
             mcpServers = mkOption {type = json_format.type;};
@@ -465,9 +468,6 @@
             enable = mkOption {type = types.bool;};
           };
           emacs = {
-            enable = mkOption {type = types.bool;};
-          };
-          cursor = {
             enable = mkOption {type = types.bool;};
           };
         };
