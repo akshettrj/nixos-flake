@@ -43,14 +43,12 @@
 
     home.packages = with pkgs; [
       bat
-      btop
+      (btop.override { cudaSupport = true; })
       dust
       fd
       nh
       nixd
       ripgrep
-
-      (inputs.alejandra.defaultPackage."${pkgs.system}")
     ];
 
     home.preferXdgDirectories = true;

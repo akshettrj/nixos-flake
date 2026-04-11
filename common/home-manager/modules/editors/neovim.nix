@@ -13,6 +13,6 @@
     };
   in
     lib.mkIf pro_editors.neovim.enable {
-      home.packages = [editors_meta.neovim.pkg];
+      home.packages = [editors_meta.neovim.pkg pkgs.tree-sitter];
     };
 }

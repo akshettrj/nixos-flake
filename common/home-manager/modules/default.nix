@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./ai
     ./bars
     ./browsers
     ./clipboard_managers

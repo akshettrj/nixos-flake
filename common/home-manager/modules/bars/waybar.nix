@@ -52,7 +52,7 @@
         );
         systemd = {
           enable = true;
-          target = pro_bars.waybar.systemd_target;
+          targets = [pro_bars.waybar.systemd_target];
         };
         settings = let
           modules = {

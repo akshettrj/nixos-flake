@@ -77,6 +77,9 @@
         requires = mkOption {type = types.listOf types.str;};
       };
     };
+
+    json_format = pkgs.formats.json {};
+    yaml_format = pkgs.formats.yaml {};
   in {
     propheci = {
       # System Meta
@@ -208,7 +211,10 @@
             example = "server";
           };
           clients = mkOption {type = types.listOf types.str;};
-          allow_duplicate_cns = mkOption {type = types.bool; description = "Allow multiple concurrent connections using the same client certificate";};
+          allow_duplicate_cns = mkOption {
+            type = types.bool;
+            description = "Allow multiple concurrent connections using the same client certificate";
+          };
         };
         tailscale.enable = mkOption {type = types.bool;};
         xdg_portal.enable = mkOption {type = types.bool;};
@@ -279,7 +285,7 @@
               ];
             };
             port = mkOption {type = types.port;}; # Default 3456
-            settings = mkOption {type = (pkgs.formats.yaml {}).type;};
+            settings = mkOption {type = yaml_format.type;};
             nginx = {
               enable = mkOption {type = types.bool;};
               hostname = mkOption {type = types.str;};
@@ -296,7 +302,7 @@
               ];
             };
             port = mkOption {type = types.port;}; # Default 4533
-            settings = mkOption {type = (pkgs.formats.json {}).type;};
+            settings = mkOption {type = json_format.type;};
             nginx = {
               enable = mkOption {type = types.bool;};
               hostname = mkOption {type = types.str;};
@@ -312,7 +318,7 @@
             enable = mkEnableOption "navidrome";
             hostname = mkOption {type = types.str;};
             port = mkOption {type = types.port;};
-            pages = mkOption {type = (pkgs.formats.yaml {}).type;};
+            pages = mkOption {type = yaml_format.type;};
           };
           watgbridge = {
             enable = mkEnableOption "watgbridge";
@@ -392,6 +398,23 @@
             };
             sioyek = {
               enable = mkOption {type = types.bool;};
+            };
+          };
+        };
+        ai = {
+          enable = mkOption {type = types.bool;};
+          mcpServers = mkOption {type = json_format.type;};
+          skills = mkOption {
+            type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
+          };
+          gemini = {
+            enable = mkOption {type = types.bool;};
+            mcpServers = mkOption {type = json_format.type;};
+          };
+          ollama = {
+            enable = mkOption {type = types.bool;};
+            acceleration = mkOption {
+              type = types.nullOr (types.enum [false "rocm" "cuda"]);
             };
           };
         };
@@ -538,6 +561,18 @@
             icon_size = mkOption {type = types.ints.unsigned;};
             tray_spacing = mkOption {type = types.ints.unsigned;};
             is_laptop = mkOption {type = types.bool;};
+            systemd_target = mkOption {type = types.str;};
+          };
+          quickshell = {
+            enable = mkOption {type = types.bool;};
+            use_official_package = mkOption {type = types.bool;};
+            # heights = mkOption {type = types.ints.unsigned;};
+            # font_size = mkOption {type = types.ints.unsigned;};
+            # separator_size = mkOption {type = types.ints.unsigned;};
+            # icon_size = mkOption {type = types.ints.unsigned;};
+            # tray_spacing = mkOption {type = types.ints.unsigned;};
+            # is_laptop = mkOption {type = types.bool;};
+            enabled_configs = mkOption {type = types.listOf types.str;};
             systemd_target = mkOption {type = types.str;};
           };
         };

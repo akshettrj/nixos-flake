@@ -48,7 +48,8 @@
       ++ lib.optionals pro_extra_utils.obsidian.enable [
         pkgs.obsidian
         pkgs.obsidian-export
-      ] ++ lib.optionals pro_extra_utils.librepods.enable [
+      ]
+      ++ lib.optionals pro_extra_utils.librepods.enable [
         inputs.nixur.legacyPackages."${pkgs.system}".librepods
       ];
   };

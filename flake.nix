@@ -31,13 +31,26 @@
     disko.url = "github:nix-community/disko";
     nixos-hw.url = "github:NixOS/nixos-hardware";
 
-    # Hyprland related
+    # Desktop Environment Related
+
+    wallpapers = {
+      url = "github:Propheci/wallpapers";
+      flake = false;
+    };
+
+    ## Hyprland
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     hyprpaper.url = "github:hyprwm/hyprpaper";
     hyprlock.url = "github:hyprwm/hyprlock";
     waybar.url = "github:Alexays/Waybar";
 
-    # Terminals
+    ## Quickshell
+    quickshell = {
+      url = "github:quickshell-mirror/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ## Terminals
     wezterm.url = "github:wez/wezterm?dir=nix";
     ghostty.url = "github:ghostty-org/ghostty";
 
@@ -51,14 +64,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/NUR";
-    alejandra.url = "github:kamadorueda/alejandra";
 
     # Misc
-    wallpapers = {
-      url = "github:Propheci/wallpapers";
-      flake = false;
-    };
-
     propheci_secrets = {
       url = "git+ssh://git@github.com/akshettrj/nixos_flake_secrets.git";
       flake = false;
@@ -76,6 +83,11 @@
 
     awcc = {
       url = "github:akshettrj/AWCC";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mcp_python = {
+      url = "github:akshettrj/personal-mcp-py";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
