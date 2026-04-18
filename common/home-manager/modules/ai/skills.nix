@@ -1,5 +1,5 @@
-{...}:
-{
-  music-manager = ./skills/music-manager/SKILL.md;
-  nixos-configuration = ./skills/nixos-configuration/SKILL.md;
+{ inputs, ... }:
+inputs.mcp_python.skills
+// {
+  nixos-configuration = ./skills/nixos-configuration;
 }

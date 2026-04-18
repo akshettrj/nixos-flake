@@ -149,7 +149,7 @@
             trust = true;
           };
         };
-        skills = import ../../common/home-manager/modules/ai/skills.nix {};
+        skills = import ../../common/home-manager/modules/ai/skills.nix { inherit inputs; };
         cursor.enable = true;
         gemini = {
           enable = true;

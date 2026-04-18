@@ -1205,11 +1205,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1774982852,
-        "narHash": "sha256-rWtjgpdMpFdaxCL9A+3U9kNv54I8A2Co2aeuQNN8Fmw=",
+        "lastModified": 1776496527,
+        "narHash": "sha256-gr7qK8XuHiT1p77zBtfKUZ2MAaQzPa+VOUqX9kjmr6w=",
         "owner": "akshettrj",
         "repo": "personal-mcp-py",
-        "rev": "ecac126d2208c50762410fe94e477c331ca2c4c6",
+        "rev": "6aad45ad3e2a0e102a9eaf0e8c04ed05465f1bd0",
         "type": "github"
       },
       "original": {
