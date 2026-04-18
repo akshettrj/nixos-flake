@@ -249,7 +249,7 @@
         main = "brave";
         brave = {
           enable = true;
-          cmd_args = ["--force-device-scale-factor=1.5"];
+          cmd_args = [];
         };
         firefox.enable = true;
         chromium.enable = false;
@@ -305,11 +305,11 @@
         waybar = {
           enable = true;
           use_official_package = false;
-          heights = 28;
-          font_size = 12;
-          separator_size = 18;
-          icon_size = 15;
-          tray_spacing = 8;
+          heights = 30;
+          font_size = 14;
+          separator_size = 20;
+          icon_size = 16;
+          tray_spacing = 9;
           is_laptop = true;
           systemd_target = "hyprland-session.target";
         };
@@ -349,7 +349,7 @@
             name = "eDP-1";
             width = 2560;
             height = 1600;
-            refresh_rate = 60;
+            refresh_rate = 165;
             x = 0;
             y = 0;
             additional_settings = "1.33";
