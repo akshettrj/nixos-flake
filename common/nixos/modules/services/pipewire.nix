@@ -28,6 +28,6 @@
 
       hardware.alsa.enablePersistence = true;
 
-      environment.systemPackages = [pkgs.pulsemixer];
+      environment.systemPackages = lib.mkIf config.services.pipewire.pulse.enable [pkgs.pulsemixer pkgs.pasystray];
     };
 }

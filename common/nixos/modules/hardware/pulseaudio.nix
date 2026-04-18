@@ -21,6 +21,6 @@
         support32Bit = true;
       };
 
-      environment.systemPackages = [pkgs.pulsemixer];
+      environment.systemPackages = [pkgs.pulsemixer pkgs.pasystray];
     };
 }
