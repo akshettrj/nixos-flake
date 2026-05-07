@@ -1723,11 +1723,11 @@
     "propheci_secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1761241468,
-        "narHash": "sha256-I44nI088BmDCjUs494Ow9Pkp/9+1oIGp49QQj8LcZ2g=",
+        "lastModified": 1775984278,
+        "narHash": "sha256-lU4fPWPRejEKUs2lALd9YR1t5hWr4RYsYUlWq9R93uA=",
         "ref": "refs/heads/main",
-        "rev": "30aade4083bb694c1d1e82ad4007a75ba59618dd",
-        "revCount": 55,
+        "rev": "27dbc6ea9731976c597c0792e9d4a3e2495840d5",
+        "revCount": 56,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       },
