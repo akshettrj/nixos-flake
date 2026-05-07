@@ -245,6 +245,9 @@
     };
 
     programs = {
+      ai = {
+        enable = false;
+      };
       media = {
         enable = false;
       };
@@ -274,7 +277,7 @@
         yazi.enable = true;
       };
       extra_utilities = {
-        taggie.enable = true;
+        taggie.enable = false;
       };
       launchers.enable = false;
       screenshot_tools.enable = false;

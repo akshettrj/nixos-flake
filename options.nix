@@ -233,6 +233,15 @@
           mediawiki = {
             enable = mkEnableOption "Mediawiki";
           };
+          audiobookshelf = {
+            enable = mkEnableOption "AudiobookShelf";
+            port = mkOption {type = types.port;};
+            nginx = {
+              enable = mkOption {type = types.bool;};
+              hostname = mkOption {type = types.str;};
+              enable_ssl = mkOption {type = types.bool;};
+            };
+          };
           dokuwiki = {
             enable = mkEnableOption "DokuWiki";
             disable_registration = mkOption {type = types.bool;};

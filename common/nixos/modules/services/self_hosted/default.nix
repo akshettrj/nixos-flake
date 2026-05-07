@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./audiobookshelf.nix
     ./adguard.nix
     ./dokuwiki.nix
     ./firefly_iii.nix
