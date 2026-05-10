@@ -139,7 +139,7 @@
     };
 
     programs = {
-      gaming.enable = true;
+      gaming.enable = false;
       ai = {
         enable = true;
         mcpServers = {
