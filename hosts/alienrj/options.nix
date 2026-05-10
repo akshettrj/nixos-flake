@@ -151,6 +151,10 @@
         };
         skills = import ../../common/home-manager/modules/ai/skills.nix { inherit inputs; };
         cursor.enable = true;
+        codex = {
+          enable = true;
+          mcpServers = null;
+        };
         gemini = {
           enable = true;
           mcpServers = null;

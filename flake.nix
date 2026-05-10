@@ -72,7 +72,10 @@
     };
 
     watgbridge.url = "github:akshettrj/watgbridge";
-    odesli.url = "github:Propheci/odesli-rs?dir=nix";
+    odesli = {
+      url = "github:Propheci/odesli-rs?dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixur.url = "github:Propheci/NixUR";
 

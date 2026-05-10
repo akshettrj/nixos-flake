@@ -423,6 +423,10 @@
             enable = mkOption {type = types.bool;};
             mcpServers = mkOption {type = json_format.type;};
           };
+          codex = {
+            enable = mkOption {type = types.bool;};
+            mcpServers = mkOption {type = json_format.type;};
+          };
           ollama = {
             enable = mkOption {type = types.bool;};
             acceleration = mkOption {
