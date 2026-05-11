@@ -1709,11 +1709,11 @@
     "propheci_secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1778194385,
-        "narHash": "sha256-FnUpT8xIiN2SnKgIp8wEEop9Yq7tABbgpAu/7sgihpo=",
+        "lastModified": 1778504169,
+        "narHash": "sha256-+vW6AInwgr4NIv6lr9SN1zcdYNXIuiHm87Rl0Cm4MPA=",
         "ref": "refs/heads/main",
-        "rev": "8e1b658d47109b4cfe70c88a092bee98d1e74549",
-        "revCount": 57,
+        "rev": "ff65464c37d0f2dffc0f604e2f55e2d31ae9e7c1",
+        "revCount": 59,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       },
@@ -2102,11 +2102,11 @@
         "nixpkgs": "nixpkgs_13"
       },
       "locked": {
-        "lastModified": 1778162544,
-        "narHash": "sha256-JPuTGhkwJU8sYmbebR81KX0QByfZzJJf2HSe+ybcV+4=",
+        "lastModified": 1778503299,
+        "narHash": "sha256-CyWts9BQ6wAIQqL0WhWNqour7UVr9KpBF/alT0fT1TQ=",
         "owner": "akshettrj",
         "repo": "watgbridge",
-        "rev": "d7ceb53aab37e78f3704eda89e2c58851828f8d7",
+        "rev": "40d8b4645d7f2956dc075d9fee70a73cfcf1ba21",
         "type": "github"
       },
       "original": {

@@ -3,7 +3,7 @@
 ## BUILDING FOR ANOTHER HOST
 
 ```sh
-nixos-rebuild (boot|build|switch) --target-host <user>@<remote_host> --sudo --flake .#<target_configuration>
+nixos-rebuild (boot|build|switch) --option narinfo-cache-negative-ttl 0 --target-host <user>@<remote_host> --sudo --flake .#<target_configuration>
 ```
 
 ## INSTALLING REMOTELY USING NIXOS-ANYWHERE
