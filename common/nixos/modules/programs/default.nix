@@ -5,5 +5,6 @@
     ./shells
     ./gaming.nix
     ./utilities.nix
+    ./vpn
   ];
 }

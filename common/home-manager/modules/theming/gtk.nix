@@ -34,6 +34,7 @@
             "file://${pro_user.homedir}/media"
           ];
         };
+        gtk4 = {theme = null;};
       };
 
       home.packages = [pkgs.lxappearance];

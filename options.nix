@@ -434,6 +434,9 @@
             };
           };
         };
+        vpn = {
+          mullvad.enable = mkEnableOption "Mullvad VPN";
+        };
         gaming = {
           enable = mkOption {type = types.bool;};
         };

@@ -139,6 +139,7 @@
     };
 
     programs = {
+      vpn.mullvad.enable = true;
       gaming.enable = false;
       ai = {
         enable = true;
@@ -192,10 +193,10 @@
         };
       };
       extra_utilities = {
-        drivedlgo.enable = true;
+        drivedlgo.enable = false;
         librepods.enable = false;
-        pleezer.enable = true;
-        taggie.enable = true;
+        pleezer.enable = false;
+        taggie.enable = false;
         typst.enable = true;
         ffmpeg.enable = true;
         rclone.enable = true;

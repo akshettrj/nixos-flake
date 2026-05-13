@@ -87,6 +87,7 @@
       nm-applet = "${pkgs.networkmanagerapplet}/bin/nm-applet";
       blueman-applet = "${pkgs.blueman}/bin/blueman-applet";
       pasystray = "${pkgs.pasystray}/bin/pasystray";
+      mullvad-gui = "${pkgs.mullvad-vpn}/bin/mullvad-gui";
     in
       pkgs.writeShellScriptBin "start" ''
 
@@ -121,6 +122,7 @@
         pidof ${nm-applet} && killall -9 ${nm-applet}
         pidof ${blueman-applet} && killall -9 ${blueman-applet}
         pidof ${pasystray} && killall -9 ${pasystray}
+        pidof ${mullvad-gui} && killall -9 ${mullvad-gui}
 
         ${clipboard_manager_meta.cmd} &
         ${nm-applet} &
