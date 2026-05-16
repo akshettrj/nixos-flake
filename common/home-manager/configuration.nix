@@ -66,6 +66,7 @@
         templates = "${config.home.homeDirectory}/media/templates";
         videos = "${config.home.homeDirectory}/media/videos";
         pictures = "${config.home.homeDirectory}/media/pictures";
+        projects = "${config.home.homeDirectory}/media/projects";
       };
       portal = lib.mkIf pro_services.xdg_portal.enable {
         enable = true;

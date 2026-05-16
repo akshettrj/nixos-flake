@@ -128,7 +128,7 @@
         ${nm-applet} &
         ${blueman-applet} &
         ${pasystray} &
-
+        ${mullvad-gui} &
       '';
 
     kill_window_script = let
