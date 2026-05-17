@@ -93,6 +93,10 @@
       url = "github:akshettrj/personal-mcp-py";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    caveman_skill = {
+      url = "github:JuliusBrussee/caveman";
+      flake = false;
+    };
   };
 
   outputs = {
