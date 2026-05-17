@@ -1,6 +1,0 @@
-{...}: {
-  imports = [
-    ./lf
-    ./yazi.nix
-  ];
-}
