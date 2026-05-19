@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Biryani Options</title>
+        <style>
+            :root {
+                color-scheme: light dark;
+                --bg: #f7f7f4;
+                --panel: #ffffff;
+                --text: #1b1d1f;
+                --muted: #626a73;
+                --line: #d9ddd9;
+                --accent: #0f766e;
+                --accent-soft: #d8f3ee;
+                --warn: #8a4b10;
+                --warn-soft: #ffe8c7;
+                font-family:
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --bg: #101214;
+                    --panel: #171a1d;
+                    --text: #eceff1;
+                    --muted: #a3abb3;
+                    --line: #30363b;
+                    --accent: #5eead4;
+                    --accent-soft: #123b38;
+                    --warn: #f4b65f;
+                    --warn-soft: #3f2a12;
+                }
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.5;
+            }
+
+            header {
+                border-bottom: 1px solid var(--line);
+                background: var(--panel);
+            }
+
+            main,
+            .header-inner {
+                width: min(1180px, calc(100vw - 32px));
+                margin: 0 auto;
+            }
+
+            .header-inner {
+                padding: 28px 0 22px;
+            }
+
+            h1 {
+                margin: 0;
+                font-size: 2rem;
+                line-height: 1.1;
+                letter-spacing: 0;
+            }
+
+            .summary {
+                margin: 10px 0 0;
+                color: var(--muted);
+            }
+
+            main {
+                padding: 22px 0 40px;
+            }
+
+            .toolbar {
+                display: grid;
+                grid-template-columns: minmax(220px, 1fr) auto auto;
+                gap: 12px;
+                align-items: center;
+                margin-bottom: 18px;
+            }
+
+            input,
+            select {
+                width: 100%;
+                border: 1px solid var(--line);
+                border-radius: 6px;
+                padding: 10px 12px;
+                background: var(--panel);
+                color: var(--text);
+                font: inherit;
+            }
+
+            .stats {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 18px;
+            }
+
+            .stat {
+                border: 1px solid var(--line);
+                border-radius: 6px;
+                padding: 8px 10px;
+                background: var(--panel);
+                color: var(--muted);
+                font-size: 0.92rem;
+            }
+
+            .stat strong {
+                color: var(--text);
+            }
+
+            .option-list {
+                display: grid;
+                gap: 10px;
+            }
+
+            .option {
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: var(--panel);
+                padding: 13px 14px;
+            }
+
+            .option-head {
+                display: flex;
+                gap: 10px;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+
+            code {
+                font-family:
+                    ui-monospace,
+                    SFMono-Regular,
+                    Menlo,
+                    Consolas,
+                    "Liberation Mono",
+                    monospace;
+                font-size: 0.92em;
+            }
+
+            .path {
+                overflow-wrap: anywhere;
+                font-weight: 650;
+            }
+
+            .badge {
+                border-radius: 999px;
+                padding: 3px 8px;
+                white-space: nowrap;
+                font-size: 0.78rem;
+                background: var(--accent-soft);
+                color: var(--accent);
+                border: 1px solid color-mix(in srgb, var(--accent), transparent 55%);
+            }
+
+            .badge.hm {
+                background: var(--warn-soft);
+                color: var(--warn);
+                border-color: color-mix(in srgb, var(--warn), transparent 55%);
+            }
+
+            .description {
+                margin: 8px 0 0;
+            }
+
+            .meta {
+                display: grid;
+                gap: 4px;
+                margin-top: 10px;
+                color: var(--muted);
+                font-size: 0.9rem;
+            }
+
+            .empty {
+                border: 1px dashed var(--line);
+                border-radius: 8px;
+                padding: 22px;
+                color: var(--muted);
+                background: var(--panel);
+            }
+
+            @media (max-width: 760px) {
+                .toolbar {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="header-inner">
+                <h1>Biryani Options</h1>
+                <p class="summary" id="summary">Loading options from <code>options.json</code>.</p>
+            </div>
+        </header>
+        <main>
+            <section class="toolbar" aria-label="Option filters">
+                <input id="search" type="search" placeholder="Filter by option, type, description, or declaration" />
+                <select id="graph">
+                    <option value="all">All graphs</option>
+                    <option value="nixos">NixOS only</option>
+                    <option value="home-manager">Home Manager only</option>
+                </select>
+                <select id="presence">
+                    <option value="all">All options</option>
+                    <option value="shared">Shared paths</option>
+                    <option value="unique">Unique paths</option>
+                </select>
+            </section>
+            <section class="stats" id="stats" aria-label="Option counts"></section>
+            <section class="option-list" id="options"></section>
+        </main>
+        <script>
+            const state = {
+                rows: [],
+                sharedPaths: new Set(),
+                query: "",
+                graph: "all",
+                presence: "all",
+            };
+
+            const graphLabel = {
+                nixos: "NixOS",
+                "home-manager": "Home Manager",
+            };
+
+            const graphClass = {
+                nixos: "badge",
+                "home-manager": "badge hm",
+            };
+
+            const normalize = (value) => String(value || "").toLowerCase();
+
+            function optionMatches(row) {
+                if (state.graph !== "all" && row.graph !== state.graph) return false;
+                if (state.presence === "shared" && !state.sharedPaths.has(row.path)) return false;
+                if (state.presence === "unique" && state.sharedPaths.has(row.path)) return false;
+
+                if (!state.query) return true;
+                const haystack = [
+                    row.graph,
+                    row.path,
+                    row.type,
+                    row.description,
+                    row.default,
+                    ...(row.declarations || []),
+                ]
+                    .map(normalize)
+                    .join("\n");
+                return haystack.includes(state.query);
+            }
+
+            function renderStats(rows, metadata) {
+                const nixos = rows.filter((row) => row.graph === "nixos").length;
+                const hm = rows.filter((row) => row.graph === "home-manager").length;
+                const shared = state.sharedPaths.size;
+                const visible = rows.filter(optionMatches).length;
+                document.getElementById("stats").innerHTML = `
+                    <div class="stat"><strong>${visible}</strong> visible</div>
+                    <div class="stat"><strong>${nixos}</strong> NixOS options</div>
+                    <div class="stat"><strong>${hm}</strong> Home Manager options</div>
+                    <div class="stat"><strong>${shared}</strong> shared paths</div>
+                    <div class="stat">NixOS source: <strong>${metadata.nixos}</strong></div>
+                    <div class="stat">HM source: <strong>${metadata.homeManager}</strong></div>
+                `;
+            }
+
+            function renderOptions() {
+                const visibleRows = state.rows.filter(optionMatches);
+                const container = document.getElementById("options");
+
+                if (visibleRows.length === 0) {
+                    container.innerHTML = '<div class="empty">No options match the current filters.</div>';
+                    return;
+                }
+
+                container.innerHTML = visibleRows
+                    .map((row) => {
+                        const declaration = (row.declarations || [])[0] || "";
+                        const defaultText = row.default ? `<div><strong>Default:</strong> <code>${escapeHtml(row.default)}</code></div>` : "";
+                        return `
+                            <article class="option">
+                                <div class="option-head">
+                                    <code class="path">${escapeHtml(row.path)}</code>
+                                    <span class="${graphClass[row.graph]}">${graphLabel[row.graph]}</span>
+                                </div>
+                                <p class="description">${escapeHtml(row.description || "No description.")}</p>
+                                <div class="meta">
+                                    <div><strong>Type:</strong> <code>${escapeHtml(row.type || "unspecified")}</code></div>
+                                    ${defaultText}
+                                    <div><strong>Declared in:</strong> <code>${escapeHtml(declaration || "unknown")}</code></div>
+                                </div>
+                            </article>
+                        `;
+                    })
+                    .join("");
+            }
+
+            function escapeHtml(value) {
+                return String(value)
+                    .replaceAll("&", "&amp;")
+                    .replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;")
+                    .replaceAll('"', "&quot;")
+                    .replaceAll("'", "&#039;");
+            }
+
+            function loadData(data) {
+                const nixosRows = data.options.nixos.map((row) => ({ ...row, graph: "nixos" }));
+                const hmRows = data.options.homeManager.map((row) => ({ ...row, graph: "home-manager" }));
+                state.rows = [...nixosRows, ...hmRows].sort((left, right) => left.path.localeCompare(right.path) || left.graph.localeCompare(right.graph));
+                state.metadata = data.generatedFrom;
+
+                const nixosPaths = new Set(nixosRows.map((row) => row.path));
+                hmRows.forEach((row) => {
+                    if (nixosPaths.has(row.path)) state.sharedPaths.add(row.path);
+                });
+
+                document.getElementById("summary").innerHTML =
+                    "Custom <code>biryani.*</code> options declared by the active NixOS and Home Manager module graphs.";
+                renderStats(state.rows, state.metadata);
+                renderOptions();
+            }
+
+            document.getElementById("search").addEventListener("input", (event) => {
+                state.query = normalize(event.target.value);
+                renderStats(state.rows, state.metadata || { nixos: "", homeManager: "" });
+                renderOptions();
+            });
+
+            document.getElementById("graph").addEventListener("change", (event) => {
+                state.graph = event.target.value;
+                renderStats(state.rows, state.metadata || { nixos: "", homeManager: "" });
+                renderOptions();
+            });
+
+            document.getElementById("presence").addEventListener("change", (event) => {
+                state.presence = event.target.value;
+                renderStats(state.rows, state.metadata || { nixos: "", homeManager: "" });
+                renderOptions();
+            });
+
+            fetch("options.json")
+                .then((response) => response.json())
+                .then(loadData)
+                .catch((error) => {
+                    document.getElementById("options").innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`;
+                });
+        </script>
+    </body>
+</html>
