@@ -1,0 +1,34 @@
+{ ... }:
+{
+    imports = [
+        ../ai
+        ../browsers/brave.nix
+        ../browsers/chrome.nix
+        ../browsers/chromium.nix
+        ../browsers/firefox.nix
+        ../desktop/bars
+        ../communication/social-media.nix
+        ../desktop/clipboard.nix
+        ../desktop/environments
+        ../desktop/launcher.nix
+        ../desktop/notifications/dunst.nix
+        ../desktop/notifications/init.nix
+        ../desktop/screenlocks/hyprlock-home.nix
+        ../desktop/screenlocks/swaylock-home.nix
+        ../desktop/screenshot-tools/default.nix
+        ../desktop/theming
+        ../dev/cachix.nix
+        ../dev/direnv.nix
+        ../dev/git.nix
+        ../editing/editors-home.nix
+        ../files/lf/lf.nix
+        ../files/yazi.nix
+        ../hardware/bluetooth-home.nix
+        ../media/home
+        ../scripts/default.nix
+        ../shell/home
+        ../terminal/alacritty.nix
+        ../terminal/ghostty.nix
+        ../terminal/wezterm.nix
+    ];
+}

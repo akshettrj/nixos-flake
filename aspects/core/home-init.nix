@@ -1,0 +1,4 @@
+{ ... }:
+{
+    imports = [ ./base-home.nix ];
+}

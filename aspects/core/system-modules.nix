@@ -1,0 +1,32 @@
+{ ... }:
+{
+    imports = [
+        ../core/system-tools/utilities.nix
+        ../desktop/fonts.nix
+        ../desktop/gtk-system.nix
+        ../desktop/hyprlock-system.nix
+        ../desktop/swaylock-system.nix
+        ../editing/emacs-system.nix
+        ../editing/helix-system.nix
+        ../editing/neovim-system.nix
+        ../gaming/default.nix
+        ../hardware/bluetooth.nix
+        ../hardware/graphics.nix
+        ../hardware/iphone.nix
+        ../hardware/nvidia-prime.nix
+        ../hardware/printing.nix
+        ../media/pipewire.nix
+        ../media/pulseaudio.nix
+        ../networking/mullvad.nix
+        ../networking/openvpn.nix
+        ../networking/ssh.nix
+        ../networking/tailscale.nix
+        ../self-hosting/default.nix
+        ../self-hosting/nginx.nix
+        ../self-hosting/telegram-bot-api.nix
+        ../shell/bash-system.nix
+        ../shell/fish-system.nix
+        ../shell/zsh-system.nix
+        ../virtualisation/containers.nix
+    ];
+}

@@ -1,0 +1,6 @@
+schema = 3
+
+[mod]
+  [mod."example.com/name"]
+    version = ""
+    hash = ""
