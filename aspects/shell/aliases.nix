@@ -1,6 +1,7 @@
 let
     config_flake_path = "~/.config/dendritic-nix";
-in {
+in
+{
     cp = "cp -rvi";
     rm = "rm -vi";
     rsync = "rsync -urvP";

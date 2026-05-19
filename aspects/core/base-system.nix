@@ -11,7 +11,6 @@
 {
     imports = [
         (lib.mkAliasOptionModule [ "propheci" ] [ "biryani" ])
-        ./options.nix
         ./system-modules.nix
 
         inputs.nix-index-database.nixosModules.nix-index # Cached database for nix-index
@@ -21,8 +20,6 @@
     options =
         let
             inherit (lib) mkOption types;
-
-            known_shells = lib.attrNames (import ./metadata/programs/shells.nix { inherit pkgs; });
         in
         {
             biryani = {
@@ -115,11 +112,6 @@
                         type = types.bool;
                         description = "Trust and use the WezTerm binary cache.";
                     };
-                };
-
-                shells.main = mkOption {
-                    type = types.enum known_shells;
-                    description = "Default login shell for the primary user.";
                 };
             };
         };

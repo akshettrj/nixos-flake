@@ -1,6 +1,7 @@
 { lib, ... }:
 {
     imports = [
+        ../home-bridge.nix
         ./audio
         ./documents
         ./picture

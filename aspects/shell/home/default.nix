@@ -1,6 +1,7 @@
 { config, lib, ... }:
 {
     imports = [
+        ../home-bridge.nix
         ./bash.nix
         ./fish.nix
         ./nushell.nix

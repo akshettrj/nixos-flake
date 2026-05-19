@@ -3,26 +3,21 @@ let
     jsonFormat = pkgs.formats.json { };
 in
 {
-    imports = [
-        ./home-bridge.nix
-        ./codex.nix
-        ./cursor.nix
-        ./gemini.nix
-        ./mcp.nix
-        ./ollama.nix
-    ];
-
     options.biryani.programs.ai = {
-        enable = lib.mkEnableOption "AI assistant tools.";
+        enable = lib.mkEnableOption "host-level AI assistant tools.";
+
         mcpServers = lib.mkOption {
             type = jsonFormat.type;
-            description = "Shared MCP server configuration for AI tools.";
+            description = "Shared MCP server configuration passed to AI tools.";
         };
+
         skills = lib.mkOption {
             type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
-            description = "Skill definitions exposed to AI tools.";
+            description = "Skill definitions exposed to configured AI tools.";
         };
+
         cursor.enable = lib.mkEnableOption "Cursor editor AI integration.";
+
         gemini = {
             enable = lib.mkEnableOption "Gemini CLI.";
             mcpServers = lib.mkOption {
@@ -30,6 +25,7 @@ in
                 description = "Gemini-specific MCP server configuration.";
             };
         };
+
         codex = {
             enable = lib.mkEnableOption "Codex CLI.";
             mcpServers = lib.mkOption {
@@ -37,6 +33,7 @@ in
                 description = "Codex-specific MCP server configuration.";
             };
         };
+
         ollama = {
             enable = lib.mkEnableOption "Ollama service.";
             acceleration = lib.mkOption {
