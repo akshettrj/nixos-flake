@@ -1,12 +1,14 @@
-{
+let
+    config_flake_path = "~/.config/dendritic-nix";
+in {
     cp = "cp -rvi";
     rm = "rm -vi";
     rsync = "rsync -urvP";
-    nh-switch = "nh os switch ~/.config/nixos-flake";
-    nh-boot = "nh os boot ~/.config/nixos-flake";
-    nh-build = "nh os build ~/.config/nixos-flake";
-    hm-switch = "home-manager switch --flake ~/.config/nixos-flake |& nom";
-    hm-news = "home-manager news --flake ~/.config/nixos-flake";
+    nh-switch = "nh os switch ${config_flake_path}";
+    nh-boot = "nh os boot ${config_flake_path}";
+    nh-build = "nh os build ${config_flake_path}";
+    hm-switch = "home-manager switch --flake ${config_flake_path} |& nom";
+    hm-news = "home-manager news --flake ${config_flake_path}";
 
     vimwiki = "nvim +'VimwikiUISelect'";
 }
