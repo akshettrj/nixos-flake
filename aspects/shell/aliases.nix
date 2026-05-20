@@ -1,5 +1,5 @@
 let
-    config_flake_path = "~/.config/dendritic-nix";
+    config_flake_path = "~/.config/nixos-flake";
 in
 {
     cp = "cp -rvi";
