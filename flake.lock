@@ -91,6 +91,22 @@
         "type": "github"
       }
     },
+    "caveman_skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778615072,
+        "narHash": "sha256-Jlfas2MPoQx3pOw+yKCta8kYlOEY27SP5NXJtSL+GGI=",
+        "owner": "JuliusBrussee",
+        "repo": "caveman",
+        "rev": "63a91ecadbf4c4719a4602a5abb00883f9966034",
+        "type": "github"
+      },
+      "original": {
+        "owner": "JuliusBrussee",
+        "repo": "caveman",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -1829,6 +1845,7 @@
     "root": {
       "inputs": {
         "awcc": "awcc",
+        "caveman_skill": "caveman_skill",
         "disko": "disko",
         "flake-parts": "flake-parts",
         "ghostty": "ghostty",
