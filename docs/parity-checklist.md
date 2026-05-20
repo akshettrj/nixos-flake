@@ -51,7 +51,7 @@ Track migration progress here. A box should only be checked when the root flake,
 - [x] `helix`
 - [x] `nix-index-database`
 - [x] `nur`
-- [x] `propheci_secrets`
+- [x] `private_secrets`
 - [x] `watgbridge`
 - [x] `odesli`
 - [x] `nixur`
@@ -174,7 +174,7 @@ Home Manager:
 
 Record any non-code blocker here:
 
-- `propheci_secrets` may require SSH access to a private repository.
+- `private_secrets` may require SSH access to a private repository.
 - Network access may be needed to fetch new `flake-parts` and any inputs missing from the lock file.
 - Desktop builds may require caches for Hyprland, WezTerm, Helix, and other fast-moving inputs.
-- Migrated Home Manager modules now define their own `biryani.*` options. `aspects/core/base-home.nix` currently bridges migrated option values from the evaluated NixOS host config into the Home Manager graph; remove that bridge incrementally if host home settings move into native Home Manager modules.
+- Migrated Home Manager modules now define their own `biryani.*` options. Host-to-Home Manager projections live beside their owning aspects as `aspects/<aspect>/home-bridge.nix`; `aspects/core/base-home.nix` only keeps Home Manager identity, session variables, common packages, and XDG user directories.

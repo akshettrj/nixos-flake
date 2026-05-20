@@ -248,7 +248,7 @@ Status:
 - `social_media/*` and `terminals/*` are migrated into communication and terminal aspects.
 - `theming/*` is migrated into the desktop theming aspect, with shared Home Manager theme options consolidated there.
 - Migrated Home Manager modules define the option leaves they consume, including descriptions.
-- `aspects/core/base-home.nix` bridges those migrated values from the evaluated NixOS host config into the Home Manager graph while host option values still live in NixOS host modules.
+- `aspects/<aspect>/home-bridge.nix` bridges migrated values from the evaluated NixOS host config into the matching Home Manager aspect while host option values still live in NixOS host modules.
 
 Owner scope:
 

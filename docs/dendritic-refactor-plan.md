@@ -8,7 +8,7 @@ The active root `flake.nix` is only a minimal placeholder. The legacy implementa
 
 - `flake.nix`: inputs, Cachix metadata, four host entries, output construction, and templates.
 - `utils.nix`: custom builders for nixpkgs imports, NixOS configurations, and Home Manager configurations.
-- `options.nix`: one large shared `biryani.*` option schema consumed by both NixOS and Home Manager modules.
+- `options.nix`: legacy one-file `biryani.*` option schema. In the refactored tree these declarations are split into aspect-owned `options.nix` files.
 - `common/nixos`: shared NixOS base configuration and NixOS modules.
 - `common/home-manager`: shared Home Manager base configuration and Home Manager modules.
 - `common/metadata/programs`: metadata registries for selectable programs.
@@ -34,10 +34,12 @@ A practical target for this repo:
 |   `-- home-configurations.nix
 |-- aspects/
 |   |-- core/
-|   |   |-- options.nix
-|   |   |-- metadata.nix
+|   |   |-- metadata/
 |   |   |-- base-system.nix
-|   |   `-- base-home.nix
+|   |   |-- base-packages.nix
+|   |   |-- base-home.nix
+|   |   |-- system-modules.nix
+|   |   `-- home-modules.nix
 |   |-- identity/
 |   |   `-- akshettrj.nix
 |   |-- nix/
@@ -113,6 +115,20 @@ This is a suggested shape, not a rule. The important rule is that a file is name
 - Make every migration step evaluable. Each completed step should leave at least one `nix flake show` or `nix eval` command working.
 - Avoid behavior edits during structural moves. If a module needs modernization, track it as a follow-up after parity.
 
+## Current Aspect Pattern
+
+The active tree now uses this pattern for most aspects:
+
+```text
+aspects/<aspect>/
+|-- options.nix       # host-facing biryani.* option schema
+|-- system.nix        # NixOS aggregate for that aspect
+|-- home-bridge.nix   # projection from evaluated host config into HM config
+`-- default.nix       # Home Manager aggregate, where applicable
+```
+
+`aspects/core/base-system.nix` is a thin system aggregator. `aspects/core/base-packages.nix` owns only the system-wide base package set. `aspects/core/base-home.nix` owns only Home Manager session variables, common packages, and XDG user directories. Identity, platform defaults, Nix settings, networking, feature options, and feature wiring belong to aspect branches.
+
 ## Migration Phases
 
 ### Phase 0: Baseline Inventory
@@ -160,22 +176,22 @@ Deliverables:
 Notes:
 
 - `nixpkgs-stable` currently points at `nixos-25.05`.
-- `propheci_secrets` is a private SSH input and may block evaluation on machines without access. Agents should avoid forcing it unless working on host import parity.
+- `private_secrets` is a private SSH input and may block evaluation on machines without access. Agents should avoid forcing it unless working on host import parity.
 
-### Phase 3: Core Options and Metadata
+### Phase 3: Aspect Options and Metadata
 
-Move the shared option schema and metadata registries first because most modules depend on them.
+Move metadata registries first, then place option declarations beside the aspect that owns the behavior.
 
 Deliverables:
 
-- `aspects/core/options.nix` equivalent to old `options.nix`.
+- Aspect-owned `aspects/<aspect>/options.nix` files equivalent to the relevant slices of old `options.nix`.
 - Core metadata modules copied under `aspects/core/metadata/`.
 - Import paths updated to the new locations.
 - Option evaluation works independently through a small test host or a migrated host.
 
 Risk:
 
-- `options.nix` imports metadata using relative paths and requires `config`, `inputs`, and `pkgs`. Keep argument contracts unchanged during the move.
+- Some aspect `options.nix` files import metadata using relative paths and require `config`, `inputs`, and `pkgs`. Keep those argument contracts explicit.
 
 ### Phase 4: Base NixOS and Home Manager Builders
 
@@ -230,8 +246,9 @@ Suggested aspects:
 
 - `core`: shared options, metadata, base NixOS config, base Home Manager config.
 - `nix`: package sets, Nix settings, Cachix caches, garbage collection.
-- `identity`: user account, home directory, sudo/polkit defaults.
-- `networking`: firewall, OpenSSH, Tailscale, OpenVPN.
+- `identity`: user account, home directory, and sudo policy.
+- `platform`: boot defaults, locale, swap, input policy, and polkit.
+- `networking`: hostname, NetworkManager, DNS, firewall, OpenSSH, Tailscale, and OpenVPN.
 - `desktop`: Hyprland, Wayland/X11 support, theming, bars, launchers, notifications, screen capture, screen locks.
 - `shell`: bash, zsh, fish, nushell, aliases, eza, starship, zoxide.
 - `editing`: Neovim, Helix, Emacs, Zed.
@@ -277,8 +294,8 @@ nix build .#homeConfigurations.'akshettrj@alienrj'.activationPackage
 
 ## Known Migration Risks
 
-- Private secrets input: `propheci_secrets` uses SSH and will fail without credentials.
+- Private secrets input: `private_secrets` uses SSH and will fail without credentials.
 - Desktop stack inputs: Hyprland, Quickshell, Waybar, WezTerm, Ghostty, and nightly editors can make evaluation or builds slower and more fragile.
 - Shared option schema: remaining unmigrated modules may still assume `config.biryani.*` exists.
 - Relative imports: many host option files import old module paths directly.
-- Read-only package set: old NixOS base imports `inputs.nixpkgs.nixosModules.readOnlyPkgs` and assigns `nixpkgs.pkgs`; preserve this until there is a deliberate package-set redesign.
+- Read-only package set: the Nix system aspect imports `inputs.nixpkgs.nixosModules.readOnlyPkgs` and assigns `nixpkgs.pkgs`; preserve this until there is a deliberate package-set redesign.

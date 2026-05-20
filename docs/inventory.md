@@ -22,9 +22,9 @@ This is the Task A inventory for migrating `vendor/nixos-flake` into a dendritic
 | `ghostty` | `github:ghostty-org/ghostty` | Home Manager | Official Ghostty package option. |
 | `neovim` | `github:nix-community/neovim-nightly-overlay` | NixOS, Home Manager | Nightly editor option. |
 | `helix` | `github:helix-editor/helix` | NixOS, Home Manager | Nightly editor option. |
-| `nix-index-database` | `github:nix-community/nix-index-database` | NixOS | Imported by base NixOS configuration. |
+| `nix-index-database` | `github:nix-community/nix-index-database` | NixOS | Imported by the Nix system aspect. |
 | `nur` | `github:nix-community/NUR` | Packages/modules | Keep available until usage is audited. |
-| `propheci_secrets` | `git+ssh://git@github.com/akshettrj/nixos_flake_secrets.git` | Host-only NixOS | Private non-flake input. Likely evaluation blocker without SSH access. |
+| `private_secrets` | `git+ssh://git@github.com/akshettrj/nixos_flake_secrets.git?ref=feature/dendritic-nix` | Host-only NixOS | Private non-flake input. Likely evaluation blocker without SSH access. |
 | `watgbridge` | `github:akshettrj/watgbridge` | NixOS services | Used by self-hosted `watgbridge` option defaults/modules. |
 | `odesli` | `github:Propheci/odesli-rs?dir=nix` | Home Manager programs | Follows `nixpkgs`. |
 | `nixur` | `github:Propheci/NixUR` | Packages/modules | Keep available until usage is audited. |
@@ -67,7 +67,7 @@ This is the Task A inventory for migrating `vendor/nixos-flake` into a dendritic
 | --- | --- | --- |
 | `vendor/nixos-flake/flake.nix` | `flake.nix`, `parts/*.nix`, `hosts/default.nix` | Split inputs, nixConfig, host manifest, outputs, and templates. |
 | `vendor/nixos-flake/utils.nix` | `parts/nixos-configurations.nix`, `parts/home-configurations.nix`, `parts/pkgs.nix` | Recreate behavior through flake-parts modules. |
-| `vendor/nixos-flake/options.nix` | `aspects/core/options.nix` | Current namespace is `biryani.*`; remaining shared declarations should move beside their modules. |
+| `vendor/nixos-flake/options.nix` | `aspects/<aspect>/options.nix` | Current namespace is `biryani.*`; option declarations now live beside the aspect that owns the behavior. |
 | `vendor/nixos-flake/templates/golang/**` | `templates/golang/**` | Copy as-is. |
 | `vendor/nixos-flake/templates/python_poetry/**` | `templates/python_poetry/**` | Copy as-is. |
 | `vendor/nixos-flake/templates/rust/**` | `templates/rust/**` | Copy as-is. |
@@ -91,7 +91,7 @@ These should move early because most other aspects depend on them.
 | `vendor/nixos-flake/common/metadata/programs/screenshot_tools.nix` | `aspects/core/metadata/screenshot-tools.nix` |
 | `vendor/nixos-flake/common/metadata/programs/shells.nix` | `aspects/core/metadata/shells.nix` |
 | `vendor/nixos-flake/common/metadata/programs/terminals.nix` | `aspects/core/metadata/terminals.nix` |
-| `vendor/nixos-flake/common/nixos/configuration.nix` | `aspects/core/base-system.nix` |
+| `vendor/nixos-flake/common/nixos/configuration.nix` | `aspects/core/base-system.nix`, `aspects/core/base-packages.nix` |
 | `vendor/nixos-flake/common/home-manager/configuration.nix` | `aspects/core/base-home.nix` |
 | `vendor/nixos-flake/common/home-manager/homeManagerInitModule.nix` | `aspects/core/home-init.nix` |
 | `vendor/nixos-flake/common/home-manager/homeManagerMaker.nix` | `aspects/core/home-maker.nix`, called later by `parts/home-configurations.nix` |
@@ -122,7 +122,7 @@ These should move early because most other aspects depend on them.
 | `vendor/nixos-flake/common/nixos/modules/programs/shells/bash.nix` | `aspects/shell/bash.nix` |
 | `vendor/nixos-flake/common/nixos/modules/programs/shells/fish.nix` | `aspects/shell/fish.nix` |
 | `vendor/nixos-flake/common/nixos/modules/programs/shells/zsh.nix` | `aspects/shell/zsh.nix` |
-| `vendor/nixos-flake/common/nixos/modules/programs/utilities.nix` | `aspects/core/system-tools.nix` |
+| `vendor/nixos-flake/common/nixos/modules/programs/utilities.nix` | `aspects/tools/system.nix` |
 | `vendor/nixos-flake/common/nixos/modules/programs/vpn/default.nix` | `aspects/networking/vpn.nix` |
 | `vendor/nixos-flake/common/nixos/modules/programs/vpn/mullvad.nix` | `aspects/networking/mullvad.nix` |
 | `vendor/nixos-flake/common/nixos/modules/services/default.nix` | Split across `aspects/networking`, `aspects/media`, `aspects/self-hosting`, and `aspects/virtualisation` |
@@ -181,10 +181,10 @@ These should move early because most other aspects depend on them.
 
 ## Risk Notes
 
-- `propheci_secrets` is private and uses SSH. Avoid making it part of early skeleton checks.
+- `private_secrets` is private and uses SSH. Avoid making it part of early skeleton checks.
 - Some modules still depend on relative imports into old metadata and shell aliases. Update those paths during file moves.
-- `options.nix` computes enum values from metadata files and needs `config`, `inputs`, and `pkgs`.
-- The old NixOS base sets `nixpkgs.pkgs` after importing `inputs.nixpkgs.nixosModules.readOnlyPkgs`; preserve this until package-set behavior is intentionally redesigned.
+- Several aspect-owned `options.nix` files compute enum values from metadata files and need `config`, `inputs`, and `pkgs`.
+- The Nix system aspect sets `nixpkgs.pkgs` after importing `inputs.nixpkgs.nixosModules.readOnlyPkgs`; preserve this until package-set behavior is intentionally redesigned.
 - `alienrj` has the largest blast radius because it exercises Nvidia, Hyprland, AI tooling, media, browsers, terminals, theming, and private secrets.
 - `oracleamperehyd` has the largest service surface because it exercises OpenVPN, Nginx, Telegram Bot API, and multiple self-hosted modules.
 - The `wallpapers` paths contain a multiplication sign in filenames, for example `1920×1080`; preserve the exact Unicode path while moving host options.
