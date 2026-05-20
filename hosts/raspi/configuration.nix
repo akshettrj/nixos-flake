@@ -1,9 +1,4 @@
-{
-    inputs,
-    lib,
-    pkgs,
-    ...
-}:
+{ inputs, lib, ... }:
 {
     imports = [
         ./options.nix
@@ -12,13 +7,11 @@
 
         inputs.nixos-hw.nixosModules.raspberry-pi-4
 
-        "${inputs.propheci_secrets}/hosts/raspi"
+        "${inputs.private_secrets}/hosts/raspi"
     ];
 
     boot.loader.grub.enable = lib.mkForce false;
     boot.loader.generic-extlinux-compatible.enable = true;
-
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
 
     hardware.enableRedistributableFirmware = true;
 

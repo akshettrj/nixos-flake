@@ -1739,18 +1739,19 @@
         "type": "github"
       }
     },
-    "propheci_secrets": {
+    "private_secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1778504169,
-        "narHash": "sha256-+vW6AInwgr4NIv6lr9SN1zcdYNXIuiHm87Rl0Cm4MPA=",
-        "ref": "refs/heads/main",
-        "rev": "ff65464c37d0f2dffc0f604e2f55e2d31ae9e7c1",
-        "revCount": 59,
+        "lastModified": 1779269979,
+        "narHash": "sha256-4xazkQYvRFSeiD71lfueRg9GO7S6mKyc+Yf8rB9Wyrc=",
+        "ref": "feature/dendritic-nix",
+        "rev": "98d21f0278c6e156452ee438b0c34df2eb58b517",
+        "revCount": 60,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       },
       "original": {
+        "ref": "feature/dendritic-nix",
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       }
@@ -1846,7 +1847,7 @@
         "nixur": "nixur",
         "nur": "nur",
         "odesli": "odesli",
-        "propheci_secrets": "propheci_secrets",
+        "private_secrets": "private_secrets",
         "quickshell": "quickshell",
         "rubikoid_base": "rubikoid_base",
         "wallpapers": "wallpapers",

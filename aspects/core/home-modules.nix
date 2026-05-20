@@ -9,6 +9,7 @@
         ../editing
         ../files
         ../hardware/home
+        ../identity
         ../media/home
         ../scripts/default.nix
         ../shell/home

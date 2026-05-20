@@ -8,6 +8,7 @@
 {
     options.biryani.programs.editors.emacs.enable = lib.mkOption {
         type = lib.types.bool;
+        default = false;
         description = "Enable the Emacs daemon service.";
     };
 

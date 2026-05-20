@@ -38,11 +38,12 @@
     config =
         let
             biryani_hw = config.biryani.hardware;
+            supports32BitGraphics = pkgs.stdenv.hostPlatform.system == "x86_64-linux";
         in
         lib.mkIf biryani_hw.nvidia.enable {
             hardware.graphics = {
                 enable = true;
-                enable32Bit = true;
+                enable32Bit = supports32BitGraphics;
                 extraPackages = [ pkgs.mesa ];
             };
 

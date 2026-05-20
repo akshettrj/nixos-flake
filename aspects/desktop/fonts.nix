@@ -33,9 +33,16 @@
                     description = "Nerd Font package names to install from pkgs.nerd-fonts.";
                 };
 
-                main = lib.mkOption {
-                    type = fontType;
-                    description = "Primary font used for system fontconfig defaults.";
+                main = {
+                    name = lib.mkOption {
+                        type = lib.types.str;
+                        description = "Primary font family used for system fontconfig defaults.";
+                    };
+
+                    size = lib.mkOption {
+                        type = lib.types.ints.unsigned;
+                        description = "Primary font size in points.";
+                    };
                 };
 
                 backups = lib.mkOption {

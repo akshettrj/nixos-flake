@@ -6,7 +6,7 @@
         ./hardware-configuration.nix
         ../../aspects/core/base-system.nix
 
-        "${inputs.propheci_secrets}/hosts/oracleamperehyd"
+        "${inputs.private_secrets}/hosts/oracleamperehyd"
     ];
 
     # DO NOT DELETE

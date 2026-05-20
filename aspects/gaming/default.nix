@@ -8,6 +8,7 @@
 {
     options.biryani.programs.gaming.enable = lib.mkOption {
         type = lib.types.bool;
+        default = false;
         description = "Enable gaming support, Steam, GameMode, and related launchers.";
     };
 

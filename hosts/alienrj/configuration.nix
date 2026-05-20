@@ -6,7 +6,7 @@
         ./specialisation.nix
         ../../aspects/core/base-system.nix
 
-        "${inputs.propheci_secrets}/hosts/alienrj"
+        "${inputs.private_secrets}/hosts/alienrj"
     ];
 
     boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

@@ -14,7 +14,6 @@
             biryani_browsers = biryani.programs.browsers;
             biryani_editors = biryani.programs.editors;
             biryani_terminals = biryani.programs.terminals;
-            biryani_user = biryani.user;
             biryani_config = { inherit biryani; };
 
             browsers_meta = import ./metadata/programs/browsers.nix { inherit pkgs; };
@@ -30,8 +29,6 @@
         {
             programs.home-manager.enable = true;
 
-            home.username = biryani_user.username;
-            home.homeDirectory = biryani_user.homedir;
             home.stateVersion = "23.11";
 
             home.sessionVariables = {

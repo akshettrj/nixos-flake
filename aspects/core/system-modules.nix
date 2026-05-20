@@ -1,7 +1,6 @@
 { ... }:
 {
     imports = [
-        ../core/system-tools/utilities.nix
         ../ai/system.nix
         ../browsers/system.nix
         ../communication/system.nix
@@ -11,11 +10,15 @@
         ../files/system.nix
         ../gaming
         ../hardware/system.nix
+        ../identity/system.nix
         ../media/system.nix
+        ../nix/system.nix
         ../networking/system.nix
+        ../platform/system.nix
         ../self-hosting/system.nix
         ../shell/system.nix
         ../terminal/system.nix
+        ../tools/system.nix
         ../virtualisation/system.nix
     ];
 }

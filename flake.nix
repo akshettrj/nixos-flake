@@ -63,8 +63,8 @@
         };
         nur.url = "github:nix-community/NUR";
 
-        propheci_secrets = {
-            url = "git+ssh://git@github.com/akshettrj/nixos_flake_secrets.git";
+        private_secrets = {
+            url = "git+ssh://git@github.com/akshettrj/nixos_flake_secrets.git?ref=feature/dendritic-nix";
             flake = false;
         };
 
