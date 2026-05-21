@@ -12,6 +12,9 @@
                 skills = biryani_ai.skills;
                 settings = {
                     mcpServers = lib.mkIf (biryani_codex.mcpServers != null) biryani_codex.mcpServers;
+                    tui = {
+                        vim_mode_default = true;
+                    };
                 };
             };
 
