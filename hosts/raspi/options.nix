@@ -65,7 +65,7 @@
 
         # Appearance
         theming = {
-            enable = true;
+            enable = false;
             fonts = {
                 nerdfonts = [
                     "jetbrains-mono"
@@ -108,7 +108,7 @@
 
         programs = {
             media = {
-                enable = true;
+                enable = false;
                 services.mpris.enable = true;
                 audio = {
                     mpd = {
@@ -149,7 +149,7 @@
                 emacs.enable = false;
             };
             terminals = {
-                enable = true;
+                enable = false;
                 main = "wezterm";
                 backup = "alacritty";
                 wezterm = {
@@ -165,7 +165,7 @@
                 ghostty.enable = false;
             };
             browsers = {
-                enable = true;
+                enable = false;
                 main = "brave";
                 brave = {
                     enable = true;
@@ -182,21 +182,21 @@
                 yazi.enable = true;
             };
             launchers = {
-                enable = true;
+                enable = false;
                 bemenu = {
                     enable = true;
                     font_size = 13;
                 };
             };
             screenshot_tools = {
-                enable = true;
+                enable = false;
                 flameshot.enable = true;
                 wayshot.enable = true;
                 shotman.enable = true;
                 hyprshot.enable = true;
             };
             screenlocks = {
-                enable = true;
+                enable = false;
                 swaylock.enable = true;
                 hyprlock = {
                     enable = false;
@@ -204,18 +204,18 @@
                 };
             };
             clipboard_managers = {
-                enable = true;
+                enable = false;
                 copyq.enable = true;
             };
             notification_daemons = {
-                enable = true;
+                enable = false;
                 dunst = {
                     enable = true;
                     font_size = 10;
                 };
             };
             bars = {
-                enable = true;
+                enable = false;
                 waybar = {
                     enable = true;
                     use_official_package = false;
@@ -248,7 +248,7 @@
         };
 
         desktop_environments = {
-            enable = true;
+            enable = false;
             defaults = {
                 "/dev/tty1" = "hyprland";
             };
