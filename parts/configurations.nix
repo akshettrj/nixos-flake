@@ -27,15 +27,14 @@ let
             modules = entry.nixosModules;
         };
 
-    mkHomeConfiguration = systemPkgs: nixosConfiguration: {
-        name = "${nixosConfiguration.config.biryani.user.username}@${nixosConfiguration.config.biryani.system.hostname}";
-        value = import ../aspects/core/home-maker.nix {
+    mkHomeConfiguration =
+        systemPkgs: nixosConfiguration:
+        import ../aspects/core/home-maker.nix {
             inherit inputs;
             pkgs = systemPkgs.unstable;
             pkgs_stable = systemPkgs.stable;
             config = nixosConfiguration.config;
         };
-    };
 
     allConfigurations = lib.mapAttrs (
         _: entry:
@@ -48,6 +47,13 @@ let
             inherit systemPkgs nixosConfiguration homeConfiguration;
         }
     ) config.flake.hosts;
+
+    homeConfigurationPairs = {
+        "akshettrj@alienrj" = "alienrj";
+        "akshettrj@oracleamd1" = "oracleamd1";
+        "akshettrj@oracleamperehyd" = "oracleamperehyd";
+        "akshettrj@raspi" = "raspi";
+    };
 in
 {
     options.flake.hosts = lib.mkOption {
@@ -61,8 +67,8 @@ in
 
         nixosConfigurations = lib.mapAttrs (_: value: value.nixosConfiguration) allConfigurations;
 
-        homeConfigurations = lib.mapAttrs' (
-            _: value: lib.nameValuePair value.homeConfiguration.name value.homeConfiguration.value
-        ) allConfigurations;
+        homeConfigurations = lib.mapAttrs (
+            _: hostName: allConfigurations.${hostName}.homeConfiguration
+        ) homeConfigurationPairs;
     };
 }
