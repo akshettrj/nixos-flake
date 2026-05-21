@@ -151,11 +151,31 @@
                         if [ "$(hyprctl activewindow -j | ${jq} -r ".class")" = "Steam" ]; then
                             ${xdotool} getactivewindow windowunmap
                         else
-                            hyprctl dispatch killactive ""
+                            hyprctl dispatch 'hl.dsp.window.close()'
                         fi
                     fi
 
                 '';
+
+            luaString = builtins.toJSON;
+            luaExecBind = keys: command: "hl.bind(${luaString keys}, hl.dsp.exec_cmd(${luaString command}))";
+            luaRepeatingExecBind =
+                keys: command:
+                "hl.bind(${luaString keys}, hl.dsp.exec_cmd(${luaString command}), { repeating = true })";
+            luaFocusDirectionBind =
+                keys: direction: "hl.bind(${luaString keys}, hl.dsp.focus({ direction = ${luaString direction} }))";
+            luaSwapDirectionBind =
+                keys: direction:
+                "hl.bind(${luaString keys}, hl.dsp.window.swap({ direction = ${luaString direction} }))";
+            luaWorkspaceBind =
+                keys: workspace: "hl.bind(${luaString keys}, hl.dsp.focus({ workspace = ${luaString workspace} }))";
+            luaMoveWorkspaceBind =
+                keys: workspace:
+                "hl.bind(${luaString keys}, hl.dsp.window.move({ workspace = ${luaString workspace}, follow = false }))";
+            luaWindowMoveBind =
+                keys: x: y:
+                "hl.bind(${luaString keys}, hl.dsp.window.move({ x = ${toString x}, y = ${toString y}, relative = true }), { repeating = true })";
+            luaWindowRule = fields: "hl.window_rule({ ${lib.concatStringsSep ", " fields} })";
         in
         lib.mkIf (biryani_deskenvs.enable && biryani_deskenvs.hyprland.enable) {
             assertions = [
@@ -197,7 +217,7 @@
 
             wayland.windowManager.hyprland = {
                 enable = true;
-                configType = "hyprlang";
+                configType = "lua";
 
                 package = hyprland_pkg;
                 portalPackage = xdg-desktop-portal-hyprland_pkg;
@@ -208,286 +228,278 @@
                 };
                 xwayland.enable = true;
 
-                settings = {
-                    exec = "${startup_script}/bin/start";
-
-                    env = [
-                        "XDG_CURRENT_DESKTOP,Hyprland"
-                        "XDG_SESSION_TYPE,wayland"
-                        "XDG_SESSION_DESKTOP,Hyprland"
-                        "QT_AUTO_SCREEN_SCALE_FACTOR,1"
-                        "QT_QPA_PLATFORM,wayland;xcb"
-                        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-                        "SDL_VIDEODRIVER,wayland"
-                        "LIBSEAT_BACKEND,logind"
-
-                        "XCURSOR_THEME,${biryani_theming.cursor.name}"
-                        "XCURSOR_SIZE,${toString (biryani_theming.cursor.size)}"
-                    ]
-                    ++ lib.optionals biryani_hw.nvidia.enable [
-                        "LIBVA_DRIVER_NAME,nvidia"
-                        "WLR_NO_HARDWARE_CURSORS,1"
-                    ];
-
-                    xwayland.force_zero_scaling = true;
-
-                    input = {
-                        kb_layout = "us";
-                        kb_options = "caps:swapescape";
-
-                        repeat_rate = 50;
-                        repeat_delay = 220;
-
-                        follow_mouse = 2;
-
-                        touchpad = {
-                            disable_while_typing = true;
-                            natural_scroll = false;
-                            scroll_factor = biryani_deskenvs.hyprland.scroll_factor;
-                            tap-and-drag = true;
-                            tap-to-click = false;
-                            drag_lock = true;
-                        };
-                    };
-
-                    cursor = {
-                        no_hardware_cursors = true;
-                        use_cpu_buffer = 0;
-                    };
-
-                    general = {
-                        gaps_in = 2;
-                        gaps_out = 2;
-                        border_size = 2;
-                        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-                        "col.inactive_border" = "rgba(595959aa)";
-                        layout = "dwindle";
-                        no_focus_fallback = true;
-                        resize_on_border = true;
-                    };
-
-                    decoration = {
-                        rounding = 0;
-                        blur = {
-                            enabled = true;
-                            size = 3;
-                            passes = 1;
-                            xray = false;
-                        };
-                        shadow = {
-                            enabled = true;
-                            range = 4;
-                            render_power = 3;
-                            color = "rgba(1a1a1aee)";
-                        };
-                    };
-
-                    animations.enabled = false;
-
-                    dwindle = {
-                        pseudotile = true;
-                        preserve_split = true;
-                    };
-
-                    master.new_status = "master";
-
-                    # gestures = {
-                    #   workspace_swipe = true;
-                    #   workspace_swipe_fingers = 3;
-                    #   workspace_swipe_forever = true;
-                    #   workspace_swipe_invert = false;
-                    #   workspace_swipe_cancel_ratio = 1.0e-3;
-                    # };
-
-                    device = {
-                        name = "epic-mouse-v1";
-                        sensitivity = -0.5;
-                    };
-
-                    misc = {
-                        disable_hyprland_logo = true;
-                        disable_splash_rendering = true;
-                        animate_manual_resizes = true;
-                        animate_mouse_windowdragging = true;
-                        disable_autoreload = false;
-                        enable_swallow = true;
-                        focus_on_activate = false;
-                        vfr = false;
-                    };
-
-                    "$mainMod" = "SUPER";
-                    "$resetSubmap" = "hyprctl dispatch submap reset";
-
-                    bind = [
-                        # BASIC
-                        "$mainMod, H, movefocus, l"
-                        "$mainMod, L, movefocus, r"
-                        "$mainMod, K, movefocus, u"
-                        "$mainMod, J, movefocus, d"
-                        "$mainMod SHIFT, H, swapwindow, l"
-                        "$mainMod SHIFT, L, swapwindow, r"
-                        "$mainMod SHIFT, K, swapwindow, u"
-                        "$mainMod SHIFT, J, swapwindow, d"
-                    ]
-                    ++ (builtins.attrValues (
-                        builtins.mapAttrs (key: desk: "$mainMod, ${key}, workspace, ${desk}") normal_desktops
-                    ))
-                    ++ (builtins.attrValues (
-                        builtins.mapAttrs (key: desk: "$mainMod ALT, ${key}, workspace, ${desk}") alt_desktops
-                    ))
-                    ++ (builtins.attrValues (
-                        builtins.mapAttrs (
-                            key: desk: "$mainMod SHIFT, ${key}, movetoworkspacesilent, ${desk}"
-                        ) normal_desktops
-                    ))
-                    ++ (builtins.attrValues (
-                        builtins.mapAttrs (
-                            key: desk: "$mainMod ALT SHIFT, ${key}, movetoworkspacesilent, ${desk}"
-                        ) alt_desktops
-                    ))
-                    ++ [
-                        "$mainMod, BracketRight, workspace, m+1"
-                        "$mainMod, BracketLeft, workspace, m-1"
-                        "$mainMod SHIFT, BracketRight, workspace, r+1"
-                        "$mainMod SHIFT, BracketLeft, workspace, r-1"
-
-                        # SUPER
-                        "$mainMod, C, exec, ${kill_window_script}/bin/kill_window"
-                        "$mainMod, S, togglefloating"
-                        "$mainMod, F, fullscreen, 0"
-                        "$mainMod, MINUS, movetoworkspacesilent, special"
-                        "$mainMod, M, fullscreen, 1"
-                        "$mainMod, U, focusurgentorlast"
-                        "$mainMod, N, cyclenext"
-                        "$mainMod, P, cyclenext, prev"
-                        "$mainMod, Tab, focusmonitor, +1"
-                        "$mainMod, O, movewindow, mon:+1"
-                        "$mainMod, R, togglesplit"
-                        "$mainMod, Escape, exec, ${screenlocks_meta."${screenlock}".cmd}"
-
-                        # SUPER + CTRL
-                        "$mainMod CONTROL, Q, exit"
-                        "$mainMod ALT, S, pin, active"
-
-                        # SUPER + SHIFT
-                        "$mainMod SHIFT, C, exec, ${kill_window_script}/bin/kill_window -f"
-                        "$mainMod SHIFT, MINUS, togglespecialworkspace"
-
-                        # TERMINALS AND FILE EXPLORERS
-                        "$mainMod, Return, exec, ${terminals_meta."${biryani_terminals.main}".cmd}"
-                        "$mainMod SHIFT, Return, exec, ${terminals_meta."${biryani_terminals.backup}".cmd}"
-                        "$mainMod, E, exec, ${terminals_meta."${biryani_terminals.main}".exec} ${
-                            file_explorers_meta."${biryani_file_explorers.main}".bin
-                        }"
-                        "$mainMod SHIFT, E, exec, ${terminals_meta."${biryani_terminals.main}".exec} ${
-                            file_explorers_meta."${biryani_file_explorers.backup}".bin
-                        }"
-
-                        # LAUNCHER
-                        "$mainMod, Space, exec, ${launchers_meta."${launcher}".bin}"
-
-                        # BROWSER
-                        "$mainMod, F1, exec, ${browsers_meta."${biryani_browsers.main}".cmd}"
-                        "$mainMod SHIFT, F1, exec, ${browsers_meta."${biryani_browsers.main}".cmd_shift}"
-                    ]
-                    ++ lib.optionals biryani_services.pipewire.enable [
-                        "$mainMod, F6, exec, wpctl set-mute '@DEFAULT_AUDIO_SINK@' toggle"
-                        ",XF86AudioMute, exec, wpctl set-mute '@DEFAULT_AUDIO_SINK@' toggle"
-                    ]
-                    ++ lib.optionals biryani_hw.pulseaudio.enable [
-                        "$mainMod, F6, exec, pactl set-sink-mute '@DEFAULT_SINK@' toggle"
-                        ",XF86AudioMute, exec, wpctl set-sink-mute '@DEFAULT_SINK@' toggle"
-                    ]
-                    ++ lib.optionals biryani_mpd.enable [
-                        "$mainMod, F9, exec, ${pkgs.mpc}/bin/mpc -q prev"
-                        "$mainMod, F10, exec, ${pkgs.mpc}/bin/mpc -q toggle"
-                        "$mainMod, F11, exec, ${pkgs.mpc}/bin/mpc -q next"
-                    ]
-                    ++ lib.optionals biryani_mpris.enable [
-                        ",XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
-                        ",XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
-                        ",XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl next"
-                    ];
-
-                    binde = [
-                        "$mainMod, Left, moveactive, -10 0"
-                        "$mainMod, Right, moveactive, 10 0"
-                        "$mainMod, Up, moveactive, 0 -10"
-                        "$mainMod, Down, moveactive, 0 10"
-
-                        ",XF86MonBrightnessDown, exec, brightnessdown"
-                        ",XF86MonBrightnessUp, exec, brightnessup"
-                        "$mainMod, F2, exec, brightnessdown"
-                        "$mainMod, F3, exec, brightnessup"
-                    ]
-                    ++ lib.optionals biryani_services.pipewire.enable [
-                        "$mainMod, F7, exec, wpctl set-volume '@DEFAULT_AUDIO_SINK@' '1%-'"
-                        ",XF86AudioLowerVolume, exec, wpctl set-volume '@DEFAULT_AUDIO_SINK@' '1%-'"
-                        "$mainMod, F8, exec, wpctl set-volume '@DEFAULT_AUDIO_SINK@' '1%+'"
-                        ",XF86AudioRaiseVolume, exec, wpctl set-volume '@DEFAULT_AUDIO_SINK@' '1%+'"
-                    ]
-                    ++ lib.optionals biryani_hw.pulseaudio.enable [
-                        "$mainMod, F7, exec, pactl set-sink-volume '@DEFAULT_SINK@' '-1%'"
-                        ",XF86AudioLowerVolume, exec, pactl set-sink-volume '@DEFAULT_SINK@' '-1%'"
-                        "$mainMod, F8, exec, pactl set-sink-volume '@DEFAULT_SINK@' '+1%'"
-                        ",XF86AudioRaiseVolume, exec, pactl set-sink-volume '@DEFAULT_SINK@' '+1%'"
-                    ];
-
-                    bindm = [
-                        "$mainMod, mouse:272, movewindow"
-                        "$mainMod, mouse:273, resizewindow"
-                    ];
-
-                    bindl = [ ",switch:on:Lid Switch, exec, ${screenlocks_meta."${screenlock}".cmd}" ];
-
-                    windowrule = [
-                        "workspace 9,match:class org.telegram.desktop"
-                        "workspace 10,match:class teams-for-linux"
-                        "workspace unset,match:class org.telegram.desktop,match:title ^(Media viewer)$"
-                        "float on,match:title Bitwarden"
-                        "workspace 10,match:class Beeper"
-                        "pin on,match:class dragon-drop"
-                        "float on,match:class ^(ueberzug.*)$"
-                        "no_initial_focus on, match:class ^(ueberzug.*)$"
-                    ];
-                };
-
                 extraConfig =
                     let
                         ydotool = "${pkgs.ydotool}/bin/ydotool";
 
                         ss_group_help = "- Escape: Abort\\n- R: Region\\n- F: Fullscreen\\n- H: This help";
                     in
-                    # hyprlang
                     ''
-                        # SCREENSHOTS BINDINGS
-                        bind = $mainMod SHIFT, S, submap, screenshot
+                        hl.on("hyprland.start", function()
+                          hl.exec_cmd(${luaString "${startup_script}/bin/start"})
+                        end)
 
-                        submap = screenshot
+                        hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+                        hl.env("XDG_SESSION_TYPE", "wayland")
+                        hl.env("XDG_SESSION_DESKTOP", "Hyprland")
+                        hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
+                        hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+                        hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
+                        hl.env("SDL_VIDEODRIVER", "wayland")
+                        hl.env("LIBSEAT_BACKEND", "logind")
+                        hl.env("XCURSOR_THEME", ${luaString biryani_theming.cursor.name})
+                        hl.env("XCURSOR_SIZE", ${luaString (toString biryani_theming.cursor.size)})
+                        ${lib.optionalString biryani_hw.nvidia.enable ''
+                            hl.env("LIBVA_DRIVER_NAME", "nvidia")
+                            hl.env("WLR_NO_HARDWARE_CURSORS", "1")
+                        ''}
 
-                        bind = , Escape, submap, reset
+                        hl.config({
+                          xwayland = {
+                            force_zero_scaling = true,
+                          },
+                          input = {
+                            kb_layout = "us",
+                            kb_options = "caps:swapescape",
+                            repeat_rate = 50,
+                            repeat_delay = 220,
+                            follow_mouse = 2,
+                            touchpad = {
+                              disable_while_typing = true,
+                              natural_scroll = false,
+                              scroll_factor = ${toString biryani_deskenvs.hyprland.scroll_factor},
+                              tap_and_drag = true,
+                              tap_to_click = false,
+                              drag_lock = 1,
+                            },
+                          },
+                          cursor = {
+                            no_hardware_cursors = true,
+                            use_cpu_buffer = 0,
+                          },
+                          general = {
+                            gaps_in = 2,
+                            gaps_out = 2,
+                            border_size = 2,
+                            col = {
+                              active_border = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
+                              inactive_border = "rgba(595959aa)",
+                            },
+                            layout = "dwindle",
+                            no_focus_fallback = true,
+                            resize_on_border = true,
+                          },
+                          decoration = {
+                            rounding = 0,
+                            blur = {
+                              enabled = true,
+                              size = 3,
+                              passes = 1,
+                              xray = false,
+                            },
+                            shadow = {
+                              enabled = true,
+                              range = 4,
+                              render_power = 3,
+                              color = "rgba(1a1a1aee)",
+                            },
+                          },
+                          animations = {
+                            enabled = false,
+                          },
+                          dwindle = {
+                            preserve_split = true,
+                          },
+                          master = {
+                            new_status = "master",
+                          },
+                          debug = {
+                            vfr = false,
+                          },
+                          misc = {
+                            disable_hyprland_logo = true,
+                            disable_splash_rendering = true,
+                            animate_manual_resizes = true,
+                            animate_mouse_windowdragging = true,
+                            disable_autoreload = false,
+                            enable_swallow = true,
+                            focus_on_activate = false,
+                          },
+                        })
 
-                        bind = , H, exec, ${pkgs.libnotify}/bin/notify-send -- "Screenshot Keybinds" "${ss_group_help}"
-                        bind = , R, exec, $resetSubmap & ${ss_tools_meta."${ss_tool}".cmd.region}
-                        bind = , F, exec, $resetSubmap & ${ss_tools_meta."${ss_tool}".cmd.fullscreen}
+                        hl.device({
+                          name = "epic-mouse-v1",
+                          sensitivity = -0.5,
+                        })
 
-                        submap = reset
+                        ${lib.concatStringsSep "\n" (
+                            [
+                                (luaFocusDirectionBind "SUPER + H" "left")
+                                (luaFocusDirectionBind "SUPER + L" "right")
+                                (luaFocusDirectionBind "SUPER + K" "up")
+                                (luaFocusDirectionBind "SUPER + J" "down")
+                                (luaSwapDirectionBind "SUPER + SHIFT + H" "left")
+                                (luaSwapDirectionBind "SUPER + SHIFT + L" "right")
+                                (luaSwapDirectionBind "SUPER + SHIFT + K" "up")
+                                (luaSwapDirectionBind "SUPER + SHIFT + J" "down")
+                            ]
+                            ++ (builtins.attrValues (
+                                builtins.mapAttrs (key: desk: luaWorkspaceBind "SUPER + ${key}" desk) normal_desktops
+                            ))
+                            ++ (builtins.attrValues (
+                                builtins.mapAttrs (key: desk: luaWorkspaceBind "SUPER + ALT + ${key}" desk) alt_desktops
+                            ))
+                            ++ (builtins.attrValues (
+                                builtins.mapAttrs (key: desk: luaMoveWorkspaceBind "SUPER + SHIFT + ${key}" desk) normal_desktops
+                            ))
+                            ++ (builtins.attrValues (
+                                builtins.mapAttrs (key: desk: luaMoveWorkspaceBind "SUPER + ALT + SHIFT + ${key}" desk) alt_desktops
+                            ))
+                            ++ [
+                                (luaWorkspaceBind "SUPER + BracketRight" "m+1")
+                                (luaWorkspaceBind "SUPER + BracketLeft" "m-1")
+                                (luaWorkspaceBind "SUPER + SHIFT + BracketRight" "r+1")
+                                (luaWorkspaceBind "SUPER + SHIFT + BracketLeft" "r-1")
+                                (luaExecBind "SUPER + C" "${kill_window_script}/bin/kill_window")
+                                ''hl.bind("SUPER + S", hl.dsp.window.float({ action = "toggle" }))''
+                                ''hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "fullscreen" }))''
+                                (luaMoveWorkspaceBind "SUPER + MINUS" "special")
+                                ''hl.bind("SUPER + M", hl.dsp.window.fullscreen({ mode = "maximized" }))''
+                                ''hl.bind("SUPER + U", hl.dsp.focus({ urgent_or_last = true }))''
+                                ''hl.bind("SUPER + N", hl.dsp.window.cycle_next({ next = true }))''
+                                ''hl.bind("SUPER + P", hl.dsp.window.cycle_next({ next = false }))''
+                                ''hl.bind("SUPER + Tab", hl.dsp.focus({ monitor = "+1" }))''
+                                ''hl.bind("SUPER + O", hl.dsp.window.move({ monitor = "+1", follow = false }))''
+                                ''hl.bind("SUPER + R", hl.dsp.layout("togglesplit"))''
+                                (luaExecBind "SUPER + Escape" screenlocks_meta."${screenlock}".cmd)
+                                ''hl.bind("SUPER + CONTROL + Q", hl.dsp.exit())''
+                                ''hl.bind("SUPER + ALT + S", hl.dsp.window.pin())''
+                                (luaExecBind "SUPER + SHIFT + C" "${kill_window_script}/bin/kill_window -f")
+                                ''hl.bind("SUPER + SHIFT + MINUS", hl.dsp.workspace.toggle_special())''
+                                (luaExecBind "SUPER + Return" terminals_meta."${biryani_terminals.main}".cmd)
+                                (luaExecBind "SUPER + SHIFT + Return" terminals_meta."${biryani_terminals.backup}".cmd)
+                                (luaExecBind "SUPER + E" "${terminals_meta."${biryani_terminals.main}".exec} ${
+                                    file_explorers_meta."${biryani_file_explorers.main}".bin
+                                }")
+                                (luaExecBind "SUPER + SHIFT + E" "${terminals_meta."${biryani_terminals.main}".exec} ${
+                                    file_explorers_meta."${biryani_file_explorers.backup}".bin
+                                }")
+                                (luaExecBind "SUPER + Space" launchers_meta."${launcher}".bin)
+                                (luaExecBind "SUPER + F1" browsers_meta."${biryani_browsers.main}".cmd)
+                                (luaExecBind "SUPER + SHIFT + F1" browsers_meta."${biryani_browsers.main}".cmd_shift)
+                            ]
+                            ++ lib.optionals biryani_services.pipewire.enable [
+                                (luaExecBind "SUPER + F6" "wpctl set-mute '@DEFAULT_AUDIO_SINK@' toggle")
+                                (luaExecBind "XF86AudioMute" "wpctl set-mute '@DEFAULT_AUDIO_SINK@' toggle")
+                            ]
+                            ++ lib.optionals biryani_hw.pulseaudio.enable [
+                                (luaExecBind "SUPER + F6" "pactl set-sink-mute '@DEFAULT_SINK@' toggle")
+                                (luaExecBind "XF86AudioMute" "wpctl set-sink-mute '@DEFAULT_SINK@' toggle")
+                            ]
+                            ++ lib.optionals biryani_mpd.enable [
+                                (luaExecBind "SUPER + F9" "${pkgs.mpc}/bin/mpc -q prev")
+                                (luaExecBind "SUPER + F10" "${pkgs.mpc}/bin/mpc -q toggle")
+                                (luaExecBind "SUPER + F11" "${pkgs.mpc}/bin/mpc -q next")
+                            ]
+                            ++ lib.optionals biryani_mpris.enable [
+                                (luaExecBind "XF86AudioPrev" "${pkgs.playerctl}/bin/playerctl previous")
+                                (luaExecBind "XF86AudioPlay" "${pkgs.playerctl}/bin/playerctl play-pause")
+                                (luaExecBind "XF86AudioNext" "${pkgs.playerctl}/bin/playerctl next")
+                            ]
+                            ++ [
+                                (luaWindowMoveBind "SUPER + Left" (-10) 0)
+                                (luaWindowMoveBind "SUPER + Right" 10 0)
+                                (luaWindowMoveBind "SUPER + Up" 0 (-10))
+                                (luaWindowMoveBind "SUPER + Down" 0 10)
+                                (luaRepeatingExecBind "XF86MonBrightnessDown" "brightnessdown")
+                                (luaRepeatingExecBind "XF86MonBrightnessUp" "brightnessup")
+                                (luaRepeatingExecBind "SUPER + F2" "brightnessdown")
+                                (luaRepeatingExecBind "SUPER + F3" "brightnessup")
+                            ]
+                            ++ lib.optionals biryani_services.pipewire.enable [
+                                (luaRepeatingExecBind "SUPER + F7" "wpctl set-volume '@DEFAULT_AUDIO_SINK@' '1%-'")
+                                (luaRepeatingExecBind "XF86AudioLowerVolume" "wpctl set-volume '@DEFAULT_AUDIO_SINK@' '1%-'")
+                                (luaRepeatingExecBind "SUPER + F8" "wpctl set-volume '@DEFAULT_AUDIO_SINK@' '1%+'")
+                                (luaRepeatingExecBind "XF86AudioRaiseVolume" "wpctl set-volume '@DEFAULT_AUDIO_SINK@' '1%+'")
+                            ]
+                            ++ lib.optionals biryani_hw.pulseaudio.enable [
+                                (luaRepeatingExecBind "SUPER + F7" "pactl set-sink-volume '@DEFAULT_SINK@' '-1%'")
+                                (luaRepeatingExecBind "XF86AudioLowerVolume" "pactl set-sink-volume '@DEFAULT_SINK@' '-1%'")
+                                (luaRepeatingExecBind "SUPER + F8" "pactl set-sink-volume '@DEFAULT_SINK@' '+1%'")
+                                (luaRepeatingExecBind "XF86AudioRaiseVolume" "pactl set-sink-volume '@DEFAULT_SINK@' '+1%'")
+                            ]
+                        )}
 
-                        binde = , KP_HOME, exec, ${ydotool} mousemove -- -10 -10 && sleep 0.1   # Left-Up
-                        binde = , KP_PRIOR, exec, ${ydotool} mousemove -- 10 -10 && sleep 0.1   # Right-Up
-                        binde = , KP_END, exec, ${ydotool} mousemove -- -10 10 && sleep 0.1     # Left-Down
-                        binde = , KP_NEXT, exec, ${ydotool} mousemove -- 10 10 && sleep 0.1     # Right-Down
-                        binde = , KP_LEFT, exec, ${ydotool} mousemove -- -10 0 && sleep 0.1     # Left
-                        binde = , KP_RIGHT, exec, ${ydotool} mousemove -- 10 0 && sleep 0.1     # Right
-                        binde = , KP_UP, exec, ${ydotool} mousemove -- 0 -10 && sleep 0.1       # Up
-                        binde = , KP_DOWN, exec, ${ydotool} mousemove -- 0 10 && sleep 0.1      # Down
-                        bind = , KP_BEGIN, exec, ${ydotool} click C0
-                        bind = , KP_DIVIDE, exec, ${ydotool} click 0x40
-                        bind = , KP_MULTIPLY, exec, ${ydotool} click 0x42 0x82
-                        bind = , KP_SUBTRACT, exec, ${ydotool} click 0x41 0x81
-                        bind = , KP_INSERT, exec, sh -c 'if [ "$(cat /tmp/mouse_state)" = "40" ]; then echo "80" > /tmp/mouse_state && ${ydotool} click 0x80; else echo "40" > /tmp/mouse_state && ${ydotool} click 0x40; fi'
-                        bind = , KP_Enter, exec, sudo pkill ${ydotool}d
-                        bind = , KP_Add, exec, sudo ${ydotool}d --socket-perm=0666 --socket-path=/run/user/1000/.ydotool_socket
+                        hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
+                        hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
+                        hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd(${
+                            luaString screenlocks_meta."${screenlock}".cmd
+                        }), { locked = true })
+
+                        ${lib.concatStringsSep "\n" [
+                            (luaWindowRule [
+                                ''match = { class = "org.telegram.desktop" }''
+                                ''workspace = "9"''
+                            ])
+                            (luaWindowRule [
+                                ''match = { class = "teams-for-linux" }''
+                                ''workspace = "10"''
+                            ])
+                            (luaWindowRule [
+                                ''match = { class = "org.telegram.desktop", title = "^(Media viewer)$" }''
+                                ''workspace = "unset"''
+                            ])
+                            (luaWindowRule [
+                                ''match = { title = "Bitwarden" }''
+                                "float = true"
+                            ])
+                            (luaWindowRule [
+                                ''match = { class = "Beeper" }''
+                                ''workspace = "10"''
+                            ])
+                            (luaWindowRule [
+                                ''match = { class = "dragon-drop" }''
+                                "pin = true"
+                            ])
+                            (luaWindowRule [
+                                ''match = { class = "^(ueberzug.*)$" }''
+                                "float = true"
+                            ])
+                            (luaWindowRule [
+                                ''match = { class = "^(ueberzug.*)$" }''
+                                "no_initial_focus = true"
+                            ])
+                        ]}
+
+                        hl.define_submap("screenshot", function()
+                          hl.bind("Escape", hl.dsp.submap("reset"))
+                          hl.bind("H", hl.dsp.exec_cmd(${luaString "${pkgs.libnotify}/bin/notify-send -- \"Screenshot Keybinds\" \"${ss_group_help}\""}))
+                          hl.bind("R", function()
+                            hl.dispatch(hl.dsp.submap("reset"))
+                            hl.exec_cmd(${luaString ss_tools_meta."${ss_tool}".cmd.region})
+                          end)
+                          hl.bind("F", function()
+                            hl.dispatch(hl.dsp.submap("reset"))
+                            hl.exec_cmd(${luaString ss_tools_meta."${ss_tool}".cmd.fullscreen})
+                          end)
+                        end)
+                        hl.bind("SUPER + SHIFT + S", hl.dsp.submap("screenshot"))
+
+                        hl.bind("KP_HOME", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- -10 -10 && sleep 0.1"}), { repeating = true })
+                        hl.bind("KP_PRIOR", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- 10 -10 && sleep 0.1"}), { repeating = true })
+                        hl.bind("KP_END", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- -10 10 && sleep 0.1"}), { repeating = true })
+                        hl.bind("KP_NEXT", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- 10 10 && sleep 0.1"}), { repeating = true })
+                        hl.bind("KP_LEFT", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- -10 0 && sleep 0.1"}), { repeating = true })
+                        hl.bind("KP_RIGHT", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- 10 0 && sleep 0.1"}), { repeating = true })
+                        hl.bind("KP_UP", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- 0 -10 && sleep 0.1"}), { repeating = true })
+                        hl.bind("KP_DOWN", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- 0 10 && sleep 0.1"}), { repeating = true })
+                        hl.bind("KP_BEGIN", hl.dsp.exec_cmd(${luaString "${ydotool} click C0"}))
+                        hl.bind("KP_DIVIDE", hl.dsp.exec_cmd(${luaString "${ydotool} click 0x40"}))
+                        hl.bind("KP_MULTIPLY", hl.dsp.exec_cmd(${luaString "${ydotool} click 0x42 0x82"}))
+                        hl.bind("KP_SUBTRACT", hl.dsp.exec_cmd(${luaString "${ydotool} click 0x41 0x81"}))
+                        hl.bind("KP_INSERT", hl.dsp.exec_cmd(${luaString "sh -c 'if [ \"$(cat /tmp/mouse_state)\" = \"40\" ]; then echo \"80\" > /tmp/mouse_state && ${ydotool} click 0x80; else echo \"40\" > /tmp/mouse_state && ${ydotool} click 0x40; fi'"}))
+                        hl.bind("KP_Enter", hl.dsp.exec_cmd(${luaString "sudo pkill ${ydotool}d"}))
+                        hl.bind("KP_Add", hl.dsp.exec_cmd(${luaString "sudo ${ydotool}d --socket-perm=0666 --socket-path=/run/user/1000/.ydotool_socket"}))
                     '';
             };
 

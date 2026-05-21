@@ -56,7 +56,20 @@ When changing host imports or private secrets:
   "${inputs.private_secrets}/hosts/<host>"
   ```
 
-When running builds:
+When validating changes:
+
+- Prefer no-build/eval checks first. Do not build broad Home Manager or NixOS
+  activation/system derivations unless the user explicitly asks; they can fetch
+  or build large dependency closures.
+- For generated Home Manager files, inspect the config text directly with
+  `nix eval` instead of building the activation package. Example:
+  ```sh
+  nix eval --impure --raw --expr '(builtins.getFlake (toString ./.)).homeConfigurations."akshettrj@alienrj".config.xdg.configFile."hypr/hyprland.lua".text'
+  ```
+- If a build is truly needed, keep it narrow to the affected attribute and ask
+  before running it.
+
+When the user explicitly requests builds:
 
 - Use `nom` and 16 jobs/cores:
   ```sh
@@ -65,7 +78,8 @@ When running builds:
 
 ## No-Build Checks
 
-Use these before builds:
+Use these before any build, and often as the final validation for small module
+or generated-config changes:
 
 ```sh
 nix eval --raw .#nixosConfigurations.alienrj.config.networking.hostName
