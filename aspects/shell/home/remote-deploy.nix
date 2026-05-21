@@ -7,21 +7,26 @@ let
         ''
             function nixos-remote() {
                 local max_jobs_args=()
+                local no_cache_args=()
                 local remote_user="''${USER:-$(id -un)}"
                 local remote_host=""
                 while [ "$#" -gt 0 ]; do
                     case "$1" in
                         -j|--max-jobs)
                             if [ "$#" -lt 2 ]; then
-                                echo "usage: nixos-remote [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
+                                echo "usage: nixos-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
                                 return 2
                             fi
                             max_jobs_args=(--option max-jobs "$2")
                             shift 2
                             ;;
+                        --no-cache)
+                            no_cache_args=(--option narinfo-cache-negative-ttl 0)
+                            shift
+                            ;;
                         -u|--user)
                             if [ "$#" -lt 2 ]; then
-                                echo "usage: nixos-remote [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
+                                echo "usage: nixos-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
                                 return 2
                             fi
                             remote_user="$2"
@@ -29,7 +34,7 @@ let
                             ;;
                         -r|--remote|--host|--remote-host)
                             if [ "$#" -lt 2 ]; then
-                                echo "usage: nixos-remote [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
+                                echo "usage: nixos-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
                                 return 2
                             fi
                             remote_host="$2"
@@ -42,7 +47,7 @@ let
                 done
 
                 if [ "$#" -lt 2 ]; then
-                    echo "usage: nixos-remote [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
+                    echo "usage: nixos-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
                     return 2
                 fi
 
@@ -57,7 +62,7 @@ let
                 local target_host="$remote_user@$remote_host"
 
                 nixos-rebuild "$action" \
-                    --option narinfo-cache-negative-ttl 0 \
+                    "''${no_cache_args[@]}" \
                     "''${max_jobs_args[@]}" \
                     --target-host "$target_host" \
                     --sudo \
@@ -67,21 +72,26 @@ let
 
             function hm-remote() {
                 local max_jobs_args=()
+                local no_cache_args=()
                 local remote_user="''${USER:-$(id -un)}"
                 local remote_host=""
                 while [ "$#" -gt 0 ]; do
                     case "$1" in
                         -j|--max-jobs)
                             if [ "$#" -lt 2 ]; then
-                                echo "usage: hm-remote [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
+                                echo "usage: hm-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
                                 return 2
                             fi
                             max_jobs_args=(--option max-jobs "$2")
                             shift 2
                             ;;
+                        --no-cache)
+                            no_cache_args=(--option narinfo-cache-negative-ttl 0)
+                            shift
+                            ;;
                         -u|--user)
                             if [ "$#" -lt 2 ]; then
-                                echo "usage: hm-remote [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
+                                echo "usage: hm-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
                                 return 2
                             fi
                             remote_user="$2"
@@ -89,7 +99,7 @@ let
                             ;;
                         -r|--remote|--host|--remote-host)
                             if [ "$#" -lt 2 ]; then
-                                echo "usage: hm-remote [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
+                                echo "usage: hm-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
                                 return 2
                             fi
                             remote_host="$2"
@@ -102,8 +112,8 @@ let
                 done
 
                 if [ "$#" -lt 1 ]; then
-                    echo "usage: hm-remote [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
-                    echo "example: hm-remote -j 8 raspi" >&2
+                    echo "usage: hm-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
+                    echo "example: hm-remote --no-cache -j 8 raspi" >&2
                     return 2
                 fi
 
@@ -124,8 +134,8 @@ let
 
                 local target_host="$remote_user@$remote_host"
 
-                nom build "''${max_jobs_args[@]}" "${configFlakePath}#homeConfigurations.$home_configuration.activationPackage" \
-                    && (set -o pipefail; nix --log-format internal-json -v copy --to "ssh://$target_host" ./result 2>&1 | nom --json) \
+                nom build "''${no_cache_args[@]}" "''${max_jobs_args[@]}" "${configFlakePath}#homeConfigurations.$home_configuration.activationPackage" \
+                    && (set -o pipefail; nix "''${no_cache_args[@]}" --log-format internal-json -v copy --to "ssh://$target_host" ./result 2>&1 | nom --json) \
                     && ssh "$target_host" "$(readlink -f result)/activate"
             }
         '';
@@ -134,6 +144,7 @@ let
         ''
             function nixos-remote
                 set max_jobs_args
+                set no_cache_args
                 set remote_user (id -un)
                 if set -q USER
                     set remote_user $USER
@@ -143,21 +154,24 @@ let
                     switch $argv[1]
                         case -j --max-jobs
                             if test (count $argv) -lt 2
-                                echo "usage: nixos-remote [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
+                                echo "usage: nixos-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
                                 return 2
                             end
                             set max_jobs_args --option max-jobs $argv[2]
                             set --erase argv[1..2]
+                        case --no-cache
+                            set no_cache_args --option narinfo-cache-negative-ttl 0
+                            set --erase argv[1]
                         case -u --user
                             if test (count $argv) -lt 2
-                                echo "usage: nixos-remote [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
+                                echo "usage: nixos-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
                                 return 2
                             end
                             set remote_user $argv[2]
                             set --erase argv[1..2]
                         case -r --remote --host --remote-host
                             if test (count $argv) -lt 2
-                                echo "usage: nixos-remote [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
+                                echo "usage: nixos-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
                                 return 2
                             end
                             set remote_host $argv[2]
@@ -168,7 +182,7 @@ let
                 end
 
                 if test (count $argv) -lt 2
-                    echo "usage: nixos-remote [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
+                    echo "usage: nixos-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <boot|build|switch> <target_configuration> [nixos-rebuild args...]" >&2
                     return 2
                 end
 
@@ -180,7 +194,7 @@ let
                 set target_host "$remote_user@$remote_host"
 
                 nixos-rebuild $action \
-                    --option narinfo-cache-negative-ttl 0 \
+                    $no_cache_args \
                     $max_jobs_args \
                     --target-host $target_host \
                     --sudo \
@@ -190,6 +204,7 @@ let
 
             function hm-remote
                 set max_jobs_args
+                set no_cache_args
                 set remote_user (id -un)
                 if set -q USER
                     set remote_user $USER
@@ -199,21 +214,24 @@ let
                     switch $argv[1]
                         case -j --max-jobs
                             if test (count $argv) -lt 2
-                                echo "usage: hm-remote [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
+                                echo "usage: hm-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
                                 return 2
                             end
                             set max_jobs_args --option max-jobs $argv[2]
                             set --erase argv[1..2]
+                        case --no-cache
+                            set no_cache_args --option narinfo-cache-negative-ttl 0
+                            set --erase argv[1]
                         case -u --user
                             if test (count $argv) -lt 2
-                                echo "usage: hm-remote [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
+                                echo "usage: hm-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
                                 return 2
                             end
                             set remote_user $argv[2]
                             set --erase argv[1..2]
                         case -r --remote --host --remote-host
                             if test (count $argv) -lt 2
-                                echo "usage: hm-remote [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
+                                echo "usage: hm-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
                                 return 2
                             end
                             set remote_host $argv[2]
@@ -224,8 +242,8 @@ let
                 end
 
                 if test (count $argv) -lt 1
-                    echo "usage: hm-remote [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
-                    echo "example: hm-remote -j 8 raspi" >&2
+                    echo "usage: hm-remote [--no-cache] [-j jobs] [-u user] [-r remote_host] <configuration> [home_configuration]" >&2
+                    echo "example: hm-remote --no-cache -j 8 raspi" >&2
                     return 2
                 end
 
@@ -246,9 +264,9 @@ let
                 end
                 set target_host "$remote_user@$remote_host"
 
-                nom build $max_jobs_args "${configFlakePath}#homeConfigurations.$home_configuration.activationPackage"; or return
+                nom build $no_cache_args $max_jobs_args "${configFlakePath}#homeConfigurations.$home_configuration.activationPackage"; or return
 
-                nix --log-format internal-json -v copy --to "ssh://$target_host" ./result 2>&1 | nom --json
+                nix $no_cache_args --log-format internal-json -v copy --to "ssh://$target_host" ./result 2>&1 | nom --json
                 set copy_status $pipestatus
                 if test "$copy_status" != "0 0"
                     return 1
