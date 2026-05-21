@@ -5,6 +5,7 @@
         ./bash.nix
         ./fish.nix
         ./nushell.nix
+        ./remote-deploy.nix
         ./zsh
 
         ./utils
