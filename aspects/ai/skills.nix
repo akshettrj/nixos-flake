@@ -2,7 +2,6 @@
 inputs.mcp_python.skills
 // {
     nixos-configuration = ./skills/nixos-configuration;
-    dendritic-nix = ./skills/dendritic-nix;
     cavecrew = "${inputs.caveman_skill}/skills/cavecrew";
     caveman = "${inputs.caveman_skill}/skills/caveman";
     caveman-commit = "${inputs.caveman_skill}/skills/caveman-commit";
