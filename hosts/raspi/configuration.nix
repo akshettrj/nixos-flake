@@ -1,4 +1,9 @@
-{ inputs, lib, ... }:
+{
+    inputs,
+    lib,
+    pkgs_stable,
+    ...
+}:
 {
     imports = [
         ./options.nix
@@ -14,6 +19,8 @@
     boot.loader.generic-extlinux-compatible.enable = true;
 
     hardware.enableRedistributableFirmware = true;
+
+    boot.kernelPackages = lib.mkForce pkgs_stable.linuxPackages_rpi4;
 
     # DO NOT DELETE
     system.stateVersion = "24.05";
