@@ -139,6 +139,7 @@ in
                         description = "Dunst notification font size.";
                     };
                 };
+                swaync.enable = lib.mkEnableOption "SwayNotificationCenter notification daemon.";
             };
 
             bars = {

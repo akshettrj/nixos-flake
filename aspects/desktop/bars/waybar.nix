@@ -301,6 +301,16 @@
                                     tooltip = "Dunst";
                                     restart-interval = 1;
                                 };
+                            "custom/swaync" =
+                                let
+                                    swaync-client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
+                                in
+                                {
+                                    format = "";
+                                    on-click = "${swaync-client} -t";
+                                    on-click-right = "${swaync-client} -d";
+                                    tooltip = "Notifications";
+                                };
                         };
                     in
                     {
@@ -333,6 +343,10 @@
                                 ]
                                 ++ lib.optionals (biryani_notifiers.enable && biryani_notifiers.dunst.enable) [
                                     "custom/dunst"
+                                    "custom/separator"
+                                ]
+                                ++ lib.optionals (biryani_notifiers.enable && biryani_notifiers.swaync.enable) [
+                                    "custom/swaync"
                                     "custom/separator"
                                 ]
                                 ++ [

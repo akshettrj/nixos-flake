@@ -222,7 +222,7 @@
                 backup = "helix";
                 neovim = {
                     enable = true;
-                    nightly = true;
+                    nightly = false;
                 };
                 helix = {
                     enable = true;
@@ -298,9 +298,10 @@
             notification_daemons = {
                 enable = true;
                 dunst = {
-                    enable = true;
+                    enable = false;
                     font_size = 10;
                 };
+                swaync.enable = true;
             };
             bars = {
                 enable = true;

@@ -22,6 +22,14 @@
                 description = "Font size used by Dunst notifications.";
             };
         };
+
+        swaync = {
+            enable = lib.mkOption {
+                type = lib.types.bool;
+                default = false;
+                description = "Enable SwayNotificationCenter as the Home Manager notification daemon.";
+            };
+        };
     };
 
     config =

@@ -478,6 +478,9 @@
                           end)
                         end)
                         hl.bind("SUPER + SHIFT + S", hl.dsp.submap("screenshot"))
+                        ${lib.optionalString config.biryani.programs.notification_daemons.swaync.enable ''
+                            hl.bind("SUPER + SHIFT + N", hl.dsp.exec_cmd(${luaString "${pkgs.swaynotificationcenter}/bin/swaync-client -t"}))
+                        ''}
 
                         hl.bind("KP_HOME", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- -10 -10 && sleep 0.1"}), { repeating = true })
                         hl.bind("KP_PRIOR", hl.dsp.exec_cmd(${luaString "${ydotool} mousemove -- 10 -10 && sleep 0.1"}), { repeating = true })
