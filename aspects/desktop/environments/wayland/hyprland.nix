@@ -90,39 +90,33 @@
                 let
                     clipboard_manager_meta = clips_meta."${clipboard_manager}";
                     hyprctl = "${hyprland_pkg}/bin/hyprctl";
+                    hyprctlEval = code: "${hyprctl} eval ${lib.escapeShellArg code}";
                     nm-applet = "${pkgs.networkmanagerapplet}/bin/nm-applet";
                     blueman-applet = "${pkgs.blueman}/bin/blueman-applet";
                     pasystray = "${pkgs.pasystray}/bin/pasystray";
                     mullvad-gui = "${pkgs.mullvad-vpn}/bin/mullvad-gui";
+                    monitorCommands = builtins.concatMap (
+                        mon:
+                        let
+                            mode = "${toString mon.width}x${toString mon.height}@${toString mon.refresh_rate}";
+                            position = "${toString mon.x}x${toString mon.y}";
+                            monitorCommand =
+                                if mon.enabled then
+                                    hyprctlEval "hl.monitor({ output = ${luaString mon.name}, mode = ${luaString mode}, position = ${luaString position}, scale = ${luaString mon.additional_settings} })"
+                                else
+                                    hyprctlEval "hl.monitor({ output = ${luaString mon.name}, disabled = true })";
+                            workspaceCommands = map (
+                                wk:
+                                hyprctlEval "hl.workspace_rule({ workspace = ${luaString (toString wk)}, monitor = ${luaString mon.name} })"
+                            ) (lib.optionals mon.enabled mon.workspaces);
+                        in
+                        [ monitorCommand ] ++ workspaceCommands
+                    ) biryani_deskenvs.hyprland.monitors;
                 in
                 pkgs.writeShellScriptBin "start" ''
 
                     # Setting up monitors
-                    ${lib.strings.concatStringsSep "\n" (
-                        map (
-                            mon:
-                            let
-                                resolution = "${toString mon.width}x${toString mon.height}@${toString mon.refresh_rate}";
-                                position = "${toString mon.x}x${toString mon.y}";
-                                mon_config =
-                                    if mon.enabled then "${resolution},${position},${mon.additional_settings}" else "disable";
-                            in
-                            # sh
-                            ''
-                                ${hyprctl} keyword monitor "${mon.name},${mon_config}"
-
-                            ''
-                            +
-                                lib.optionalString mon.enabled # sh
-
-                                    ''
-
-                                        for wk in ${toString mon.workspaces}; do
-                                            ${hyprctl} keyword workspace "$wk,monitor:${mon.name}" &
-                                        done
-                                    ''
-                        ) (biryani_deskenvs.hyprland.monitors)
-                    )}
+                    ${lib.strings.concatStringsSep "\n" monitorCommands}
 
                     pidof ${clipboard_manager_meta.bin} && killall -9 ${clipboard_manager_meta.bin}
                     pidof ${nm-applet} && killall -9 ${nm-applet}

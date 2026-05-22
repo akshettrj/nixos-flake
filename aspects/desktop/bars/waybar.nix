@@ -129,8 +129,8 @@
                                     active = "";
                                     default = "";
                                 };
-                                on-scroll-up = "hyprctl dispatch workspace e+1";
-                                on-scroll-down = "hyprctl dispatch workspace e-1";
+                                on-scroll-up = "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e+1\" })'";
+                                on-scroll-down = "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e-1\" })'";
                                 on-click = "activate";
                             };
                             "hyprland/window" = {
