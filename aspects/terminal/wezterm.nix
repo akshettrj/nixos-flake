@@ -36,6 +36,11 @@
             biryani_shells = config.biryani.shells;
             biryani_terminals = config.biryani.programs.terminals;
             biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.wezterm.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
 
             terminals_meta = import ../core/metadata/programs/terminals.nix { inherit config inputs pkgs; };
         in
@@ -77,7 +82,35 @@
                             font_size = ${toString (biryani_terminals.wezterm.font_size)},
                         }
 
-                        config.color_scheme = "Gruvbox Dark (Gogh)"
+                        config.colors = {
+                            foreground = "${palette.on_surface}",
+                            background = "${palette.surface}",
+                            cursor_bg = "${palette.primary}",
+                            cursor_fg = "${palette.on_primary}",
+                            cursor_border = "${palette.primary}",
+                            selection_bg = "${palette.primary_container}",
+                            selection_fg = "${palette.on_primary_container}",
+                            ansi = {
+                                "${palette.base16.base00}",
+                                "${palette.base16.base08}",
+                                "${palette.base16.base0b}",
+                                "${palette.base16.base0a}",
+                                "${palette.base16.base0d}",
+                                "${palette.base16.base0e}",
+                                "${palette.base16.base0c}",
+                                "${palette.base16.base05}",
+                            },
+                            brights = {
+                                "${palette.base16.base03}",
+                                "${palette.base16.base08}",
+                                "${palette.base16.base0b}",
+                                "${palette.base16.base0a}",
+                                "${palette.base16.base0d}",
+                                "${palette.base16.base0e}",
+                                "${palette.base16.base0c}",
+                                "${palette.base16.base07}",
+                            },
+                        }
                         config.hide_tab_bar_if_only_one_tab = false
                         config.window_background_opacity = 0.95
                         config.audible_bell = "Disabled"

@@ -11,6 +11,11 @@
             biryani_docs = biryani_media.documents;
 
             biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.zathura.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
         in
         lib.mkIf (biryani_media.enable && biryani_docs.zathura.enable) {
             programs.zathura = {
@@ -37,35 +42,35 @@
                     scroll-step = 50;
 
                     font = "${biryani_theming.fonts.main.name} ${toString (biryani_theming.fonts.main.size)}";
-                    default-bg = "#282828";
-                    default-fg = "#3c3836";
+                    default-bg = palette.surface;
+                    default-fg = palette.surface_container;
 
-                    statusbar-fg = "#bdae93";
-                    statusbar-bg = "#504945";
+                    statusbar-fg = palette.on_surface;
+                    statusbar-bg = palette.surface_container_high;
 
-                    inputbar-bg = "#282828";
-                    inputbar-fg = "#fbf1c7";
+                    inputbar-bg = palette.surface;
+                    inputbar-fg = palette.on_surface;
 
-                    notification-bg = "#282828";
-                    notification-fg = "#fbf1c7";
+                    notification-bg = palette.surface_container;
+                    notification-fg = palette.on_surface;
 
-                    notification-error-bg = "#282828";
-                    notification-error-fg = "#fb4934";
+                    notification-error-bg = palette.error_container;
+                    notification-error-fg = palette.on_error_container;
 
-                    notification-warning-bg = "#282828";
-                    notification-warning-fg = "#fb4934";
+                    notification-warning-bg = palette.primary_container;
+                    notification-warning-fg = palette.on_primary_container;
 
-                    highlight-color = "#fabd2f";
-                    highlight-active-color = "#83a598";
+                    highlight-color = palette.primary_container;
+                    highlight-active-color = palette.primary;
 
-                    completion-bg = "#3c3836";
-                    completion-fg = "#83a598";
+                    completion-bg = palette.surface_container;
+                    completion-fg = palette.on_surface;
 
-                    completion-highlight-fg = "#fbf1c7";
-                    completion-highlight-bg = "#83a598";
+                    completion-highlight-fg = palette.on_primary_container;
+                    completion-highlight-bg = palette.primary_container;
 
-                    recolor-lightcolor = "#282828";
-                    recolor-darkcolor = "#ebdbb2";
+                    recolor-lightcolor = palette.surface;
+                    recolor-darkcolor = palette.on_surface;
 
                     recolor = "false";
                     recolor-keephue = "false";

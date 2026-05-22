@@ -8,6 +8,12 @@
     config =
         let
             biryani_ss_tools = config.biryani.programs.screenshot_tools;
+            biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.flameshot.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
 
             ss_tools_meta = import ../../core/metadata/programs/screenshot_tools.nix { inherit pkgs; };
         in
@@ -21,6 +27,9 @@
                         copyPathAfterSave = true;
                         showStartupLaunchMessage = false;
                         disabledTrayIcon = false;
+                        contrastUiColor = palette.on_primary;
+                        drawColor = palette.primary;
+                        uiColor = palette.primary;
                     };
                 };
             };

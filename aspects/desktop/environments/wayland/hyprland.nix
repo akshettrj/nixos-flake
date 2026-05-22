@@ -170,6 +170,13 @@
                 keys: x: y:
                 "hl.bind(${luaString keys}, hl.dsp.window.move({ x = ${toString x}, y = ${toString y}, relative = true }), { repeating = true })";
             luaWindowRule = fields: "hl.window_rule({ ${lib.concatStringsSep ", " fields} })";
+            palette =
+                if biryani_theming.matugen.integrations.hyprland.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
+            noHash = lib.removePrefix "#";
+            rgba = color: alpha: "rgba(${noHash color}${alpha})";
         in
         lib.mkIf (biryani_deskenvs.enable && biryani_deskenvs.hyprland.enable) {
             assertions = [
@@ -239,10 +246,22 @@
                         hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
                         hl.env("QT_QPA_PLATFORM", "wayland;xcb")
                         hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
+                        ${lib.optionalString (biryani_theming.qt && biryani_theming.matugen.integrations.qt.enable) ''
+                            hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
+                            hl.env("QT_STYLE_OVERRIDE", "kvantum")
+                        ''}
                         hl.env("SDL_VIDEODRIVER", "wayland")
                         hl.env("LIBSEAT_BACKEND", "logind")
+                        ${lib.optionalString (biryani_theming.gtk && biryani_theming.matugen.integrations.gtk.enable) ''
+                            hl.env("GTK_THEME", ${
+                                luaString (if biryani_theming.matugen.mode == "dark" then "adw-gtk3-dark" else "adw-gtk3")
+                            })
+                        ''}
                         hl.env("XCURSOR_THEME", ${luaString biryani_theming.cursor.name})
                         hl.env("XCURSOR_SIZE", ${luaString (toString biryani_theming.cursor.size)})
+                        ${lib.optionalString (launcher == "bemenu") ''
+                            hl.env("BEMENU_OPTS", ${luaString config.home.sessionVariables.BEMENU_OPTS})
+                        ''}
                         ${lib.optionalString biryani_hw.nvidia.enable ''
                             hl.env("LIBVA_DRIVER_NAME", "nvidia")
                             hl.env("WLR_NO_HARDWARE_CURSORS", "1")
@@ -276,8 +295,8 @@
                             gaps_out = 2,
                             border_size = 2,
                             col = {
-                              active_border = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
-                              inactive_border = "rgba(595959aa)",
+                              active_border = { colors = { ${luaString (rgba palette.primary "ee")}, ${luaString (rgba palette.secondary "ee")} }, angle = 45 },
+                              inactive_border = ${luaString (rgba palette.outline "aa")},
                             },
                             layout = "dwindle",
                             no_focus_fallback = true,
@@ -295,7 +314,7 @@
                               enabled = true,
                               range = 4,
                               render_power = 3,
-                              color = "rgba(1a1a1aee)",
+                              color = ${luaString (rgba palette.surface_container_lowest "ee")},
                             },
                           },
                           animations = {

@@ -46,6 +46,7 @@
             cursor = biryani.theming.cursor;
             enable = biryani.theming.enable;
             gtk = biryani.theming.gtk;
+            matugen = biryani.theming.matugen;
             minimum_brightness = biryani.theming.minimum_brightness;
             qt = biryani.theming.qt;
             wallpaper = biryani.theming.wallpaper;

@@ -32,6 +32,11 @@ Hosts:
 - If a feature has both NixOS and Home Manager wiring, keep both under the same aspect.
 - Preserve behavior unless the user explicitly asks for modernization.
 - Do not edit `vendor/` except for comparison.
+- When adding or enabling a new desktop/user-facing application, check whether it
+  has colors/theme settings that can consume `biryani.theming.palette`. If it
+  can, try to add a `biryani.theming.matugen.integrations.<app>.enable` toggle
+  and default it on with a static-palette fallback. Include browsers when they
+  have declarative theme/color hooks, while avoiding brittle profile mutation.
 
 ## Common Workflows
 

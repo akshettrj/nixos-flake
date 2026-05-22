@@ -22,6 +22,11 @@
         let
             biryani_screenlocks = config.biryani.programs.screenlocks;
             biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.hyprlock.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
 
             screenlocks_meta = import ../../core/metadata/programs/screenlocks.nix {
                 inherit config inputs pkgs;
@@ -52,6 +57,11 @@
                     shadow_passes = 3
                     shadow_size = 3
                     shadow_boost = 1.5
+                    outer_color = rgb(${lib.removePrefix "#" palette.outline})
+                    inner_color = rgb(${lib.removePrefix "#" palette.surface_container})
+                    font_color = rgb(${lib.removePrefix "#" palette.on_surface})
+                    check_color = rgb(${lib.removePrefix "#" palette.primary})
+                    fail_color = rgb(${lib.removePrefix "#" palette.error})
                     halign = center
                     valign = center
                     position = 0, -120

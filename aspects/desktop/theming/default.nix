@@ -2,6 +2,7 @@
 {
     imports = [
         ./gtk.nix
+        ./matugen.nix
         ./qt.nix
         ./xsession.nix
     ];

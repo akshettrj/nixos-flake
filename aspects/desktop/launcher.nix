@@ -26,6 +26,11 @@
         let
             biryani_launchers = config.biryani.programs.launchers;
             biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.bemenu.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
         in
         lib.mkIf (biryani_launchers.enable && biryani_launchers.bemenu.enable) {
             programs.bemenu = {
@@ -38,10 +43,16 @@
                     line-height = biryani_launchers.bemenu.font_size + 20;
                     cw = 2;
                     ch = biryani_launchers.bemenu.font_size + 8;
-                    tf = "#268bd2";
-                    hf = "#268bd2";
-                    hb = "#444444";
-                    tb = "#444444";
+                    tf = palette.on_surface;
+                    hf = palette.on_primary_container;
+                    fb = palette.surface;
+                    ff = palette.on_surface;
+                    hb = palette.primary_container;
+                    tb = palette.surface;
+                    nb = palette.surface;
+                    nf = palette.on_surface;
+                    sb = palette.primary_container;
+                    sf = palette.on_primary_container;
                     fn = "${biryani_theming.fonts.main.name} ${toString (biryani_launchers.bemenu.font_size)}";
                     no-cursor = true;
                 };

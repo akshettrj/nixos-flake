@@ -91,6 +91,7 @@
             };
             minimum_brightness = 40;
             wallpaper = "${inputs.wallpapers}/panda-2-1920×1080.png";
+            matugen.enable = true;
         };
 
         dev = {

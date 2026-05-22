@@ -6,6 +6,8 @@
     ...
 }:
 let
+    mkMatugenIntegrationEnable =
+        name: lib.mkEnableOption "matugen palette integration for ${name}." // { default = true; };
     knownClipboardManagers = lib.attrNames (
         import ../core/metadata/programs/clipboard_managers.nix { inherit pkgs; }
     );
@@ -94,6 +96,53 @@ in
             wallpaper = lib.mkOption {
                 type = lib.types.path;
                 description = "Wallpaper image used by desktop theming modules.";
+            };
+            matugen = {
+                enable = lib.mkEnableOption "matugen wallpaper-derived palette generation.";
+                mode = lib.mkOption {
+                    type = lib.types.enum [
+                        "dark"
+                        "light"
+                    ];
+                    default = "dark";
+                    description = "matugen color mode.";
+                };
+                scheme = lib.mkOption {
+                    type = lib.types.enum [
+                        "scheme-content"
+                        "scheme-expressive"
+                        "scheme-fidelity"
+                        "scheme-fruit-salad"
+                        "scheme-monochrome"
+                        "scheme-neutral"
+                        "scheme-rainbow"
+                        "scheme-tonal-spot"
+                        "scheme-vibrant"
+                    ];
+                    default = "scheme-tonal-spot";
+                    description = "matugen Material color scheme type.";
+                };
+                source_color_index = lib.mkOption {
+                    type = lib.types.ints.unsigned;
+                    default = 0;
+                    description = "matugen source color candidate index used for non-interactive palette generation.";
+                };
+                fallback_color = lib.mkOption {
+                    type = lib.types.strMatching "#[0-9a-fA-F]{6}";
+                    default = "#6750a4";
+                    description = "Fallback source color used by matugen if wallpaper extraction fails.";
+                };
+                integrations = {
+                    alacritty.enable = mkMatugenIntegrationEnable "Alacritty";
+                    bemenu.enable = mkMatugenIntegrationEnable "bemenu";
+                    dunst.enable = mkMatugenIntegrationEnable "Dunst";
+                    ghostty.enable = mkMatugenIntegrationEnable "Ghostty";
+                    hyprlock.enable = mkMatugenIntegrationEnable "Hyprlock";
+                    swaylock.enable = mkMatugenIntegrationEnable "Swaylock";
+                    swaync.enable = mkMatugenIntegrationEnable "SwayNotificationCenter";
+                    waybar.enable = mkMatugenIntegrationEnable "Waybar";
+                    wezterm.enable = mkMatugenIntegrationEnable "WezTerm";
+                };
             };
         };
 

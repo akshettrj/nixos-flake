@@ -4,6 +4,11 @@
         let
             biryani_notifiers = config.biryani.programs.notification_daemons;
             biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.swaync.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
         in
         lib.mkIf (biryani_notifiers.enable && biryani_notifiers.swaync.enable) {
             services.swaync = {
@@ -38,15 +43,15 @@
 
                     .notification,
                     .control-center {
-                      border: 1px solid #44475a;
+                      border: 1px solid ${palette.outline};
                       border-radius: 8px;
-                      background: #1e1e2e;
-                      color: #cdd6f4;
+                      background: ${palette.surface_container};
+                      color: ${palette.on_surface};
                     }
 
                     .notification-row:focus,
                     .notification-row:hover {
-                      background: #313244;
+                      background: ${palette.surface_container_high};
                     }
 
                     .notification-content {
@@ -54,8 +59,8 @@
                     }
 
                     .close-button {
-                      background: #f38ba8;
-                      color: #1e1e2e;
+                      background: ${palette.error};
+                      color: ${palette.on_error};
                     }
                 '';
             };

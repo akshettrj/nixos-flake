@@ -4,6 +4,11 @@
         let
             biryani_notifiers = config.biryani.programs.notification_daemons;
             biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.dunst.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
         in
         lib.mkIf (biryani_notifiers.enable && biryani_notifiers.dunst.enable) {
             services.dunst = {
@@ -19,7 +24,7 @@
                         separator_height = 3;
                         padding = 4;
                         frame_width = 2;
-                        frame_color = "#aaaaaa";
+                        frame_color = palette.outline;
                         separator_color = "auto";
                         sort = false;
                         idle_threshold = 0;
@@ -47,19 +52,19 @@
                         per_monitor_dpi = true;
                     };
                     urgency_low = {
-                        background = "#2b2b2b";
-                        foreground = "#ffffff";
+                        background = palette.surface_container;
+                        foreground = palette.on_surface;
                         icon = "${./dunst_images/normal.png}";
                     };
                     urgency_normal = {
-                        background = "#2b2b2b";
-                        foreground = "#ffffff";
+                        background = palette.surface_container_high;
+                        foreground = palette.on_surface;
                         icon = "${./dunst_images/normal.png}";
                     };
                     urgency_critical = {
-                        background = "#900000";
-                        foreground = "#ffffff";
-                        frame_color = "#ff0000";
+                        background = palette.error_container;
+                        foreground = palette.on_error_container;
+                        frame_color = palette.error;
                         icon = "${./dunst_images/critical.png}";
                     };
                 };

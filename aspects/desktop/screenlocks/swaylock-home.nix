@@ -16,6 +16,12 @@
         let
             biryani_screenlocks = config.biryani.programs.screenlocks;
             biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.swaylock.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
+            noHash = lib.removePrefix "#";
         in
         lib.mkIf (biryani_screenlocks.enable && biryani_screenlocks.swaylock.enable) {
             programs.swaylock = {
@@ -24,29 +30,29 @@
                     show-failed-attempts = true;
                     ignore-empty-password = true;
 
-                    color = "000000";
+                    color = noHash palette.surface;
                     font = biryani_theming.fonts.main.name;
-                    inside-color = "1F202A";
-                    line-color = "1F202A";
-                    ring-color = "bd93f9";
-                    text-color = "f8f8f2";
-                    layout-bg-color = "000000";
-                    layout-text-color = "f8f8f2";
-                    inside-clear-color = "6272a4";
-                    line-clear-color = "1F202A";
-                    ring-clear-color = "6272a4";
-                    text-clear-color = "1F202A";
-                    inside-ver-color = "bd93f9";
-                    line-ver-color = "1F202A";
-                    ring-ver-color = "bd93f9";
-                    text-ver-color = "1F202A";
-                    inside-wrong-color = "ff5555";
-                    line-wrong-color = "1F202A";
-                    ring-wrong-color = "ff5555";
-                    text-wrong-color = "1F202A";
-                    bs-hl-color = "ff5555";
-                    key-hl-color = "50fa7b";
-                    text-caps-lock-color = "f8f8f2";
+                    inside-color = noHash palette.surface_container;
+                    line-color = noHash palette.outline_variant;
+                    ring-color = noHash palette.primary;
+                    text-color = noHash palette.on_surface;
+                    layout-bg-color = noHash palette.surface;
+                    layout-text-color = noHash palette.on_surface;
+                    inside-clear-color = noHash palette.secondary_container;
+                    line-clear-color = noHash palette.outline_variant;
+                    ring-clear-color = noHash palette.secondary;
+                    text-clear-color = noHash palette.on_secondary_container;
+                    inside-ver-color = noHash palette.primary_container;
+                    line-ver-color = noHash palette.outline_variant;
+                    ring-ver-color = noHash palette.primary;
+                    text-ver-color = noHash palette.on_primary_container;
+                    inside-wrong-color = noHash palette.error_container;
+                    line-wrong-color = noHash palette.outline_variant;
+                    ring-wrong-color = noHash palette.error;
+                    text-wrong-color = noHash palette.on_error_container;
+                    bs-hl-color = noHash palette.error;
+                    key-hl-color = noHash palette.primary;
+                    text-caps-lock-color = noHash palette.on_surface;
                 };
             };
         };

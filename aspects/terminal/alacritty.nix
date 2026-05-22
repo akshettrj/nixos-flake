@@ -35,6 +35,12 @@
         let
             biryani_theming = config.biryani.theming;
             biryani_terminals = config.biryani.programs.terminals;
+            palette =
+                if biryani_theming.matugen.integrations.alacritty.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
+            base16 = palette.base16;
         in
         lib.mkIf (biryani_terminals.enable && biryani_terminals.alacritty.enable) {
             programs.alacritty = {
@@ -44,28 +50,36 @@
                     colors = {
                         draw_bold_text_with_bright_colors = true;
                         bright = {
-                            black = "#928374";
-                            blue = "#83a598";
-                            cyan = "#8ec07c";
-                            green = "#b8bb26";
-                            magenta = "#d3869b";
-                            red = "#fb4934";
-                            white = "#ebdbb2";
-                            yellow = "#fabd2f";
+                            black = base16.base03;
+                            blue = base16.base0d;
+                            cyan = base16.base0c;
+                            green = base16.base0b;
+                            magenta = base16.base0e;
+                            red = base16.base08;
+                            white = base16.base07;
+                            yellow = base16.base0a;
                         };
                         normal = {
-                            black = "#282828";
-                            blue = "#458588";
-                            cyan = "#689d6a";
-                            green = "#98971a";
-                            magenta = "#b16286";
-                            red = "#cc241d";
-                            white = "#a89984";
-                            yellow = "#d79921";
+                            black = base16.base00;
+                            blue = base16.base0d;
+                            cyan = base16.base0c;
+                            green = base16.base0b;
+                            magenta = base16.base0e;
+                            red = base16.base08;
+                            white = base16.base05;
+                            yellow = base16.base0a;
                         };
                         primary = {
-                            background = "#282828";
-                            foreground = "#ebdbb2";
+                            background = palette.surface;
+                            foreground = palette.on_surface;
+                        };
+                        cursor = {
+                            cursor = palette.primary;
+                            text = palette.on_primary;
+                        };
+                        selection = {
+                            background = palette.primary_container;
+                            text = palette.on_primary_container;
                         };
                     };
                     cursor = {

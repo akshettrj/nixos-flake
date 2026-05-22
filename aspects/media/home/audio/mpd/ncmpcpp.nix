@@ -4,6 +4,12 @@
         let
             biryani_media = config.biryani.programs.media;
             biryani_mpd = config.biryani.programs.media.audio.mpd;
+            biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.ncmpcpp.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
         in
         lib.mkIf (biryani_media.enable && biryani_mpd.enable && biryani_mpd.ncmpcpp.enable) {
             programs.ncmpcpp = {
@@ -52,26 +58,26 @@
                     allow_for_physical_item_deletion = "yes";
 
                     colors_enabled = "yes";
-                    main_window_color = "white";
-                    current_item_prefix = "$(blue)$r";
+                    main_window_color = palette.on_surface;
+                    current_item_prefix = "$(${palette.primary})$r";
                     current_item_suffix = "$/r$(end)";
-                    header_window_color = "cyan";
-                    volume_color = "red";
-                    progressbar_color = "cyan";
-                    progressbar_elapsed_color = "white";
-                    statusbar_color = "white";
-                    current_item_inactive_column_prefix = "$(cyan)$r";
-                    active_window_border = "blue";
-                    song_columns_list_format = "(10)[blue]{l} (30)[green]{t} (30)[red]{a} (30)[yellow]{b}";
-                    song_list_format = "{$3%n │ $9}{$7%a - $9}{$5%t$9}|{$8%f$9}$R{$6 │ %b$9}{$3 │ %l$9}";
+                    header_window_color = palette.primary;
+                    volume_color = palette.error;
+                    progressbar_color = palette.primary_container;
+                    progressbar_elapsed_color = palette.primary;
+                    statusbar_color = palette.on_surface;
+                    current_item_inactive_column_prefix = "$(${palette.secondary})$r";
+                    active_window_border = palette.primary;
+                    song_columns_list_format = "(10)[${palette.primary}]{l} (30)[${palette.on_surface}]{t} (30)[${palette.secondary}]{a} (30)[${palette.tertiary}]{b}";
+                    song_list_format = "{$(${palette.outline})%n │ $(end)}{$(${palette.secondary})%a - $(end)}{$(${palette.on_surface})%t$(end)}|{$(${palette.on_surface_variant})%f$(end)}$R{$(${palette.tertiary}) │ %b$(end)}{$(${palette.outline}) │ %l$(end)}";
 
                     ## Alternative Interface ##;
-                    alternative_header_first_line_format = "$0$aqqu$/a {$6%a$9 - }{$3%t$9}|{$8%f$9} $0$atqq$/a$9";
-                    alternative_header_second_line_format = "{{$4%b$9}{ [$8%y$9]}}|{%D}";
+                    alternative_header_first_line_format = "$0$aqqu$/a {$(${palette.secondary})%a$(end) - }{$(${palette.on_surface})%t$(end)}|{$(${palette.on_surface_variant})%f$(end)} $0$atqq$/a$9";
+                    alternative_header_second_line_format = "{{$(${palette.tertiary})%b$(end)}{ [$(${palette.outline})%y$(end)]}}|{%D}";
                     user_interface = "alternative";
 
                     ## Classic Interface ##;
-                    song_status_format = " $6%a $7⟫⟫ $3%t $7⟫⟫ $4%b ";
+                    song_status_format = " $(${palette.secondary})%a $(end)$(${palette.outline})⟫⟫ $(end)$(${palette.on_surface})%t $(end)$(${palette.outline})⟫⟫ $(end)$(${palette.tertiary})%b$(end) ";
 
                     ## Visualizer ##;
                     visualizer_data_source = "/tmp/mpd.fifo";

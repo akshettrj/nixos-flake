@@ -15,6 +15,11 @@
             biryani_services = config.biryani.services;
             biryani_sys = config.biryani.system;
             biryani_theming = config.biryani.theming;
+            palette =
+                if biryani_theming.matugen.integrations.waybar.enable then
+                    biryani_theming.palette.matugen
+                else
+                    biryani_theming.palette.static;
 
             dunst_monitor_script =
                 let
@@ -394,46 +399,53 @@
                         }
 
                         tooltip {
-                            background-color: #000000;
+                            background-color: ${palette.surface_container_high};
+                            color: ${palette.on_surface};
+                            border: 1px solid ${palette.outline};
                         }
 
                         window#waybar {
-                            color: #ffffff;
-                            border: 3px solid rgba(100, 114, 125, 0.5);
+                            background-color: ${palette.surface};
+                            color: ${palette.on_surface};
+                            border: 3px solid ${palette.outline_variant};
                             padding: 3px;
                         }
 
                         #workspaces button {
                             padding: 1px;
-                            color: #ffffff;
+                            color: ${palette.on_surface};
                         }
 
                         #workspaces button.active {
-                            background-color: #64727D;
+                            background-color: ${palette.primary_container};
+                            color: ${palette.on_primary_container};
                         }
 
                         #workspaces button.urgent {
-                            background-color: #eb4d4b;
+                            background-color: ${palette.error_container};
+                            color: ${palette.on_error_container};
                         }
 
                         #custom-separator {
-                            color: white;
+                            color: ${palette.outline};
                             margin: 0 3px;
                             font-size: ${toString (biryani_bars.waybar.separator_size)}px;
                         }
 
                         #pulseaudio {
+                            background-color: ${palette.surface_container};
+                            color: ${palette.on_surface};
                             padding: 2px;
                         }
 
                         #pulseaudio.input.source-muted {
-                            background-color: #90b1b1;
-                            color: #2a5c45;
+                            background-color: ${palette.error_container};
+                            color: ${palette.on_error_container};
                         }
 
                         #pulseaudio.output.muted {
-                            background-color: #90b1b1;
-                            color: #2a5c45;
+                            background-color: ${palette.error_container};
+                            color: ${palette.on_error_container};
                         }
 
                         #tray {
@@ -445,13 +457,13 @@
                         }
 
                         #battery.warning {
-                            background-color: #fcba03;
-                            color: black;
+                            background-color: ${palette.primary_container};
+                            color: ${palette.on_primary_container};
                         }
 
                         #battery.critical {
-                            background-color: red;
-                            color: white;
+                            background-color: ${palette.error_container};
+                            color: ${palette.on_error_container};
                         }
 
                     '';
