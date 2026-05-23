@@ -39,12 +39,6 @@
                   caret-color: ${palette.primary};
                 }
 
-                window,
-                .background {
-                  background-color: ${palette.surface};
-                  color: ${palette.on_surface};
-                }
-
                 headerbar,
                 .titlebar,
                 popover,

@@ -41,7 +41,18 @@
                       font-size: 13px;
                     }
 
-                    .notification,
+                    notificationwindow,
+                    blankwindow,
+                    .blank-window,
+                    .floating-notifications,
+                    .notification-window,
+                    .notification-row,
+                    .notification-background {
+                      background: transparent;
+                      box-shadow: none;
+                    }
+
+                    .notification-row .notification-background .notification,
                     .control-center {
                       border: 1px solid ${palette.outline};
                       border-radius: 8px;
@@ -51,11 +62,19 @@
 
                     .notification-row:focus,
                     .notification-row:hover {
+                      background: transparent;
+                    }
+
+                    .notification-row:focus .notification-background .notification,
+                    .notification-row:hover .notification-background .notification {
                       background: ${palette.surface_container_high};
                     }
 
+                    .notification-default-action,
                     .notification-content {
                       padding: 8px;
+                      background: transparent;
+                      color: ${palette.on_surface};
                     }
 
                     .close-button {

@@ -41,6 +41,12 @@
                     biryani_theming.palette.matugen
                 else
                     biryani_theming.palette.static;
+            gtkCss = pkgs.writeText "ghostty-transparent.css" ''
+                window,
+                .background {
+                  background-color: transparent;
+                }
+            '';
 
             terminals_meta = import ../core/metadata/programs/terminals.nix { inherit config inputs pkgs; };
         in
@@ -56,9 +62,11 @@
 
                 settings = {
                     font-family = "${biryani_theming.fonts.main.name}";
+                    gtk-custom-css = [ "${gtkCss}" ];
                     window-decoration = false;
                     alpha-blending = "linear-corrected";
                     background-opacity = biryani_terminals.ghostty.background_opacity;
+                    background-opacity-cells = biryani_terminals.ghostty.background_opacity < 1.0;
                     background-blur = biryani_terminals.ghostty.background_blur;
                     background = palette.surface;
                     foreground = palette.on_surface;
