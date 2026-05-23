@@ -123,7 +123,7 @@
                 size = 26;
             };
             minimum_brightness = 40;
-            wallpaper = "${inputs.wallpapers}/mountain-24-1920×1080.png";
+            wallpaper = "${inputs.wallpapers}/panda-2-1920×1080.png";
             matugen = {
                 enable = true;
                 scheme = "scheme-content";

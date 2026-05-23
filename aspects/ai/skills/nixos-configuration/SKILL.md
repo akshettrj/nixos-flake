@@ -37,6 +37,13 @@ Hosts:
   can, try to add a `biryani.theming.matugen.integrations.<app>.enable` toggle
   and default it on with a static-palette fallback. Include browsers when they
   have declarative theme/color hooks, while avoiding brittle profile mutation.
+- Prefer app-native color formats over raw hex. Some TUI apps, notably
+  `ncmpcpp`, only accept terminal color names or indices; use terminal palette
+  colors there so matugen flows through the terminal instead of emitting invalid
+  `#rrggbb` values.
+- Avoid broad GTK CSS selectors that paint every `window` or `.background`.
+  They can break transparency for GTK layer-shell/terminal apps such as SwayNC
+  and Ghostty. Use app-specific CSS or narrow widget selectors when possible.
 
 ## Common Workflows
 
