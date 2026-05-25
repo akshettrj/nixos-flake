@@ -217,10 +217,7 @@
             screenlocks = {
                 enable = false;
                 swaylock.enable = true;
-                hyprlock = {
-                    enable = false;
-                    background_image = "${inputs.wallpapers}/gta-5-wallpaper-1920×1080.jpg";
-                };
+                hyprlock.enable = false;
             };
             clipboard_managers = {
                 enable = false;

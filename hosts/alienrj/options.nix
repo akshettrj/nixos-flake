@@ -307,10 +307,10 @@
             };
             screenlocks = {
                 enable = true;
-                swaylock.enable = true;
+                swaylock.enable = false;
                 hyprlock = {
-                    enable = false;
-                    background_image = "${inputs.wallpapers}/gta-5-wallpaper-1920×1080.jpg";
+                    enable = true;
+                    font_size = 16;
                 };
             };
             clipboard_managers = {
@@ -374,7 +374,7 @@
                 use_official_packages = false;
                 scroll_factor = 0.2;
                 launcher = "bemenu";
-                screenlock = "swaylock";
+                screenlock = "hyprlock";
                 screenshot_tool = "hyprshot";
                 clipboard_manager = "copyq";
                 monitors = [

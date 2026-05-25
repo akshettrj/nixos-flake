@@ -168,9 +168,10 @@ in
 
             screenlocks = {
                 enable = lib.mkEnableOption "screenlock configuration.";
-                hyprlock.background_image = lib.mkOption {
-                    type = lib.types.path;
-                    description = "Background image used by Hyprlock.";
+                hyprlock.font_size = lib.mkOption {
+                    type = lib.types.ints.positive;
+                    default = 16;
+                    description = "Base font size used by Hyprlock text widgets.";
                 };
             };
 
