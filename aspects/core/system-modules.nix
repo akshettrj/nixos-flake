@@ -4,6 +4,7 @@
         ../ai/system.nix
         ../browsers/system.nix
         ../communication/system.nix
+        ../data-protection/system.nix
         ../desktop/system.nix
         ../dev/system.nix
         ../editing/system.nix

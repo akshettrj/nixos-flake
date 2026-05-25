@@ -10,6 +10,13 @@ let
         declarations = map toString (option.declarations or [ ]);
     };
 
+    optionSubOptions =
+        option:
+        if option ? type && option.type ? nestedTypes && option.type.nestedTypes ? elemType then
+            option.type.nestedTypes.elemType.getSubOptions [ ]
+        else
+            { };
+
     collectOptions =
         graph: prefix: attrs:
         lib.flatten (
@@ -21,6 +28,7 @@ let
                 in
                 if lib.isOption value then
                     [ (optionToRecord graph path value) ]
+                    ++ collectOptions graph (pathParts ++ [ "<name>" ]) (optionSubOptions value)
                 else if builtins.isAttrs value then
                     collectOptions graph pathParts value
                 else

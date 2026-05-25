@@ -74,6 +74,39 @@
                 port = 8082;
                 data_dir = config.biryani.user.homedir + "/.local/share/telegram-bot-api";
             };
+            backups = {
+                enable = true;
+                client = {
+                    enable = true;
+                    jobs.self-hosted.paths = [
+                        "/var/lib/firefly-iii"
+                        "/var/lib/freshrss"
+                        "/var/lib/vikunja/vikunja.db"
+                        "/var/lib/navidrome"
+                        "/var/lib/audiobookshelf"
+                    ];
+                };
+            };
+            sync = {
+                enable = true;
+                group = "navidrome";
+                devices = {
+                    raspi.id = "NJURPXN-EV5J6RQ-CAKG53B-7GETTR3-UFGJBEQ-2GSYGIF-P27KQ46-EHNFKQQ";
+                    alienrj.id = "EAGTE5Z-U4T2GZM-HAS3FYD-EEEC7LX-YKGPQ6M-ZAQ2ZPH-3LAOQRZ-YJS4XA5";
+                };
+                folders.music = {
+                    path = "/home/akshettrj/media/music";
+                    permissions = {
+                        owner = "akshettrj";
+                        group = "navidrome";
+                        mode = "0770";
+                    };
+                    devices = [
+                        "raspi"
+                        "alienrj"
+                    ];
+                };
+            };
             nginx.enable = true;
             self_hosted = {
                 firefly_iii = {

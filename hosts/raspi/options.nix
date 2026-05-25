@@ -52,6 +52,24 @@
             xdg_portal.enable = false;
             telegram_bot_api.enable = false;
             openvpn.enable = false;
+            backups = {
+                enable = true;
+                receiver.enable = true;
+            };
+            sync = {
+                enable = true;
+                devices = {
+                    oracleamperehyd.id = "NQU5OGN-WPJA7R6-S5LDKEF-DBGMSI7-4CO45B5-XHDG65B-BOLUCLD-YTS2MAZ";
+                    alienrj.id = "EAGTE5Z-U4T2GZM-HAS3FYD-EEEC7LX-YKGPQ6M-ZAQ2ZPH-3LAOQRZ-YJS4XA5";
+                };
+                folders.music = {
+                    path = "/home/akshettrj/media/music";
+                    devices = [
+                        "oracleamperehyd"
+                        "alienrj"
+                    ];
+                };
+            };
         };
 
         # Nix/NixOS specific

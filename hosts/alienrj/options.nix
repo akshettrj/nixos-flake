@@ -85,6 +85,20 @@
             };
             nginx.enable = false;
             openvpn.enable = false;
+            sync = {
+                enable = true;
+                devices = {
+                    oracleamperehyd.id = "NQU5OGN-WPJA7R6-S5LDKEF-DBGMSI7-4CO45B5-XHDG65B-BOLUCLD-YTS2MAZ";
+                    raspi.id = "NJURPXN-EV5J6RQ-CAKG53B-7GETTR3-UFGJBEQ-2GSYGIF-P27KQ46-EHNFKQQ";
+                };
+                folders.music = {
+                    path = "/home/akshettrj/media/music";
+                    devices = [
+                        "oracleamperehyd"
+                        "raspi"
+                    ];
+                };
+            };
         };
 
         # Nix/NixOS specific
