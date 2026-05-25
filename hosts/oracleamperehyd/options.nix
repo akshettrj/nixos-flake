@@ -93,6 +93,7 @@
                 devices = {
                     raspi.id = "NJURPXN-EV5J6RQ-CAKG53B-7GETTR3-UFGJBEQ-2GSYGIF-P27KQ46-EHNFKQQ";
                     alienrj.id = "EAGTE5Z-U4T2GZM-HAS3FYD-EEEC7LX-YKGPQ6M-ZAQ2ZPH-3LAOQRZ-YJS4XA5";
+                    mac.id = "KSQEHMB-Q4EM5R4-WTICYHC-Y57QPAU-ZPDEVUJ-PCDNEWG-HUBFQBF-KYVJLQI";
                 };
                 folders.music = {
                     path = "/home/akshettrj/media/music";
@@ -104,6 +105,7 @@
                     devices = [
                         "raspi"
                         "alienrj"
+                        "mac"
                     ];
                 };
             };
