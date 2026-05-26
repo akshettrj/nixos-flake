@@ -296,7 +296,7 @@
                 backup = "helix";
                 neovim = {
                     enable = true;
-                    nightly = true;
+                    nightly = false;
                 };
                 helix = {
                     enable = true;
