@@ -2134,11 +2134,11 @@
     "wallpapers": {
       "flake": false,
       "locked": {
-        "lastModified": 1720617165,
-        "narHash": "sha256-xEKa13Bpn/xJ+1pxtT2olYZ7SGa5P3s/bPTqLZDWnc4=",
+        "lastModified": 1779729599,
+        "narHash": "sha256-+IeYdMg3Yfuqw8J7uLoBVSMMTEEZdBiW3+LhEILtZDk=",
         "owner": "Propheci",
         "repo": "wallpapers",
-        "rev": "dbc889672805a2a0402eecfeec42ebeca658cc5c",
+        "rev": "a657fa42b14afcbabfc96c7bb49b4480bb499140",
         "type": "github"
       },
       "original": {

@@ -61,7 +61,7 @@
 
                 label {
                     text = cmd[update:60000] ${pkgs.bash}/bin/bash -c 'hour=$(${pkgs.coreutils}/bin/date +%H); if (( hour < 12 )); then part=Morning; elif (( hour < 17 )); then part=Afternoon; else part=Evening; fi; printf "Good %s, %s" "$part" "$USER"'
-                    color = rgba(${lib.removePrefix "#" palette.on_surface_variant}dd)
+                    color = rgba(${lib.removePrefix "#" palette.secondary}e6)
                     font_size = ${toString base_font_size}
                     font_family = ${biryani_theming.fonts.main.name}
                     position = 0, 165
@@ -71,7 +71,7 @@
 
                 label {
                     text = $TIME
-                    color = rgb(${lib.removePrefix "#" palette.on_surface})
+                    color = rgb(${lib.removePrefix "#" palette.primary})
                     font_size = ${toString time_font_size}
                     font_family = ${biryani_theming.fonts.main.name}
                     shadow_passes = 3
@@ -83,7 +83,7 @@
 
                 label {
                     text = cmd[update:1000] ${pkgs.coreutils}/bin/date +%S
-                    color = rgba(${lib.removePrefix "#" palette.on_surface_variant}e6)
+                    color = rgba(${lib.removePrefix "#" palette.tertiary}e6)
                     font_size = ${toString seconds_font_size}
                     font_family = ${biryani_theming.fonts.main.name}
                     position = 198, 37
@@ -93,7 +93,7 @@
 
                 label {
                     text = cmd[update:60000] ${pkgs.coreutils}/bin/date '+%A, %B %d'
-                    color = rgb(${lib.removePrefix "#" palette.on_surface})
+                    color = rgb(${lib.removePrefix "#" palette.secondary})
                     font_size = ${toString base_font_size}
                     font_family = ${biryani_theming.fonts.main.name}
                     position = 0, -60
@@ -115,7 +115,7 @@
                     shadow_boost = 1.2
                     outer_color = rgba(${lib.removePrefix "#" palette.outline}cc)
                     inner_color = rgba(${lib.removePrefix "#" palette.surface_container}55)
-                    font_color = rgb(${lib.removePrefix "#" palette.on_surface})
+                    font_color = rgb(${lib.removePrefix "#" palette.primary})
                     check_color = rgb(${lib.removePrefix "#" palette.primary})
                     fail_color = rgb(${lib.removePrefix "#" palette.error})
                     halign = center
