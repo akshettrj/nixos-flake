@@ -176,6 +176,7 @@
                     };
                 };
                 skills = import ../../aspects/ai/skills.nix { inherit inputs; };
+                commands = import ../../aspects/ai/commands.nix { inherit inputs; };
                 cursor.enable = true;
                 codex = {
                     enable = true;

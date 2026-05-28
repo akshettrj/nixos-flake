@@ -22,6 +22,11 @@ in
             type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
             description = "Skill definitions exposed to AI tools.";
         };
+        commands = lib.mkOption {
+            type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
+            default = { };
+            description = "Command prompt definitions exposed to AI tools.";
+        };
         cursor.enable = lib.mkEnableOption "Cursor editor AI integration.";
         gemini = {
             enable = lib.mkEnableOption "Gemini CLI.";

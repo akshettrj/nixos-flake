@@ -16,6 +16,12 @@ in
             description = "Skill definitions exposed to configured AI tools.";
         };
 
+        commands = lib.mkOption {
+            type = lib.types.attrsOf (lib.types.either lib.types.lines lib.types.path);
+            default = { };
+            description = "Command prompt definitions exposed to configured AI tools.";
+        };
+
         cursor.enable = lib.mkEnableOption "Cursor editor AI integration.";
 
         gemini = {
