@@ -116,20 +116,6 @@ in
             // cfg.settings;
         };
 
-        systemd.services.postgresql.serviceConfig = {
-            NoNewPrivileges = true;
-            PrivateTmp = true;
-            ProtectClock = true;
-            ProtectControlGroups = true;
-            ProtectHome = true;
-            ProtectHostname = true;
-            ProtectKernelLogs = true;
-            ProtectKernelModules = true;
-            ProtectKernelTunables = true;
-            RestrictAddressFamilies = lib.mkForce [ "AF_UNIX" ];
-            RestrictNamespaces = true;
-            RestrictRealtime = true;
-            SystemCallArchitectures = "native";
-        };
+        systemd.services.postgresql.serviceConfig.SystemCallFilter = lib.mkForce [ ];
     };
 }

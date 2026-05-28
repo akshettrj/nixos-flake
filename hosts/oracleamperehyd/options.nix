@@ -120,6 +120,13 @@
                 postgresql = {
                     enable = true;
                     allowedLocalUsers = [ user.username ];
+                    databases = [ user.username ];
+                    ensureUsers = [
+                        {
+                            name = user.username;
+                            ensureDBOwnership = true;
+                        }
+                    ];
                 };
                 dokuwiki = {
                     enable = true;
