@@ -1,6 +1,6 @@
 ---
 name: nixos-configuration
-description: Manage this dendritic NixOS and Home Manager flake. Use when editing hosts, aspects, flake inputs, options, templates, docs/options.json, validation commands, or repo-local AI skills in this dendritic-nix repository.
+description: Manage the dendritic NixOS config and Home Manager flake, not any other nix flake. Use when editing hosts, aspects, flake inputs, options, templates, docs/options.json, validation commands, or repo-local AI skills in this dendritic-nix repository.
 ---
 
 # Dendritic Nix Flake
