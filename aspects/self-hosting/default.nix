@@ -9,6 +9,7 @@
         ./glance.nix
         ./navidrome.nix
         ./overleaf_docker.nix
+        ./postgresql.nix
         ./vikunja.nix
         ./watgbridge.nix
     ];

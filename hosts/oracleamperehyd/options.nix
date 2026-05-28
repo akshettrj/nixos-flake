@@ -84,6 +84,7 @@
                         "/var/lib/vikunja/vikunja.db"
                         "/var/lib/navidrome"
                         "/var/lib/audiobookshelf"
+                        "/var/lib/postgresql"
                     ];
                 };
             };
@@ -115,6 +116,10 @@
                     enable = true;
                     hostname = "ff.nfak.xyz";
                     nginx.enable_ssl = true;
+                };
+                postgresql = {
+                    enable = true;
+                    allowedLocalUsers = [ user.username ];
                 };
                 dokuwiki = {
                     enable = true;
