@@ -4,14 +4,6 @@
         let
             biryani_ai = config.biryani.programs.ai;
             biryani_codex = biryani_ai.codex;
-            isStorePathString =
-                content: builtins.isString content && lib.hasPrefix "${builtins.storeDir}/" content;
-            isPathLikeContent = content: lib.isPath content || isStorePathString content;
-            mkCommandEntry =
-                n: v:
-                lib.nameValuePair "codex/commands/${n}.toml" (
-                    if isPathLikeContent v then { source = v; } else { text = v; }
-                );
         in
         lib.mkIf (biryani_ai.enable && biryani_codex.enable) {
             programs.codex = {
@@ -36,7 +28,5 @@
             home.sessionVariables = {
                 CODEX_HOME = "${config.xdg.configHome}/codex";
             };
-
-            xdg.configFile = lib.mapAttrs' mkCommandEntry biryani_ai.commands;
         };
 }

@@ -10,6 +10,5 @@
         mcpServers = biryani.programs.ai.mcpServers;
         ollama = biryani.programs.ai.ollama;
         skills = biryani.programs.ai.skills;
-        commands = biryani.programs.ai.commands;
     };
 }
