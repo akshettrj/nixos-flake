@@ -28,6 +28,13 @@ in
                 description = "Codex-specific MCP server configuration.";
             };
         };
+        claude-code = {
+            enable = lib.mkEnableOption "Claude Code CLI.";
+            mcpServers = lib.mkOption {
+                type = jsonFormat.type;
+                description = "Claude-Code-specific MCP server configuration.";
+            };
+        };
         ollama = {
             enable = lib.mkEnableOption "Ollama service.";
             acceleration = lib.mkOption {

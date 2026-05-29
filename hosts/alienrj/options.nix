@@ -181,6 +181,10 @@
                     enable = true;
                     mcpServers = null;
                 };
+                claude-code = {
+                    enable = true;
+                    mcpServers = null;
+                };
                 gemini = {
                     enable = true;
                     mcpServers = null;

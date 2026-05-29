@@ -6,6 +6,7 @@
     // lib.optionalAttrs (biryani.programs.ai.enable or false) {
         codex = biryani.programs.ai.codex;
         cursor = biryani.programs.ai.cursor;
+        claude-code = biryani.programs.ai.claude-code;
         gemini = biryani.programs.ai.gemini;
         mcpServers = biryani.programs.ai.mcpServers;
         ollama = biryani.programs.ai.ollama;
