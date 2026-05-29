@@ -143,6 +143,9 @@
                 scheme = "scheme-content";
                 mode = "dark";
                 integrations = {
+                    brave.enable = false;
+                    chrome.enable = false;
+                    chromium.enable = false;
                     # ghostty.enable = true;
                 };
             };

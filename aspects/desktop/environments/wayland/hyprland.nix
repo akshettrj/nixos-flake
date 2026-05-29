@@ -247,8 +247,9 @@
                         hl.env("QT_QPA_PLATFORM", "wayland;xcb")
                         hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
                         ${lib.optionalString (biryani_theming.qt && biryani_theming.matugen.integrations.qt.enable) ''
-                            hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
-                            hl.env("QT_STYLE_OVERRIDE", "kvantum")
+                            hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
+                            hl.env("QT_STYLE_OVERRIDE", "qt6ct-style")
+                            hl.env("QT_PLUGIN_PATH", "${config.home.profileDirectory}/lib/qt-6/plugins")
                         ''}
                         hl.env("SDL_VIDEODRIVER", "wayland")
                         hl.env("LIBSEAT_BACKEND", "logind")

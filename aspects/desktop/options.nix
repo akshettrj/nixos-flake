@@ -134,14 +134,26 @@ in
                 };
                 integrations = {
                     alacritty.enable = mkMatugenIntegrationEnable "Alacritty";
+                    bat.enable = mkMatugenIntegrationEnable "bat";
                     bemenu.enable = mkMatugenIntegrationEnable "bemenu";
+                    brave.enable = mkMatugenIntegrationEnable "Brave";
+                    btop.enable = mkMatugenIntegrationEnable "btop";
+                    chrome.enable = mkMatugenIntegrationEnable "Google Chrome";
+                    chromium.enable = mkMatugenIntegrationEnable "Chromium";
                     dunst.enable = mkMatugenIntegrationEnable "Dunst";
+                    flameshot.enable = mkMatugenIntegrationEnable "Flameshot";
                     ghostty.enable = mkMatugenIntegrationEnable "Ghostty";
+                    gtk.enable = mkMatugenIntegrationEnable "GTK";
+                    hyprland.enable = mkMatugenIntegrationEnable "Hyprland";
                     hyprlock.enable = mkMatugenIntegrationEnable "Hyprlock";
+                    ncmpcpp.enable = mkMatugenIntegrationEnable "ncmpcpp";
+                    qt.enable = mkMatugenIntegrationEnable "Qt";
                     swaylock.enable = mkMatugenIntegrationEnable "Swaylock";
                     swaync.enable = mkMatugenIntegrationEnable "SwayNotificationCenter";
                     waybar.enable = mkMatugenIntegrationEnable "Waybar";
                     wezterm.enable = mkMatugenIntegrationEnable "WezTerm";
+                    yazi.enable = mkMatugenIntegrationEnable "Yazi";
+                    zathura.enable = mkMatugenIntegrationEnable "Zathura";
                 };
             };
         };
