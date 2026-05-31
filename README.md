@@ -26,5 +26,7 @@ nix build .#homeConfigurations.<user>@<server>.activationPackage \
 
 ## TODOs
 
-- [ ] Make graphics module's 32 bit support configurable
+- [X] Make graphics module's 32 bit support configurable
 - [ ] Make blurs in a lot of programs configurable for raspi
+- [ ] Secrets management
+- [ ] Quickshell setup
