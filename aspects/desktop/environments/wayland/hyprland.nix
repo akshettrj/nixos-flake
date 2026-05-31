@@ -265,6 +265,7 @@
                         ''}
                         ${lib.optionalString biryani_hw.nvidia.enable ''
                             hl.env("LIBVA_DRIVER_NAME", "nvidia")
+                            hl.env("NVD_BACKEND", "direct")
                             hl.env("WLR_NO_HARDWARE_CURSORS", "1")
                         ''}
 

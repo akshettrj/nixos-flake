@@ -286,7 +286,13 @@
                 main = "brave";
                 brave = {
                     enable = true;
-                    cmd_args = [ ];
+                    cmd_args = [
+                        "--ozone-platform=wayland"
+                        "--use-gl=egl"
+                        "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks"
+                        "--ignore-gpu-blocklist"
+                        "--enable-gpu-rasterization"
+                    ];
                 };
                 firefox.enable = true;
                 chromium.enable = false;

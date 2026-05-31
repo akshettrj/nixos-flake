@@ -44,7 +44,7 @@
             hardware.graphics = {
                 enable = true;
                 enable32Bit = supports32BitGraphics;
-                extraPackages = [ pkgs.mesa ];
+                extraPackages = [ pkgs.mesa pkgs.nvidia-vaapi-driver ];
             };
 
             services.xserver.videoDrivers = [ "nvidia" ];
