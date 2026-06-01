@@ -320,6 +320,7 @@ in
                 hyprlock.enable = mkIntegrationEnable "Hyprlock";
                 ncmpcpp.enable = mkIntegrationEnable "ncmpcpp";
                 qt.enable = mkIntegrationEnable "Qt";
+                quickshell.enable = mkIntegrationEnable "Quickshell";
                 swaylock.enable = mkIntegrationEnable "Swaylock";
                 swaync.enable = mkIntegrationEnable "SwayNotificationCenter";
                 waybar.enable = mkIntegrationEnable "Waybar";

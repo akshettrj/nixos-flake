@@ -148,6 +148,7 @@ in
                     hyprlock.enable = mkMatugenIntegrationEnable "Hyprlock";
                     ncmpcpp.enable = mkMatugenIntegrationEnable "ncmpcpp";
                     qt.enable = mkMatugenIntegrationEnable "Qt";
+                    quickshell.enable = mkMatugenIntegrationEnable "Quickshell";
                     swaylock.enable = mkMatugenIntegrationEnable "Swaylock";
                     swaync.enable = mkMatugenIntegrationEnable "SwayNotificationCenter";
                     waybar.enable = mkMatugenIntegrationEnable "Waybar";
