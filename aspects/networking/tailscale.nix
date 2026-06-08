@@ -24,7 +24,7 @@
                 useRoutingFeatures = "both";
                 extraSetFlags = [
                     "--operator=${biryani_user.username}"
-                ] ++ lib.mkIf biryani_services.tailscale.advertise_exit_node [
+                ] ++ lib.optionals biryani_services.tailscale.advertise_exit_node [
                     "--advertise-exit-node"
                 ];
                 extraDaemonFlags = [

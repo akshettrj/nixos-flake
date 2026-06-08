@@ -76,7 +76,10 @@
                     x11_forwarding = false;
                 };
             };
-            tailscale.enable = true;
+            tailscale = {
+                enable = true;
+                advertise_exit_node = false;
+            };
             xdg_portal.enable = false;
             telegram_bot_api = {
                 enable = true;
