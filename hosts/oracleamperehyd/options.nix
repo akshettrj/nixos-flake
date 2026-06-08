@@ -97,7 +97,7 @@
                     mac.id = "KSQEHMB-Q4EM5R4-WTICYHC-Y57QPAU-ZPDEVUJ-PCDNEWG-HUBFQBF-KYVJLQI";
                 };
                 folders.music = {
-                    path = "/home/akshettrj/media/music";
+                    path = "/media/music";
                     permissions = {
                         owner = "akshettrj";
                         group = "navidrome";
