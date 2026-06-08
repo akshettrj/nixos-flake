@@ -67,7 +67,10 @@
                 network = "10.8.0.0/24";
                 cipher = "AES-256-GCM";
             };
-            tailscale.enable = true;
+            tailscale = {
+                enable = true;
+                advertise_exit_node = true;
+            };
             xdg_portal.enable = false;
             telegram_bot_api = {
                 enable = true;
