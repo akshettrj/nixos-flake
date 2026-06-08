@@ -18,7 +18,16 @@
                 mcpServers = lib.mkIf (biryani_claude_code.mcpServers != null) biryani_claude_code.mcpServers;
                 settings = {
                     theme = "auto";
+                    model = "claude-opus-4-8";
+                    effortLevel = "high";
                     editorMode = "vim";
+                    env = {
+                        ENABLE_LSP_TOOL = "1";
+                    };
+                    statusLine = {
+                        type = "command";
+                        command = ''input=$(cat); model=$(echo "$input" | jq -r '.model.display_name // "Claude"'); cwd=$(echo "$input" | jq -r '.cwd // ""'); dir=$(basename "$cwd"); used=$(echo "$input" | jq -r '.context_window.used_percentage // empty'); ctx_str=""; [ -n "$used" ] && ctx_str=" ctx:$(printf '%.0f' "$used")%"; five=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty'); rate_str=""; [ -n "$five" ] && rate_str=" 5h:$(printf '%.0f' "$five")%"; printf "%s  %s%s%s" "$model" "$dir" "$ctx_str" "$rate_str"'';
+                    };
                 };
             };
 
