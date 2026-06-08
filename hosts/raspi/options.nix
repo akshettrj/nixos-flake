@@ -48,7 +48,10 @@
                     x11_forwarding = true;
                 };
             };
-            tailscale.enable = true;
+            tailscale = {
+                enable = true;
+                advertise_exit_node = true;
+            };
             xdg_portal.enable = false;
             telegram_bot_api.enable = false;
             openvpn.enable = false;
