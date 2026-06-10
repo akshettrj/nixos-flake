@@ -1,5 +1,4 @@
-{ config, inputs, ... }:
-{
+{ config, inputs, ... }: {
     imports = [
         ./options.nix
         ./disk-config.nix

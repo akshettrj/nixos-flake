@@ -1,5 +1,4 @@
-{ lib, biryani, ... }:
-{
+{ lib, biryani, ... }: {
     config.biryani.programs.ai = {
         enable = biryani.programs.ai.enable or false;
     }

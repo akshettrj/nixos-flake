@@ -1,4 +1,1 @@
-{ ... }:
-{
-    imports = [ ./containers.nix ];
-}
+{ ... }: { imports = [ ./containers.nix ]; }

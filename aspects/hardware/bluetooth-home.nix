@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.hardware.bluetooth.enable = lib.mkOption {
         type = lib.types.bool;
         description = "Write Home Manager Bluetooth companion configuration.";

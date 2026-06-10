@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
     imports = [
         ../ai/system.nix
         ../browsers/system.nix

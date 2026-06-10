@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
     imports = [
         ../ai
         ../browsers

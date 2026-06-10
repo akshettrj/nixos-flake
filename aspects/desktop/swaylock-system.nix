@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.programs.screenlocks.swaylock.enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enable Swaylock system PAM integration.";

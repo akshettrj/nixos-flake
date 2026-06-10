@@ -1,4 +1,1 @@
-{ ... }:
-{
-    imports = [ ./mpd ];
-}
+{ ... }: { imports = [ ./mpd ]; }

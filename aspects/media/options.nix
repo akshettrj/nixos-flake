@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
     options.biryani.programs.media = {
         enable = lib.mkEnableOption "home media programs and services.";
         services.mpris.enable = lib.mkEnableOption "MPRIS command-line controls.";

@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani =
         let
             inherit (lib) mkOption types;

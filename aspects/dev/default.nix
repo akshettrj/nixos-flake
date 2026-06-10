@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
     imports = [
         ./home-bridge.nix
         ./cachix.nix

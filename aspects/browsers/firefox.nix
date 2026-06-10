@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.programs.browsers.firefox.enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enable Firefox through Home Manager.";

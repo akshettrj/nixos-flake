@@ -1,5 +1,4 @@
-{ lib, biryani, ... }:
-{
+{ lib, biryani, ... }: {
     config.biryani = {
         hardware = {
             nvidia.enable = biryani.hardware.nvidia.enable;

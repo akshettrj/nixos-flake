@@ -1,4 +1,1 @@
-{ biryani, ... }:
-{
-    config.biryani.programs.media = biryani.programs.media;
-}
+{ biryani, ... }: { config.biryani.programs.media = biryani.programs.media; }

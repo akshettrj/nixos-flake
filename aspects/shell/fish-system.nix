@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.shells.fish.enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enable Fish shell system integration.";

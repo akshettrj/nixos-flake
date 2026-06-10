@@ -1,5 +1,4 @@
-{ pkgs }:
-{
+{ pkgs }: {
     brave = rec {
         pkg = pkgs.brave;
         bin = "${pkg}/bin/brave";

@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.services.self_hosted.audiobookshelf = {
         enable = lib.mkEnableOption "Audiobookshelf";
 

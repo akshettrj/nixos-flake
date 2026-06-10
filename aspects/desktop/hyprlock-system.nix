@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.programs.screenlocks.hyprlock.enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enable Hyprlock system PAM integration.";

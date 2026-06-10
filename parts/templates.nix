@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
     flake.templates = {
         golang = {
             path = ../templates/golang;

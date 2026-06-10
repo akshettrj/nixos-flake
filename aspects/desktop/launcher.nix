@@ -1,5 +1,4 @@
-{ lib, config, ... }:
-{
+{ lib, config, ... }: {
     options.biryani = {
         programs.launchers = {
             enable = lib.mkOption {

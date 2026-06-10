@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
     imports = [
         ./quickshell
         ./waybar.nix

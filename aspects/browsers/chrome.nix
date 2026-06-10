@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.programs.browsers.chrome = {
         enable = lib.mkOption {
             type = lib.types.bool;

@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.services.virtualisation = {
         enable = lib.mkOption {
             type = lib.types.bool;

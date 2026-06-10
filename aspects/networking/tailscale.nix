@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.services.tailscale = {
         enable = lib.mkOption {
             type = lib.types.bool;
@@ -24,12 +23,9 @@
                 useRoutingFeatures = "both";
                 extraSetFlags = [
                     "--operator=${biryani_user.username}"
-                ] ++ lib.optionals biryani_services.tailscale.advertise_exit_node [
-                    "--advertise-exit-node"
-                ];
-                extraDaemonFlags = [
-                    "--no-logs-no-support"
-                ];
+                ]
+                ++ lib.optionals biryani_services.tailscale.advertise_exit_node [ "--advertise-exit-node" ];
+                extraDaemonFlags = [ "--no-logs-no-support" ];
             };
         };
 }

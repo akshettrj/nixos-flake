@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
     options.biryani.dev = {
         git = {
             enable = lib.mkOption {

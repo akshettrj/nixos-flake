@@ -1,5 +1,4 @@
-{ inputs, pkgs, ... }:
-{
+{ inputs, pkgs, ... }: {
     environment.systemPackages = with pkgs; [
         # BASE + BASE-DEVEL
         binutils

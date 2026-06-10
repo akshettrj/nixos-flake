@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.services.self_hosted.adguard = {
         enable = lib.mkEnableOption "AdGuard Home";
 

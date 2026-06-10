@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.shells.zsh.enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enable Zsh system integration.";

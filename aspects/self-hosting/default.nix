@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
     imports = [
         ./audiobookshelf.nix
         ./adguard.nix

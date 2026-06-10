@@ -1,4 +1,1 @@
-{ ... }:
-{
-    imports = [ ./lf.nix ];
-}
+{ ... }: { imports = [ ./lf.nix ]; }

@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.services.nginx.enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enable the shared Nginx reverse proxy service.";

@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.programs.screenshot_tools = {
         enable = lib.mkOption {
             type = lib.types.bool;

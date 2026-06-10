@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.programs.file_explorers.yazi.enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enable Yazi through Home Manager.";

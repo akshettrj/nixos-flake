@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
     options.biryani.programs.social_media = {
         telegram.enable = lib.mkEnableOption "Telegram Desktop.";
         discord.enable = lib.mkEnableOption "Discord.";

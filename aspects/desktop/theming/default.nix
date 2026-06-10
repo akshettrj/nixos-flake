@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{ lib, ... }: {
     imports = [
         ./gtk.nix
         ./matugen.nix

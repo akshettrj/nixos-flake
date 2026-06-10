@@ -1,4 +1,1 @@
-{ ... }:
-{
-    imports = [ ./options-shared.nix ];
-}
+{ ... }: { imports = [ ./options-shared.nix ]; }

@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.shells.bash.enable = lib.mkOption {
         type = lib.types.bool;
         description = "Enable system integration for Bash completion files.";

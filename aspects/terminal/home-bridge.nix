@@ -1,4 +1,1 @@
-{ biryani, ... }:
-{
-    config.biryani.programs.terminals = biryani.programs.terminals;
-}
+{ biryani, ... }: { config.biryani.programs.terminals = biryani.programs.terminals; }

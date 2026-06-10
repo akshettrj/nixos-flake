@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     config =
         let
             biryani_theming = config.biryani.theming;

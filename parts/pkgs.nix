@@ -39,19 +39,17 @@ in
             importPkgs pkgsInput { inherit system allowUnfree overlays; };
     };
 
-    perSystem =
-        { system, ... }:
-        {
-            _module.args.pkgsStable = importPkgs inputs.nixpkgs-stable {
-                inherit system;
-                allowUnfree = true;
-                overlays = [ ];
-            };
-
-            _module.args.pkgsMaster = importPkgs inputs.nixpkgs-master {
-                inherit system;
-                allowUnfree = true;
-                overlays = [ ];
-            };
+    perSystem = { system, ... }: {
+        _module.args.pkgsStable = importPkgs inputs.nixpkgs-stable {
+            inherit system;
+            allowUnfree = true;
+            overlays = [ ];
         };
+
+        _module.args.pkgsMaster = importPkgs inputs.nixpkgs-master {
+            inherit system;
+            allowUnfree = true;
+            overlays = [ ];
+        };
+    };
 }

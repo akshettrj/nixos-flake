@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
     flake.hosts = {
         alienrj = {
             system = "x86_64-linux";

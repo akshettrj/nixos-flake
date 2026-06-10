@@ -1,4 +1,1 @@
-{ ... }:
-{
-    imports = [ ./base-home.nix ];
-}
+{ ... }: { imports = [ ./base-home.nix ]; }

@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
     options.biryani.theming.gtk = lib.mkOption {
         type = lib.types.bool;
         description = "Enable system GTK integration required by desktop theming.";

@@ -1,5 +1,4 @@
-{ lib, config, ... }:
-{
+{ lib, config, ... }: {
     options.biryani.programs.screenlocks = {
         enable = lib.mkOption {
             type = lib.types.bool;

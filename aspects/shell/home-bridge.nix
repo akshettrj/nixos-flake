@@ -1,5 +1,4 @@
-{ biryani, ... }:
-{
+{ biryani, ... }: {
     config.biryani.shells = {
         aliases = biryani.shells.aliases;
         bash.enable = biryani.shells.bash.enable;

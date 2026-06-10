@@ -1,5 +1,4 @@
-{ pkgs }:
-{
+{ pkgs }: {
     lf = rec {
         pkg = pkgs.lf;
         bin = "${pkg}/bin/lf";
