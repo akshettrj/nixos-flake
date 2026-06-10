@@ -9,6 +9,7 @@
             "https://hyprland.cachix.org"
             "https://helix.cachix.org"
             "https://wezterm.cachix.org"
+            "https://cache.numtide.com"
         ];
 
         extra-trusted-public-keys = [
@@ -18,6 +19,7 @@
             "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
             "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
             "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0="
+            "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
         ];
     };
 
@@ -96,6 +98,8 @@
             url = "github:JuliusBrussee/caveman";
             flake = false;
         };
+
+        llm-agents.url = "github:numtide/llm-agents.nix";
     };
 
     outputs =
@@ -111,10 +115,6 @@
                 ./parts/templates.nix
             ];
 
-            perSystem =
-                { pkgs, ... }:
-                {
-                    packages.default = pkgs.hello;
-                };
+            perSystem = { pkgs, ... }: { packages.default = pkgs.hello; };
         };
 }
