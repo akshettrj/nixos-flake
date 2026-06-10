@@ -9,4 +9,5 @@ inputs.mcp_python.skills
     caveman-help = "${inputs.caveman_skill}/skills/caveman-help";
     caveman-review = "${inputs.caveman_skill}/skills/caveman-review";
     caveman-stats = "${inputs.caveman_skill}/skills/caveman-stats";
+    improve = "${inputs.improve_skill}/skills/improve";
 }

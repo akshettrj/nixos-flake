@@ -99,6 +99,11 @@
             flake = false;
         };
 
+        improve_skill = {
+            url = "github:shadcn/improve";
+            flake = false;
+        };
+
         llm-agents.url = "github:numtide/llm-agents.nix";
     };
 
