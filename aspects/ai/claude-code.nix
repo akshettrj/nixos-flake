@@ -27,6 +27,7 @@
                     model = "claude-opus-4-8";
                     effortLevel = "high";
                     editorMode = "vim";
+                    includeCoAuthoredBy = false;
                     env = {
                         ENABLE_LSP_TOOL = "1";
                     };
