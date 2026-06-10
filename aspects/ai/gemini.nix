@@ -11,7 +11,7 @@
             biryani_gemini = biryani_ai.gemini;
         in
         lib.mkIf (biryani_ai.enable && biryani_gemini.enable) {
-            programs.gemini-cli = {
+            programs.antigravity-cli = {
                 enable = true;
                 package = pkgs.llm-agents.gemini-cli;
                 enableMcpIntegration = true;

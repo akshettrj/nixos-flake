@@ -111,6 +111,7 @@
             hyprland_cache = true;
             helix_cache = true;
             wezterm_cache = true;
+            numtide_cache = true;
         };
 
         # Appearance

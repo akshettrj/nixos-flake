@@ -42,6 +42,11 @@
                 type = types.bool;
                 description = "Trust and use the WezTerm binary cache.";
             };
+
+            numtide_cache = mkOption {
+                type = types.bool;
+                description = "Trust and use the numtide binary cache.";
+            };
         };
 
     config =
@@ -65,6 +70,7 @@
                     ++ lib.optionals biryani_nix.nix_community_cache [ "https://nix-community.cachix.org" ]
                     ++ lib.optionals biryani_nix.hyprland_cache [ "https://hyprland.cachix.org" ]
                     ++ lib.optionals biryani_nix.helix_cache [ "https://helix.cachix.org" ]
+                    ++ lib.optionals biryani_nix.numtide_cache [ "https://cache.numtide.com" ]
                     ++ lib.optionals biryani_nix.wezterm_cache [ "https://wezterm.cachix.org" ];
                     extra-trusted-public-keys = [
                         "propheci.cachix.org-1:CwV87KMySX+rhW88NhTx2hRzdNltV497nhXvWswFGDc="
@@ -78,6 +84,9 @@
                     ]
                     ++ lib.optionals biryani_nix.helix_cache [
                         "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
+                    ]
+                    ++ lib.optionals biryani_nix.numtide_cache [
+                        "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
                     ]
                     ++ lib.optionals biryani_nix.wezterm_cache [
                         "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0="
