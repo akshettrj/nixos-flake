@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+    config,
+    lib,
+    pkgs,
+    ...
+}:
 {
     config =
         let
@@ -8,6 +13,7 @@
         lib.mkIf (biryani_ai.enable && biryani_claude_code.enable) {
             programs.claude-code = {
                 enable = true;
+                package = pkgs.llm-agents.claude-code;
                 enableMcpIntegration = true;
                 # configDir = "${config.xdg.configHome}/claude";
                 skills = biryani_ai.skills;

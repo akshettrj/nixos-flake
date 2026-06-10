@@ -11,7 +11,10 @@
             biryani_cursor = biryani_ai.cursor;
         in
         lib.mkIf (biryani_ai.enable && biryani_cursor.enable) {
-            home.packages = [ pkgs.code-cursor ];
+            home.packages = [
+                pkgs.code-cursor
+                pkgs.llm-agents.cursor-agent
+            ];
 
             home.file = lib.mapAttrs' (
                 n: v:

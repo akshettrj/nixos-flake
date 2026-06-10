@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+    config,
+    lib,
+    pkgs,
+    ...
+}:
 {
     config =
         let
@@ -8,6 +13,7 @@
         lib.mkIf (biryani_ai.enable && biryani_codex.enable) {
             programs.codex = {
                 enable = true;
+                package = pkgs.llm-agents.codex;
                 enableMcpIntegration = true;
                 skills = biryani_ai.skills;
                 context = ''

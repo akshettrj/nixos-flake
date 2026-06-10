@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+    config,
+    lib,
+    pkgs,
+    ...
+}:
 {
     config =
         let
@@ -8,6 +13,7 @@
         lib.mkIf (biryani_ai.enable && biryani_gemini.enable) {
             programs.gemini-cli = {
                 enable = true;
+                package = pkgs.llm-agents.gemini-cli;
                 enableMcpIntegration = true;
                 skills = biryani_ai.skills;
                 settings = {
