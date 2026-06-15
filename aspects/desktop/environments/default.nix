@@ -89,9 +89,15 @@ in
             };
         };
 
-        hardware.nvidia.enable = lib.mkOption {
-            type = lib.types.bool;
-            description = "Whether Nvidia-specific Wayland environment variables should be enabled.";
+        hardware.nvidia = {
+            enable = lib.mkOption {
+                type = lib.types.bool;
+                description = "Whether Nvidia-specific Wayland environment variables should be enabled.";
+            };
+            prime.enable = lib.mkOption {
+                type = lib.types.bool;
+                description = "Whether the host uses NVIDIA PRIME offload (Intel iGPU is primary).";
+            };
         };
     };
 }

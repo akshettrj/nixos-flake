@@ -263,11 +263,22 @@
                         ${lib.optionalString (launcher == "bemenu") ''
                             hl.env("BEMENU_OPTS", ${luaString config.home.sessionVariables.BEMENU_OPTS})
                         ''}
-                        ${lib.optionalString biryani_hw.nvidia.enable ''
-                            hl.env("LIBVA_DRIVER_NAME", "nvidia")
-                            hl.env("NVD_BACKEND", "direct")
-                            hl.env("WLR_NO_HARDWARE_CURSORS", "1")
-                        ''}
+                        ${lib.optionalString biryani_hw.nvidia.enable (
+                            if biryani_hw.nvidia.prime.enable then
+                                # PRIME offload: compositor + apps render on the Intel
+                                # iGPU by default, so VAAPI must use the Intel driver.
+                                # NVIDIA is only used when explicitly offloaded.
+                                ''
+                                    hl.env("LIBVA_DRIVER_NAME", "iHD")
+                                    hl.env("WLR_NO_HARDWARE_CURSORS", "1")
+                                ''
+                            else
+                                ''
+                                    hl.env("LIBVA_DRIVER_NAME", "nvidia")
+                                    hl.env("NVD_BACKEND", "direct")
+                                    hl.env("WLR_NO_HARDWARE_CURSORS", "1")
+                                ''
+                        )}
 
                         hl.config({
                           xwayland = {

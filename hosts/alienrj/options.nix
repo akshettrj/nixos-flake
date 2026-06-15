@@ -292,7 +292,10 @@
                     enable = true;
                     cmd_args = [
                         "--ozone-platform=wayland"
-                        "--use-gl=egl"
+                        # This Brave build dropped the native-EGL path; only ANGLE
+                        # backends are allowed, so use ANGLE over desktop GL.
+                        "--use-gl=angle"
+                        "--use-angle=gl"
                         "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks"
                         "--ignore-gpu-blocklist"
                         "--enable-gpu-rasterization"

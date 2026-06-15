@@ -2,6 +2,7 @@
     config.biryani = {
         hardware = {
             nvidia.enable = biryani.hardware.nvidia.enable;
+            nvidia.prime.enable = biryani.hardware.nvidia.prime.enable;
             pulseaudio.enable = biryani.hardware.pulseaudio.enable;
         };
 

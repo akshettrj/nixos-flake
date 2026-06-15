@@ -44,11 +44,20 @@
             hardware.graphics = {
                 enable = true;
                 enable32Bit = supports32BitGraphics;
+                # PRIME laptops render on the Intel iGPU by default, so ship the
+                # Intel userspace GL/VAAPI drivers alongside the NVIDIA stack.
                 extraPackages = [
                     pkgs.mesa
                     pkgs.nvidia-vaapi-driver
+                    pkgs.intel-media-driver
+                    pkgs.vpl-gpu-rt
+                ];
+                extraPackages32 = lib.optionals supports32BitGraphics [
+                    pkgs.driversi686Linux.intel-media-driver
                 ];
             };
+
+            environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
 
             services.xserver.videoDrivers = [ "nvidia" ];
 
