@@ -300,7 +300,13 @@
 
         programs = {
             ai = {
-                enable = false;
+                enable = true;
+                mcpServers = {};
+                skills = import ../../aspects/ai/skills.nix { inherit inputs; };
+                claude-code = {
+                    enable = true;
+                    mcpServers = null;
+                };
             };
             media = {
                 enable = false;
