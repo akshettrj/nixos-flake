@@ -1908,11 +1908,11 @@
     "private_secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1779521066,
-        "narHash": "sha256-cnFpnYY2SEkKiA9gwFG9PunU/ycJfE5w8AN9cC5onAc=",
+        "lastModified": 1781554087,
+        "narHash": "sha256-Yuaz3lhFU7BQehaH6QZs/TtrzYM/fR85QnLlW/4fx2s=",
         "ref": "feature/dendritic-nix",
-        "rev": "5764f33b59dd7da261edb147fdd0df8ea07a949f",
-        "revCount": 61,
+        "rev": "cd7f726e43af791723d55199c807f73107d85285",
+        "revCount": 62,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       },
