@@ -36,7 +36,7 @@
                 useOSProber = true;
             };
 
-            boot.loader.efi.canTouchEfiVariables = true;
+            boot.loader.efi.canTouchEfiVariables = lib.mkDefault true;
 
             boot.tmp = {
                 useTmpfs = true;

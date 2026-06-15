@@ -6,6 +6,7 @@
 }:
 {
     biryani = rec {
+        platform.oracle_cloud.enable = true;
         system = {
             hostname = "oracleamperehyd";
             time_zone = "Asia/Kolkata";
@@ -278,6 +279,7 @@
             hyprland_cache = false;
             helix_cache = true;
             wezterm_cache = false;
+            numtide_cache = false;
         };
 
         # Appearance

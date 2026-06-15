@@ -61,7 +61,7 @@
             sync = {
                 enable = true;
                 devices = {
-                    oracleamperehyd.id = "NQU5OGN-WPJA7R6-S5LDKEF-DBGMSI7-4CO45B5-XHDG65B-BOLUCLD-YTS2MAZ";
+                    oracleamperehyd.id = "MN7HKXB-MRNQOWO-WO3RFUU-5CLLC2S-SXZX464-3TUAHNU-DLH2PVJ-AYA4UAL";
                     alienrj.id = "EAGTE5Z-U4T2GZM-HAS3FYD-EEEC7LX-YKGPQ6M-ZAQ2ZPH-3LAOQRZ-YJS4XA5";
                 };
                 folders.music = {
@@ -81,6 +81,7 @@
             hyprland_cache = true;
             helix_cache = true;
             wezterm_cache = false;
+            numtide_cache = false;
         };
 
         # Appearance

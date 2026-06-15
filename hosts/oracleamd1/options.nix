@@ -6,6 +6,7 @@
 }:
 {
     biryani = {
+        platform.oracle_cloud.enable = true;
         system = {
             hostname = "oracleamd1";
             time_zone = "Etc/UTC";

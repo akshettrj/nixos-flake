@@ -15,6 +15,7 @@
         ../nix/system.nix
         ../networking/system.nix
         ../platform/system.nix
+        ../platform/oracle-cloud.nix
         ../self-hosting/system.nix
         ../shell/system.nix
         ../terminal/system.nix

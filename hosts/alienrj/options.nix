@@ -91,7 +91,7 @@
             sync = {
                 enable = true;
                 devices = {
-                    oracleamperehyd.id = "NQU5OGN-WPJA7R6-S5LDKEF-DBGMSI7-4CO45B5-XHDG65B-BOLUCLD-YTS2MAZ";
+                    oracleamperehyd.id = "MN7HKXB-MRNQOWO-WO3RFUU-5CLLC2S-SXZX464-3TUAHNU-DLH2PVJ-AYA4UAL";
                     raspi.id = "NJURPXN-EV5J6RQ-CAKG53B-7GETTR3-UFGJBEQ-2GSYGIF-P27KQ46-EHNFKQQ";
                 };
                 folders.music = {
