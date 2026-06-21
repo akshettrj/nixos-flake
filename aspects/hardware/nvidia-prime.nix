@@ -52,9 +52,7 @@
                     pkgs.intel-media-driver
                     pkgs.vpl-gpu-rt
                 ];
-                extraPackages32 = lib.optionals supports32BitGraphics [
-                    pkgs.driversi686Linux.intel-media-driver
-                ];
+                extraPackages32 = lib.optionals supports32BitGraphics [ pkgs.driversi686Linux.intel-media-driver ];
             };
 
             environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
