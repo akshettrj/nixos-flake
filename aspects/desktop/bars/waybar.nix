@@ -49,6 +49,105 @@
                         printf '%s \n' "$TEXT"
                     done
                 '';
+
+            # RTMIN offset used to make the awcc module refresh immediately after a
+            # mode change. Kept in one place so the module and the script agree.
+            awcc_signal = 8;
+            awcc_mode_script =
+                let
+                    awcc = "${inputs.awcc.packages.${pkgs.stdenv.hostPlatform.system}.awcc}/bin/awcc";
+                    pkill = "${pkgs.procps}/bin/pkill";
+                in
+                pkgs.writeShellScriptBin "awcc_mode" ''
+                    set -uo pipefail
+
+                    readonly AWCC='${awcc}'
+                    readonly PKILL='${pkill}'
+                    readonly SIGNAL='${toString awcc_signal}'
+
+                    # Cycle order, as normalised keys, with the matching `awcc` set
+                    # command for each entry. Keep both arrays in the same order.
+                    readonly KEYS=("quiet" "balanced" "performance" "cool" "fullspeed" "gmode")
+                    readonly CMDS=("q" "b" "p" "c" "fs" "g")
+
+                    # Read the live mode reported by the awcc daemon (no root needed).
+                    current_mode() {
+                        local out
+                        out="$("$AWCC" qm 2>/dev/null || true)"
+                        printf '%s' "''${out##*Current Mode: }"
+                    }
+
+                    # Collapse a display name to a lookup key: lowercase, no spaces/hyphens.
+                    norm() {
+                        local s="''${1,,}"
+                        s="''${s// /}"
+                        s="''${s//-/}"
+                        printf '%s' "$s"
+                    }
+
+                    icon_for() {
+                        case "$1" in
+                            quiet)       printf '󰖔' ;;
+                            balanced)    printf '󰈐' ;;
+                            performance) printf '󰓅' ;;
+                            cool)        printf '󰜗' ;;
+                            fullspeed)   printf '󰈸' ;;
+                            gmode)       printf '󰉁' ;;
+                            manual)      printf '󰖷' ;;
+                            *)           printf '󰈐' ;;
+                        esac
+                    }
+
+                    index_of() {
+                        local key="$1" i
+                        for i in "''${!KEYS[@]}"; do
+                            if [ "''${KEYS[$i]}" = "$key" ]; then
+                                printf '%s' "$i"
+                                return 0
+                            fi
+                        done
+                        printf '%s' "-1"
+                    }
+
+                    refresh() {
+                        "$PKILL" -RTMIN+"$SIGNAL" waybar >/dev/null 2>&1 || true
+                    }
+
+                    case "''${1:-status}" in
+                        status)
+                            mode="$(current_mode)"
+                            [ -n "$mode" ] || mode="Unknown"
+                            key="$(norm "$mode")"
+                            printf '{"text":"%s  %s","tooltip":"Thermal mode: %s\\nLeft click: next mode\\nRight click: previous mode","class":"%s","alt":"%s"}\n' \
+                                "$(icon_for "$key")" "$mode" "$mode" "$key" "$key"
+                            ;;
+                        next | prev)
+                            key="$(norm "$(current_mode)")"
+                            idx="$(index_of "$key")"
+                            n="''${#KEYS[@]}"
+                            if [ "$idx" -lt 0 ]; then
+                                target=0
+                            elif [ "''${1}" = "next" ]; then
+                                target=$(( (idx + 1) % n ))
+                            else
+                                target=$(( (idx - 1 + n) % n ))
+                            fi
+                            "$AWCC" "''${CMDS[$target]}" >/dev/null 2>&1 || true
+                            refresh
+                            ;;
+                        set)
+                            idx="$(index_of "$(norm "''${2:-}")")"
+                            if [ "$idx" -ge 0 ]; then
+                                "$AWCC" "''${CMDS[$idx]}" >/dev/null 2>&1 || true
+                                refresh
+                            fi
+                            ;;
+                        *)
+                            printf 'usage: awcc_mode {status|next|prev|set <mode>}\n' >&2
+                            exit 1
+                            ;;
+                    esac
+                '';
         in
         lib.mkIf (biryani_bars.enable && biryani_bars.waybar.enable) {
             programs.waybar = {
@@ -316,6 +415,19 @@
                                     on-click-right = "${swaync-client} -d";
                                     tooltip = "Notifications";
                                 };
+                        }
+                        // lib.optionalAttrs biryani_bars.waybar.awcc.enable {
+                            "custom/awcc" = {
+                                exec = "${awcc_mode_script}/bin/awcc_mode status";
+                                return-type = "json";
+                                interval = 5;
+                                signal = awcc_signal;
+                                on-click = "${awcc_mode_script}/bin/awcc_mode next";
+                                on-click-right = "${awcc_mode_script}/bin/awcc_mode prev";
+                                on-scroll-up = "${awcc_mode_script}/bin/awcc_mode next";
+                                on-scroll-down = "${awcc_mode_script}/bin/awcc_mode prev";
+                                tooltip = true;
+                            };
                         };
                     in
                     {
@@ -356,6 +468,10 @@
                                 ]
                                 ++ [
                                     "network"
+                                    "custom/separator"
+                                ]
+                                ++ lib.optionals biryani_bars.waybar.awcc.enable [
+                                    "custom/awcc"
                                     "custom/separator"
                                 ]
                                 ++ lib.optionals biryani_bars.waybar.is_laptop [
@@ -464,6 +580,35 @@
                         #battery.critical {
                             background-color: ${palette.error_container};
                             color: ${palette.on_error_container};
+                        }
+
+                        /* Give notification glyphs breathing room so they are not
+                           clipped on the right edge. */
+                        #custom-dunst, #custom-swaync {
+                            padding: 0 8px;
+                        }
+
+                        #custom-awcc {
+                            background-color: ${palette.surface_container};
+                            color: ${palette.on_surface};
+                            padding: 0 6px;
+                        }
+
+                        #custom-awcc.quiet {
+                            background-color: ${palette.secondary_container};
+                            color: ${palette.on_secondary_container};
+                        }
+
+                        #custom-awcc.performance,
+                        #custom-awcc.fullspeed,
+                        #custom-awcc.gmode {
+                            background-color: ${palette.error_container};
+                            color: ${palette.on_error_container};
+                        }
+
+                        #custom-awcc.cool {
+                            background-color: ${palette.primary_container};
+                            color: ${palette.on_primary_container};
                         }
 
                     '';

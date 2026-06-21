@@ -37,6 +37,7 @@
                     type = lib.types.bool;
                     description = "Whether Waybar should show laptop battery and backlight modules.";
                 };
+                awcc.enable = lib.mkEnableOption "Waybar AWCC thermal-mode module (Alienware Command Center).";
                 systemd_target = lib.mkOption {
                     type = lib.types.str;
                     description = "Systemd user target for Waybar.";

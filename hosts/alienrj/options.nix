@@ -365,6 +365,7 @@
                     icon_size = 16;
                     tray_spacing = 9;
                     is_laptop = true;
+                    awcc.enable = true;
                     systemd_target = "hyprland-session.target";
                 };
             };
