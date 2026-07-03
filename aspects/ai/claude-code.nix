@@ -28,8 +28,10 @@
                     effortLevel = "high";
                     editorMode = "vim";
                     includeCoAuthoredBy = false;
-                    env = {
-                        ENABLE_LSP_TOOL = "1";
+                    enabledPlugins = {
+                        "lua-lsp@claude-plugins-official" = true;
+                        "gopls-lsp@claude-plugins-official" = true;
+                        "rust-analyzer-lsp@claude-plugins-official" = true;
                     };
                     statusLine = {
                         type = "command";
