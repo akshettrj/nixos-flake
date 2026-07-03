@@ -89,28 +89,12 @@
             startup_script =
                 let
                     clipboard_manager_meta = clips_meta."${clipboard_manager}";
-                    hyprctl = "${hyprland_pkg}/bin/hyprctl";
-                    hyprctlEval = code: "${hyprctl} eval ${lib.escapeShellArg code}";
                     nm-applet = "${pkgs.networkmanagerapplet}/bin/nm-applet";
                     blueman-applet = "${pkgs.blueman}/bin/blueman-applet";
                     pasystray = "${pkgs.pasystray}/bin/pasystray";
                     mullvad-gui = "${pkgs.mullvad-vpn}/bin/mullvad-gui";
-                    monitorCommands = map (
-                        mon:
-                        let
-                            mode = "${toString mon.width}x${toString mon.height}@${toString mon.refresh_rate}";
-                            position = "${toString mon.x}x${toString mon.y}";
-                        in
-                        if mon.enabled then
-                            hyprctlEval "hl.monitor({ output = ${luaString mon.name}, mode = ${luaString mode}, position = ${luaString position}, scale = ${luaString mon.additional_settings} })"
-                        else
-                            hyprctlEval "hl.monitor({ output = ${luaString mon.name}, disabled = true })"
-                    ) biryani_deskenvs.hyprland.monitors;
                 in
                 pkgs.writeShellScriptBin "start" ''
-
-                    # Setting up monitors
-                    ${lib.strings.concatStringsSep "\n" monitorCommands}
 
                     pidof ${clipboard_manager_meta.bin} && killall -9 ${clipboard_manager_meta.bin}
                     pidof ${nm-applet} && killall -9 ${nm-applet}
@@ -164,10 +148,21 @@
                 keys: x: y:
                 "hl.bind(${luaString keys}, hl.dsp.window.move({ x = ${toString x}, y = ${toString y}, relative = true }), { repeating = true })";
             luaWindowRule = fields: "hl.window_rule({ ${lib.concatStringsSep ", " fields} })";
-            # Workspace-to-monitor rules are declared statically (not applied
-            # imperatively from the startup script) so they survive the config
-            # reload triggered by `home-manager switch`, which otherwise wipes
-            # any workspace rules not present in the static config.
+            # Monitor and workspace-to-monitor rules are declared statically
+            # (not applied imperatively from the startup script) so they survive
+            # the config reload triggered by `home-manager switch`, which
+            # otherwise wipes any rules not present in the static config.
+            monitorRules = map (
+                mon:
+                let
+                    mode = "${toString mon.width}x${toString mon.height}@${toString mon.refresh_rate}";
+                    position = "${toString mon.x}x${toString mon.y}";
+                in
+                if mon.enabled then
+                    "hl.monitor({ output = ${luaString mon.name}, mode = ${luaString mode}, position = ${luaString position}, scale = ${luaString mon.additional_settings} })"
+                else
+                    "hl.monitor({ output = ${luaString mon.name}, disabled = true })"
+            ) biryani_deskenvs.hyprland.monitors;
             workspaceRules = lib.concatMap (
                 mon:
                 map (
@@ -244,8 +239,10 @@
                           hl.exec_cmd(${luaString "${startup_script}/bin/start"})
                         end)
 
-                        -- Workspace to monitor mapping (kept in static config so it
-                        -- survives config reloads triggered by home-manager switch)
+                        -- Monitor setup and workspace-to-monitor mapping (kept in
+                        -- static config so they survive config reloads triggered
+                        -- by home-manager switch)
+                        ${lib.concatStringsSep "\n" monitorRules}
                         ${lib.concatStringsSep "\n" workspaceRules}
 
                         hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
