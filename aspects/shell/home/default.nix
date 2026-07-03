@@ -25,6 +25,7 @@
             nushell.enable = lib.mkEnableOption "Nushell shell configuration.";
             zsh.enable = lib.mkEnableOption "Zsh shell configuration.";
             eza.enable = lib.mkEnableOption "eza shell integrations.";
+            fzf.enable = lib.mkEnableOption "fzf fuzzy finder shell integrations.";
             starship.enable = lib.mkEnableOption "Starship prompt.";
             zoxide.enable = lib.mkEnableOption "zoxide directory jumping.";
         };

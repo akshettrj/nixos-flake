@@ -16,6 +16,7 @@ in
 
         nushell.enable = lib.mkEnableOption "Nushell.";
         eza.enable = lib.mkEnableOption "eza shell integration.";
+        fzf.enable = lib.mkEnableOption "fzf fuzzy finder shell integration.";
         starship.enable = lib.mkEnableOption "Starship prompt.";
         zoxide.enable = lib.mkEnableOption "zoxide directory jumper.";
     };

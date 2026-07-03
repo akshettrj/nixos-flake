@@ -143,6 +143,7 @@
             zsh.enable = true;
 
             eza.enable = true;
+            fzf.enable = true;
             starship.enable = true;
             zoxide.enable = true;
         };

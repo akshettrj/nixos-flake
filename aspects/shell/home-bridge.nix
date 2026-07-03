@@ -4,6 +4,7 @@
         bash.enable = biryani.shells.bash.enable;
         eza.enable = biryani.shells.eza.enable;
         fish.enable = biryani.shells.fish.enable;
+        fzf.enable = biryani.shells.fzf.enable;
         main = biryani.shells.main;
         nushell.enable = biryani.shells.nushell.enable;
         starship.enable = biryani.shells.starship.enable;
