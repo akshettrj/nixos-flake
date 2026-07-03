@@ -95,22 +95,16 @@
                     blueman-applet = "${pkgs.blueman}/bin/blueman-applet";
                     pasystray = "${pkgs.pasystray}/bin/pasystray";
                     mullvad-gui = "${pkgs.mullvad-vpn}/bin/mullvad-gui";
-                    monitorCommands = builtins.concatMap (
+                    monitorCommands = map (
                         mon:
                         let
                             mode = "${toString mon.width}x${toString mon.height}@${toString mon.refresh_rate}";
                             position = "${toString mon.x}x${toString mon.y}";
-                            monitorCommand =
-                                if mon.enabled then
-                                    hyprctlEval "hl.monitor({ output = ${luaString mon.name}, mode = ${luaString mode}, position = ${luaString position}, scale = ${luaString mon.additional_settings} })"
-                                else
-                                    hyprctlEval "hl.monitor({ output = ${luaString mon.name}, disabled = true })";
-                            workspaceCommands = map (
-                                wk:
-                                hyprctlEval "hl.workspace_rule({ workspace = ${luaString (toString wk)}, monitor = ${luaString mon.name} })"
-                            ) (lib.optionals mon.enabled mon.workspaces);
                         in
-                        [ monitorCommand ] ++ workspaceCommands
+                        if mon.enabled then
+                            hyprctlEval "hl.monitor({ output = ${luaString mon.name}, mode = ${luaString mode}, position = ${luaString position}, scale = ${luaString mon.additional_settings} })"
+                        else
+                            hyprctlEval "hl.monitor({ output = ${luaString mon.name}, disabled = true })"
                     ) biryani_deskenvs.hyprland.monitors;
                 in
                 pkgs.writeShellScriptBin "start" ''
@@ -170,6 +164,16 @@
                 keys: x: y:
                 "hl.bind(${luaString keys}, hl.dsp.window.move({ x = ${toString x}, y = ${toString y}, relative = true }), { repeating = true })";
             luaWindowRule = fields: "hl.window_rule({ ${lib.concatStringsSep ", " fields} })";
+            # Workspace-to-monitor rules are declared statically (not applied
+            # imperatively from the startup script) so they survive the config
+            # reload triggered by `home-manager switch`, which otherwise wipes
+            # any workspace rules not present in the static config.
+            workspaceRules = lib.concatMap (
+                mon:
+                map (
+                    wk: "hl.workspace_rule({ workspace = ${luaString (toString wk)}, monitor = ${luaString mon.name} })"
+                ) (lib.optionals mon.enabled mon.workspaces)
+            ) biryani_deskenvs.hyprland.monitors;
             palette =
                 if biryani_theming.matugen.integrations.hyprland.enable then
                     biryani_theming.palette.matugen
@@ -239,6 +243,10 @@
                         hl.on("hyprland.start", function()
                           hl.exec_cmd(${luaString "${startup_script}/bin/start"})
                         end)
+
+                        -- Workspace to monitor mapping (kept in static config so it
+                        -- survives config reloads triggered by home-manager switch)
+                        ${lib.concatStringsSep "\n" workspaceRules}
 
                         hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
                         hl.env("XDG_SESSION_TYPE", "wayland")
