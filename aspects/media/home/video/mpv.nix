@@ -22,9 +22,6 @@
                     pkgs.mpvScripts.mpris # MPRIS support
                 ];
                 config = {
-                    fs = true;
-                    fs-screen = 1;
-
                     screenshot-directory = ss_dir;
 
                     ao = "pulse";
