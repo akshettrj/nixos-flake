@@ -2322,11 +2322,11 @@
     "wallpapers": {
       "flake": false,
       "locked": {
-        "lastModified": 1779729599,
-        "narHash": "sha256-+IeYdMg3Yfuqw8J7uLoBVSMMTEEZdBiW3+LhEILtZDk=",
+        "lastModified": 1783188199,
+        "narHash": "sha256-OfCPDasz1zOoFaAIV9rb8sexVSyBdGY0gsrPH/kfL5g=",
         "owner": "Propheci",
         "repo": "wallpapers",
-        "rev": "a657fa42b14afcbabfc96c7bb49b4480bb499140",
+        "rev": "d1f73a8d0c67aeae746f4ee6fac07f70147b292f",
         "type": "github"
       },
       "original": {

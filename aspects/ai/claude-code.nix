@@ -32,6 +32,7 @@
                         "lua-lsp@claude-plugins-official" = true;
                         "gopls-lsp@claude-plugins-official" = true;
                         "rust-analyzer-lsp@claude-plugins-official" = true;
+                        "frontend-design@claude-plugins-official" = true;
                     };
                     statusLine = {
                         type = "command";

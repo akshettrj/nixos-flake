@@ -141,7 +141,7 @@
                 size = 26;
             };
             minimum_brightness = 40;
-            wallpaper = "${inputs.wallpapers}/project_hail_mary/astrophage.webp";
+            wallpaper = "${inputs.wallpapers}/3840x2160-orange-haze-behind-a-tree-v0-51427dkmv1bh1.jpg";
             matugen = {
                 enable = true;
                 scheme = "scheme-content";

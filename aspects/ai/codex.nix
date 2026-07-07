@@ -22,12 +22,9 @@
                 '';
                 settings = {
                     mcpServers = lib.mkIf (biryani_codex.mcpServers != null) biryani_codex.mcpServers;
-                    tui = {
-                        vim_mode_default = true;
-                    };
-                    features = {
-                        memories = true;
-                    };
+                    tui = { vim_mode_default = true; };
+                    features = { memories = true; };
+                    sandbox_mode = "workspace-write";
                 };
             };
 
