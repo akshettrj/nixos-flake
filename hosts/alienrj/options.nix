@@ -228,6 +228,10 @@
                     sioyek.enable = true;
                 };
             };
+            torrent = {
+                enable = true;
+                tremc.enable = true;
+            };
             extra_utilities = {
                 drivedlgo.enable = false;
                 librepods.enable = false;

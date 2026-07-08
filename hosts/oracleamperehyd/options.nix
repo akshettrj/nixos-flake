@@ -311,6 +311,10 @@
             media = {
                 enable = false;
             };
+            torrent = {
+                enable = true;
+                tremc.enable = true;
+            };
             gaming = {
                 enable = false;
             };

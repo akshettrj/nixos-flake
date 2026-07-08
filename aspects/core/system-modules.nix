@@ -20,6 +20,7 @@
         ../shell/system.nix
         ../terminal/system.nix
         ../tools/system.nix
+        ../torrent/system.nix
         ../virtualisation/system.nix
     ];
 }

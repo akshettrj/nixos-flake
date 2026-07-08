@@ -13,5 +13,6 @@
         ../scripts/default.nix
         ../shell/home
         ../terminal
+        ../torrent/home
     ];
 }

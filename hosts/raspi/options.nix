@@ -156,6 +156,10 @@
                     sioyek.enable = true;
                 };
             };
+            torrent = {
+                enable = true;
+                tremc.enable = true;
+            };
             editors = {
                 main = "neovim";
                 backup = "helix";

@@ -105,6 +105,10 @@
             media = {
                 enable = false;
             };
+            torrent = {
+                enable = false;
+                tremc.enable = false;
+            };
             editors = {
                 main = "neovim";
                 backup = "helix";
