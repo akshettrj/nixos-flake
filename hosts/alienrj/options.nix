@@ -171,6 +171,7 @@
         programs = {
             vpn.mullvad.enable = true;
             gaming.enable = false;
+            revc.enable = true;
             ai = {
                 enable = true;
                 mcpServers = {

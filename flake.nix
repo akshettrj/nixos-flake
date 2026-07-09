@@ -105,6 +105,16 @@
         };
 
         llm-agents.url = "github:numtide/llm-agents.nix";
+
+        # reVC (re Vice City) engine source. Not a flake and no longer packaged
+        # in nixpkgs, so it is pinned here as a plain source tree and built by
+        # the local overlay (see parts/overlays.nix + aspects/revc/package.nix).
+        revc_src = {
+            # Fetched over git with submodules so the vendored librw renderer
+            # (a submodule) is populated; GitHub archive tarballs omit it.
+            url = "git+https://github.com/mrxenginner/reVC.git?ref=miami&submodules=1";
+            flake = false;
+        };
     };
 
     outputs =

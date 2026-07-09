@@ -10,6 +10,7 @@
         ../hardware/home
         ../identity
         ../media/home
+        ../revc/home
         ../scripts/default.nix
         ../shell/home
         ../terminal

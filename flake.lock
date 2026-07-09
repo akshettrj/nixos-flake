@@ -1992,6 +1992,25 @@
         "type": "github"
       }
     },
+    "revc_src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782873324,
+        "narHash": "sha256-Hhby8mNkwFXqobEvfokQp2H3fS3zZstQtm/puyZzkm0=",
+        "ref": "miami",
+        "rev": "bf2b8fa7f2569a71425e03ba07b6cc221d634c8a",
+        "revCount": 5148,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/mrxenginner/reVC.git"
+      },
+      "original": {
+        "ref": "miami",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/mrxenginner/reVC.git"
+      }
+    },
     "root": {
       "inputs": {
         "awcc": "awcc",
@@ -2018,6 +2037,7 @@
         "odesli": "odesli",
         "private_secrets": "private_secrets",
         "quickshell": "quickshell",
+        "revc_src": "revc_src",
         "rubikoid_base": "rubikoid_base",
         "wallpapers": "wallpapers",
         "watgbridge": "watgbridge",

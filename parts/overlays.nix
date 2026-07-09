@@ -4,6 +4,11 @@
     # local overlay so further package customisations can be added here later.
     flake.overlays.default = lib.composeManyExtensions [
         inputs.llm-agents.overlays.default
-        (final: prev: { })
+        (final: prev: {
+            # reVC (re Vice City) engine, built from the pinned `revc_src` input
+            # since it is no longer available in nixpkgs. Consumed by the revc
+            # aspect (aspects/revc).
+            reVC = final.callPackage ../aspects/revc/package.nix { revcSrc = inputs.revc_src; };
+        })
     ];
 }
