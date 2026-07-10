@@ -28,12 +28,44 @@ stdenv.mkDerivation {
 
     src = revcSrc;
 
-    # The fork uses the C23-only `#elifndef` preprocessor directive, which this
-    # toolchain rejects in the project's C++ mode, leaving the POSIX semaphore
-    # macros undefined and breaking the build. Rewrite it to the portable form.
     postPatch = ''
+        # The fork uses the C23-only `#elifndef` preprocessor directive, which
+        # this toolchain rejects in the project's C++ mode, leaving the POSIX
+        # semaphore macros undefined and breaking the build. Use the portable form.
         substituteInPlace src/core/CdStream_posix.cpp \
             --replace-quiet '#elifndef ANDROID' '#elif !defined(ANDROID)'
+
+        # Drop in the persistent "trainer": sticky cheat toggles (infinite
+        # health / car health / ammo, never-wanted) plus a vim-navigable
+        # overlay panel, and a web remote (nixweb.cpp) that serves a phone UI
+        # for the trainer and the whole debug menu over HTTP (port 8766,
+        # REVC_WEB_PORT overrides). The CMake source list is a recursive glob,
+        # so new files under src/ are compiled automatically.
+        #
+        # nixweb_bridge.cpp is appended to debugmenu.cpp rather than compiled
+        # standalone: it reflects over the Menu/MenuEntry classes that are
+        # private to that file.
+        #
+        # Function-scope extern declarations wire everything in without
+        # touching any #include lines:
+        #   - poll input, enforce the toggles, and pump the web server every
+        #     frame, from CGame::Process (after CPad::UpdatePads refreshes
+        #     the pad state)
+        #   - draw the panel in the 2D pass, just before CFont::DrawFonts()
+        #     flushes the text buffer (anchored on the preceding call)
+        cp ${./nixcheats.cpp} src/extras/nixcheats.cpp
+        cp ${./nixcheats.h} src/extras/nixcheats.h
+        cp ${./nixweb.cpp} src/extras/nixweb.cpp
+        cp ${./nixweb.h} src/extras/nixweb.h
+        cat ${./nixweb_bridge.cpp} >> src/extras/debugmenu.cpp
+
+        substituteInPlace src/core/Game.cpp \
+            --replace-fail 'CPad::UpdatePads();' \
+                'CPad::UpdatePads(); extern void NixTrainerInput(void); extern void NixCheatsProcess(void); extern void NixWebProcess(void); NixTrainerInput(); NixCheatsProcess(); NixWebProcess();'
+
+        substituteInPlace src/core/main.cpp \
+            --replace-fail 'CPad::PrintErrorMessage();' \
+                'CPad::PrintErrorMessage(); extern void NixTrainerRender(void); NixTrainerRender();'
     '';
 
     nativeBuildInputs = [
@@ -62,6 +94,8 @@ stdenv.mkDerivation {
         # OpenGL 3 renderer, windowed through GLFW (matches upstream Linux CI).
         "-DLIBRW_PLATFORM=GL3"
         "-DLIBRW_GL3_GFXLIB=GLFW"
+        # The web remote (nixweb.cpp) runs its HTTP server on a std::thread.
+        "-DCMAKE_CXX_FLAGS=-pthread"
     ];
 
     enableParallelBuilding = true;
