@@ -20,7 +20,7 @@ This repository is a `flake-parts` NixOS and Home Manager configuration at
 Hosts:
 
 - `alienrj`
-- `oracleamd1`
+- `oracleamd1ca`
 - `oracleamperehyd`
 - `raspi`
 
@@ -95,11 +95,11 @@ or generated-config changes:
 
 ```sh
 nix eval --raw .#nixosConfigurations.alienrj.config.networking.hostName
-nix eval --raw .#nixosConfigurations.oracleamd1.config.networking.hostName
+nix eval --raw .#nixosConfigurations.oracleamd1ca.config.networking.hostName
 nix eval --raw .#nixosConfigurations.oracleamperehyd.config.networking.hostName
 nix eval --raw .#nixosConfigurations.raspi.config.networking.hostName
 nix eval --raw .#homeConfigurations.'akshettrj@alienrj'.config.home.username
-nix eval --raw .#homeConfigurations.'akshettrj@oracleamd1'.config.home.username
+nix eval --raw .#homeConfigurations.'akshettrj@oracleamd1ca'.config.home.username
 nix eval --raw .#homeConfigurations.'akshettrj@oracleamperehyd'.config.home.username
 nix eval --raw .#homeConfigurations.'akshettrj@raspi'.config.home.username
 ```

@@ -8,7 +8,7 @@
     biryani = {
         platform.oracle_cloud.enable = true;
         system = {
-            hostname = "oracleamd1";
+            hostname = "oracleamd1ca";
             time_zone = "Etc/UTC";
             swap_devices = [
                 {
@@ -36,17 +36,7 @@
 
         # Various Services
         services = {
-            virtualisation = {
-                enable = true;
-                docker = {
-                    enable = true;
-                    rootless = true;
-                };
-                containers = {
-                    enable = true;
-                    backend = "docker";
-                };
-            };
+            virtualisation.enable = false;
             printing.enable = false;
             firewall = {
                 enable = true;
@@ -67,13 +57,17 @@
                     x11_forwarding = false;
                 };
             };
-            tailscale.enable = true;
+            openvpn.enable = false;
+            tailscale = {
+                enable = true;
+                advertise_exit_node = true;
+            };
             xdg_portal.enable = false;
             telegram_bot_api.enable = false;
+            backups.enable = false;
+            sync.enable = false;
             nginx.enable = false;
-            self_hosted = {
-                overleaf.enable = false;
-            };
+            self_hosted = {};
         };
 
         # Nix/NixOS specific
@@ -83,6 +77,7 @@
             hyprland_cache = false;
             helix_cache = true;
             wezterm_cache = false;
+            numtide_cache = false;
         };
 
         # Appearance
@@ -102,9 +97,8 @@
         };
 
         programs = {
-            media = {
-                enable = false;
-            };
+            ai.enable = false;
+            media.enable = false;
             torrent = {
                 enable = false;
                 tremc.enable = false;
@@ -114,13 +108,14 @@
                 backup = "helix";
                 neovim = {
                     enable = true;
-                    nightly = true;
+                    nightly = false;
                 };
                 helix = {
                     enable = true;
                     nightly = false;
                 };
                 zeditor.enable = false;
+                emacs.enable = false;
             };
             terminals.enable = false;
             browsers.enable = false;

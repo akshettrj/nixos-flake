@@ -20,12 +20,12 @@
             ];
         };
 
-        oracleamd1 = {
+        oracleamd1ca = {
             system = "x86_64-linux";
             allowUnfree = false;
             stable = false;
             nixosModules = [
-                ../hosts/oracleamd1/configuration.nix
+                ../hosts/oracleamd1ca/configuration.nix
                 inputs.disko.nixosModules.disko
             ];
         };

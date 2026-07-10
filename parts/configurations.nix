@@ -50,7 +50,7 @@ let
 
     homeConfigurationPairs = {
         "akshettrj@alienrj" = "alienrj";
-        "akshettrj@oracleamd1" = "oracleamd1";
+        "akshettrj@oracleamd1ca" = "oracleamd1ca";
         "akshettrj@oracleamperehyd" = "oracleamperehyd";
         "akshettrj@raspi" = "raspi";
     };
