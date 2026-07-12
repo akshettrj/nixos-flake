@@ -33,6 +33,13 @@
                         "gopls-lsp@claude-plugins-official" = true;
                         "rust-analyzer-lsp@claude-plugins-official" = true;
                         "frontend-design@claude-plugins-official" = true;
+                        "codex@openai-codex" = true;
+                    };
+                    extraKnownMarketplaces = {
+                        openai-codex.source = {
+                            source = "github";
+                            repo = "openai/codex-plugin-cc";
+                        };
                     };
                     statusLine = {
                         type = "command";
