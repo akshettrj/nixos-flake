@@ -6,7 +6,10 @@
 }:
 {
     biryani = {
-        platform.oracle_cloud.enable = true;
+        platform.oracle_cloud = {
+            enable = true;
+            iscsi.enable = true;
+        };
         system = {
             hostname = "oracleamd1ca";
             time_zone = "Etc/UTC";
@@ -67,7 +70,7 @@
             backups.enable = false;
             sync.enable = false;
             nginx.enable = false;
-            self_hosted = {};
+            self_hosted = { };
         };
 
         # Nix/NixOS specific
