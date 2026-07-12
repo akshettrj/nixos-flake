@@ -5,10 +5,13 @@
     ...
 }:
 {
-    biryani = {
+    biryani = rec {
         platform.oracle_cloud = {
             enable = true;
-            iscsi.enable = true;
+            iscsi = {
+                enable = true;
+                initiator_name = "iqn.2015-02.oracle.boot:uefi";
+            };
         };
         system = {
             hostname = "oracleamd1ca";
@@ -70,7 +73,19 @@
             backups.enable = false;
             sync.enable = false;
             nginx.enable = false;
-            self_hosted = { };
+            self_hosted = {
+                postgresql = {
+                    enable = true;
+                    allowedLocalUsers = [ user.username ];
+                    databases = [ user.username ];
+                    ensureUsers = [
+                        {
+                            name = user.username;
+                            ensureDBOwnership = true;
+                        }
+                    ];
+                };
+            };
         };
 
         # Nix/NixOS specific
@@ -100,7 +115,19 @@
         };
 
         programs = {
-            ai.enable = false;
+            ai = {
+                enable = true;
+                mcpServers = {};
+                skills = import ../../aspects/ai/skills.nix { inherit inputs; };
+                claude-code = {
+                    enable = true;
+                    mcpServers = null;
+                };
+                gemini = {
+                    enable = true;
+                    mcpServers = null;
+                };
+            };
             media.enable = false;
             torrent = {
                 enable = false;
