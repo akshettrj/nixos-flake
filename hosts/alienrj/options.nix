@@ -81,6 +81,7 @@
                 advertise_exit_node = false;
             };
             xdg_portal.enable = false;
+            vnc.enable = true;
             telegram_bot_api = {
                 enable = true;
                 port = 8082;

@@ -24,6 +24,7 @@
         };
 
         services.pipewire.enable = biryani.services.pipewire.enable;
+        services.vnc = biryani.services.vnc;
         system.time_zone = biryani.system.time_zone;
 
         desktop_environments = {

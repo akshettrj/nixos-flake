@@ -64,6 +64,11 @@ let
     };
 in
 {
+    # biryani.services.vnc lives in a shared file imported by both module graphs
+    # (here for the NixOS graph, and vnc.nix for the home graph) to avoid
+    # re-declaring the schema.
+    imports = [ ./environments/wayland/vnc-options.nix ];
+
     options.biryani = {
         services.xdg_portal.enable = lib.mkOption {
             type = lib.types.bool;
