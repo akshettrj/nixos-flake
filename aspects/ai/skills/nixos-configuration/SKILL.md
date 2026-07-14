@@ -45,6 +45,37 @@ Hosts:
   They can break transparency for GTK layer-shell/terminal apps such as SwayNC
   and Ghostty. Use app-specific CSS or narrow widget selectors when possible.
 
+## The NixOS ↔ Home `biryani` Bridge (read before adding any option)
+
+`biryani.*` options are declared **twice**, once per module graph, and the two
+graphs do not share option definitions. A Home Manager module cannot read an
+option that only exists on the NixOS graph — it fails with
+`error: attribute '<name>' missing`. The wiring:
+
+1. **Declaration (once, shared).** Put the `options.biryani.*` declaration in its
+   own small file and `imports` it into **both** graphs — the NixOS aggregator
+   (`aspects/desktop/options.nix`) so hosts can set values, and the home consumer
+   module so it can read them. Do **not** re-type the schema in two files.
+   Example: `aspects/desktop/environments/wayland/vnc-options.nix` is imported by
+   both `aspects/desktop/options.nix` and `.../wayland/vnc.nix`. (An options-only
+   file is safe to import into either graph; a file that also defines `config`
+   with `home.*`/`systemd.user.*` is home-only, so split options out.)
+2. **Forwarding (one line).** `aspects/<feature>/home-bridge.nix` copies the value
+   from the NixOS `biryani` special-arg into the home graph's `config.biryani.*`
+   (the home config receives NixOS `config.biryani` as the `biryani` module arg,
+   wired in `aspects/core/home-maker.nix`). This is value forwarding, not schema
+   duplication, and is required by the two-graph design.
+
+So a **Home Manager**-consumed option needs: one shared declaration file imported
+into both graphs, plus the `home-bridge.nix` forward line. Miss the home-graph
+import or the forward and you get `attribute '<name>' missing`. A NixOS-only
+option needs only the declaration, imported into the NixOS graph.
+
+> Older aspects instead re-declare the same option in both `options.nix` (strict
+> `enum` types) and a home module like `environments/default.nix` (looser `str`
+> types). Prefer the shared-file approach above for new work; only re-declare when
+> the two graphs genuinely need different types.
+
 ## Common Workflows
 
 When changing options or module declarations:
@@ -70,6 +101,11 @@ When changing host imports or private secrets:
 
 When validating changes:
 
+- `git add` any **new** file before running `.#` flake checks. Flakes only see
+  git-tracked files, so a new aspect module evaluates as
+  `Path '<file>' ... is not tracked by Git` until staged (intent-to-add with
+  `git add -N` is enough). The `--impure` `getFlake (toString ./.)` and
+  `nix eval --file` forms read the dirty working tree and do not need this.
 - Prefer no-build/eval checks first. Do not build broad Home Manager or NixOS
   activation/system derivations unless the user explicitly asks; they can fetch
   or build large dependency closures.
