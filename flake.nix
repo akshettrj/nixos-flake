@@ -44,6 +44,16 @@
         };
 
         hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+        hyprland-plugins = {
+            # Pinned to the commit whose "chase Hyprland" state matches our
+            # Hyprland git snapshot (2026-07-02): it uses the new window/monitor
+            # state API our compositor has, but still the pre-move
+            # managers/animation header path. The v0.55.0 tag is too old (uses the
+            # removed m_windows) and main is too new (needs a relocated header).
+            # `follows` builds the plugins against our exact compositor for ABI parity.
+            url = "github:hyprwm/hyprland-plugins/71b8953d7d92dbebe87a6ff9895bdd30e7495873";
+            inputs.hyprland.follows = "hyprland";
+        };
         hyprpaper.url = "github:hyprwm/hyprpaper";
         hyprlock.url = "github:hyprwm/hyprlock";
         waybar.url = "github:Alexays/Waybar";

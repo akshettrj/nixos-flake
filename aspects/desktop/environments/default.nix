@@ -66,6 +66,19 @@ in
                     type = lib.types.number;
                     description = "Hyprland touchpad scroll factor.";
                 };
+                mouse_scroll_factor = lib.mkOption {
+                    type = lib.types.number;
+                    default = 1.0;
+                    description = "Hyprland external-mouse scroll factor (lower is less sensitive).";
+                };
+                hyprbars = {
+                    enable = lib.mkEnableOption "hyprbars window title bars with close/hide buttons";
+                    height = lib.mkOption {
+                        type = lib.types.ints.positive;
+                        default = 22;
+                        description = "Height in pixels of the hyprbars window title bar.";
+                    };
+                };
                 screenlock = lib.mkOption {
                     type = lib.types.str;
                     description = "Screenlock backend used by Hyprland keybindings.";

@@ -400,7 +400,9 @@
             hyprland = {
                 enable = true;
                 use_official_packages = false;
-                scroll_factor = 0.2;
+                scroll_factor = 0.15;
+                mouse_scroll_factor = 0.5;
+                hyprbars.enable = false;
                 launcher = "bemenu";
                 screenlock = "hyprlock";
                 screenshot_tool = "hyprshot";

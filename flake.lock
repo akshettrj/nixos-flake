@@ -793,6 +793,37 @@
         "type": "github"
       }
     },
+    "hyprland-plugins": {
+      "inputs": {
+        "hyprland": [
+          "hyprland"
+        ],
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782769258,
+        "narHash": "sha256-HAhqQOoz4S0gzIOMnClL49B+rMT7zdp3UDWeqxtMs/k=",
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
+        "rev": "71b8953d7d92dbebe87a6ff9895bdd30e7495873",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
+        "rev": "71b8953d7d92dbebe87a6ff9895bdd30e7495873",
+        "type": "github"
+      }
+    },
     "hyprland-protocols": {
       "inputs": {
         "nixpkgs": [
@@ -2021,6 +2052,7 @@
         "helix": "helix",
         "home-manager": "home-manager_2",
         "hyprland": "hyprland",
+        "hyprland-plugins": "hyprland-plugins",
         "hyprlock": "hyprlock",
         "hyprpaper": "hyprpaper",
         "improve_skill": "improve_skill",

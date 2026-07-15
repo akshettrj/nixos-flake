@@ -86,6 +86,11 @@
                     pkgs.xdg-desktop-portal-hyprland
             );
 
+            biryani_hyprbars = biryani_deskenvs.hyprland.hyprbars;
+            # Built against our Hyprland input via the flake's `hyprland.follows`,
+            # so the plugin ABI matches the compositor.
+            hyprbars_pkg = inputs.hyprland-plugins.packages."${pkgs.stdenv.hostPlatform.system}".hyprbars;
+
             startup_script =
                 let
                     clipboard_manager_meta = clips_meta."${clipboard_manager}";
@@ -228,6 +233,11 @@
                 };
                 xwayland.enable = true;
 
+                # Home Manager renders `hl.plugin.load(...)` for these ahead of the
+                # extraConfig below, which is required before the hyprbars Lua API
+                # (guarded in extraConfig) becomes available on the reload pass.
+                plugins = lib.optionals biryani_hyprbars.enable [ hyprbars_pkg ];
+
                 extraConfig =
                     let
                         ydotool = "${pkgs.ydotool}/bin/ydotool";
@@ -295,6 +305,7 @@
                             repeat_rate = 50,
                             repeat_delay = 220,
                             follow_mouse = 2,
+                            scroll_factor = ${toString biryani_deskenvs.hyprland.mouse_scroll_factor},
                             touchpad = {
                               disable_while_typing = true,
                               natural_scroll = false,
@@ -362,6 +373,50 @@
                           name = "epic-mouse-v1",
                           sensitivity = -0.5,
                         })
+
+                        ${lib.optionalString biryani_hyprbars.enable ''
+                            -- hyprbars draws a title bar on each window with clickable
+                            -- buttons. Its Lua API (hl.plugin.hyprbars.add_button) and
+                            -- config values only exist after hl.plugin.load runs, which
+                            -- happens post-eval and triggers a second config pass. Guard
+                            -- on the namespace so the first pass is a silent no-op and the
+                            -- config/buttons are applied on the reload once it is live.
+                            if hl.plugin.hyprbars ~= nil then
+                              hl.config({
+                                plugin = {
+                                  hyprbars = {
+                                    bar_height = ${toString biryani_hyprbars.height},
+                                    bar_text_size = 12,
+                                    bar_text_font = ${luaString biryani_theming.fonts.main.name},
+                                    bar_color = ${luaString (rgba palette.surface_container "ee")},
+                                    col = { text = ${luaString (rgba palette.on_surface "ff")} },
+                                    bar_part_of_window = true,
+                                    bar_precedence_over_border = true,
+                                  },
+                                },
+                              })
+
+                              -- Buttons render right-to-left in the order added.
+                              -- Close: reuse the repo kill_window helper (handles Steam).
+                              hl.plugin.hyprbars.add_button({
+                                bg_color = ${luaString (rgba palette.error "ff")},
+                                fg_color = ${luaString (rgba palette.on_error "ff")},
+                                size = 13,
+                                icon = "󰖭",
+                                action = ${luaString "${kill_window_script}/bin/kill_window"},
+                              })
+
+                              -- Hide: stash the window on the special (scratchpad)
+                              -- workspace. Bring it back with SUPER + SHIFT + MINUS.
+                              hl.plugin.hyprbars.add_button({
+                                bg_color = ${luaString (rgba palette.primary "ff")},
+                                fg_color = ${luaString (rgba palette.on_primary "ff")},
+                                size = 13,
+                                icon = "󰖰",
+                                action = "hyprctl dispatch movetoworkspacesilent special",
+                              })
+                            end
+                        ''}
 
                         ${lib.concatStringsSep "\n" (
                             [
