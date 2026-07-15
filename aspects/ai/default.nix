@@ -8,5 +8,6 @@
         ./mcp.nix
         ./ollama.nix
         ./options-shared.nix
+        ./pi.nix
     ];
 }

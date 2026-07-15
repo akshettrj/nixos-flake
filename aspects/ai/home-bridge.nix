@@ -9,6 +9,7 @@
         gemini = biryani.programs.ai.gemini;
         mcpServers = biryani.programs.ai.mcpServers;
         ollama = biryani.programs.ai.ollama;
+        pi = biryani.programs.ai.pi;
         skills = biryani.programs.ai.skills;
     };
 }

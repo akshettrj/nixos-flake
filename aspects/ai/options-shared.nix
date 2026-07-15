@@ -35,6 +35,10 @@ in
                 description = "Claude-Code-specific MCP server configuration.";
             };
         };
+        # Pi exposes a single `pi` binary that is both the coding agent and its
+        # TUI. It has no native `mcpServers` settings key (MCP is wired through
+        # adapter packages), so unlike the other agents it carries no such field.
+        pi.enable = lib.mkEnableOption "Pi coding agent (TUI).";
         ollama = {
             enable = lib.mkEnableOption "Ollama service.";
             acceleration = lib.mkOption {
