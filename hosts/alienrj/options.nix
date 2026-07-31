@@ -236,7 +236,7 @@
                 tremc.enable = true;
             };
             extra_utilities = {
-                drivedlgo.enable = false;
+                drivedlgo.enable = true;
                 librepods.enable = false;
                 pleezer.enable = false;
                 taggie.enable = false;
