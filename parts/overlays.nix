@@ -3,7 +3,7 @@
     # gemini-cli, ...) under the `pkgs.llm-agents` namespace. Compose it with a
     # local overlay so further package customisations can be added here later.
     flake.overlays.default = lib.composeManyExtensions [
-        inputs.llm-agents.overlays.default
+        inputs.llm-agents.overlays.shared-nixpkgs
         (final: prev: {
             # reVC (re Vice City) engine, built from the pinned `revc_src` input
             # since it is no longer available in nixpkgs. Consumed by the revc
