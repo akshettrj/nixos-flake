@@ -13,7 +13,7 @@
         lib.mkIf (biryani_ai.enable && biryani_gemini.enable) {
             programs.antigravity-cli = {
                 enable = true;
-                package = pkgs.llm-agents.gemini-cli;
+                package = pkgs.llm-agents.antigravity-cli;
                 enableMcpIntegration = true;
                 skills = biryani_ai.skills;
                 settings = {

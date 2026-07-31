@@ -188,7 +188,7 @@
                 cursor.enable = true;
                 pi.enable = true;
                 codex = {
-                    enable = true;
+                    enable = false;
                     mcpServers = null;
                 };
                 claude-code = {
@@ -196,7 +196,7 @@
                     mcpServers = null;
                 };
                 gemini = {
-                    enable = true;
+                    enable = false;
                     mcpServers = null;
                 };
                 ollama = {
