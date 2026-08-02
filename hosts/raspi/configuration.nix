@@ -11,6 +11,7 @@ in
     imports = [
         ./options.nix
         ./hardware-configuration.nix
+        ./storage.nix
         ../../aspects/core/base-system.nix
 
         inputs.nixos-hw.nixosModules.raspberry-pi-4

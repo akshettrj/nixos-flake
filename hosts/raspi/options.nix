@@ -53,10 +53,20 @@
             };
             xdg_portal.enable = false;
             telegram_bot_api.enable = false;
+            self_hosted.nextcloud = {
+                enable = true;
+                hostname = "nc.nfak.xyz";
+                # Bulk storage lives on the external HDD, alongside cmu_lectures.
+                data_dir = "/mnt/hdd/nextcloud";
+            };
             openvpn.enable = false;
             backups = {
                 enable = true;
-                receiver.enable = true;
+                receiver = {
+                    enable = true;
+                    # Keep incoming Restic repositories on the external HDD.
+                    storagePath = "/mnt/hdd/restic";
+                };
             };
             sync = {
                 enable = true;
