@@ -115,7 +115,7 @@ let
 
     resticRepository =
         jobName:
-        "sftp:restic@${backupCfg.client.repositoryHost}:${backupCfg.receiver.storagePath}/${config.networking.hostName}/${jobName}";
+        "sftp:restic@${backupCfg.client.repositoryHost}:${backupCfg.client.repositoryPath}/${config.networking.hostName}/${jobName}";
 
     resticSftpCommand = "sftp.command='ssh restic@${backupCfg.client.repositoryHost} -i ${backupCfg.client.sshKeyFile} -s sftp'";
 in
@@ -141,6 +141,18 @@ in
                     type = types.str;
                     default = "raspi";
                     description = "Host name of the Restic SFTP receiver.";
+                };
+
+                repositoryPath = mkOption {
+                    type = types.str;
+                    default = "/srv/storage/restic";
+                    description = ''
+                        Absolute path of the Restic repository root **on the receiver
+                        host**. This must match that host's
+                        `biryani.services.backups.receiver.storagePath`. The two live in
+                        separate NixOS configurations, so they cannot be derived from one
+                        another and must be kept in step by hand.
+                    '';
                 };
 
                 passwordFile = mkOption {
