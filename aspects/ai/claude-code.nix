@@ -48,8 +48,7 @@
                 };
             };
 
-            # home.sessionVariables = {
-            #     CLAUDE_CONFIG_DIR = "${config.xdg.configHome}/claude";
-            # };
+            home.packages = [ pkgs.nodejs ];
+
         };
 }
