@@ -85,6 +85,8 @@
                 enable = true;
                 client = {
                     enable = true;
+                    # Must match raspi's backups.receiver.storagePath.
+                    repositoryPath = "/mnt/hdd/restic";
                     jobs.self-hosted.paths = [
                         "/var/lib/firefly-iii"
                         "/var/lib/freshrss"
@@ -123,6 +125,12 @@
                     enable = true;
                     hostname = "ff.nfak.xyz";
                     nginx.enable_ssl = true;
+                };
+                nextcloud.reverse_proxy = {
+                    enable = true;
+                    hostname = "nc.nfak.xyz";
+                    upstream_host = "raspi";
+                    enable_ssl = true;
                 };
                 postgresql = {
                     enable = true;
