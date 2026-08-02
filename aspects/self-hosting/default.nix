@@ -7,6 +7,7 @@
         ./freshrss.nix
         ./glance.nix
         ./navidrome.nix
+        ./nextcloud.nix
         ./overleaf_docker.nix
         ./postgresql.nix
         ./vikunja.nix
