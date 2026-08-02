@@ -1340,11 +1340,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1777895221,
-        "narHash": "sha256-n7emv/H9/q6jQeVtB1B6MmdOB9V76sP6UqT/vtMeL6U=",
+        "lastModified": 1785704650,
+        "narHash": "sha256-IaTv9IGbgfXQmA8OHAD9X5aqZOyOp87Pz/3lLMtBss8=",
         "owner": "akshettrj",
         "repo": "personal-mcp-py",
-        "rev": "d590a706f190a2b13d12a6c5d346c6b91fbfacd6",
+        "rev": "6a3bfa65ccb14e39a0515a01c4b46367a07964ca",
         "type": "github"
       },
       "original": {
