@@ -24,7 +24,7 @@
                 mcpServers = lib.mkIf (biryani_claude_code.mcpServers != null) biryani_claude_code.mcpServers;
                 settings = {
                     theme = "auto";
-                    model = "claude-opus-4-8";
+                    model = "claude-opus-5[1m]";
                     effortLevel = "high";
                     editorMode = "vim";
                     includeCoAuthoredBy = false;
