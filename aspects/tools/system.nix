@@ -10,7 +10,6 @@
         drivedlgo.enable = lib.mkEnableOption "drivedlgo utility package";
         librepods.enable = lib.mkEnableOption "librepods utility package";
         ffmpeg.enable = lib.mkEnableOption "FFmpeg and thumbnailer utilities";
-        obs.enable = lib.mkEnableOption "OBS Studio";
         odesli.enable = lib.mkEnableOption "odesli-rs utility package";
         pleezer.enable = lib.mkEnableOption "Pleezer utility package";
         rclone.enable = lib.mkEnableOption "rclone utility package";
@@ -36,7 +35,6 @@
                     pkgs.ffmpeg
                     pkgs.ffmpegthumbnailer
                 ]
-                ++ lib.optionals biryani_extra_utils.obs.enable [ pkgs.obs-studio ]
                 ++ lib.optionals biryani_extra_utils.odesli.enable [
                     inputs.odesli.packages."${pkgs.stdenv.hostPlatform.system}".default
                 ]

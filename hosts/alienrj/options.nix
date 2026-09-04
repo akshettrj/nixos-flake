@@ -176,6 +176,19 @@ in
         };
 
         programs = {
+            streaming = {
+                enable = true;
+                obs = {
+                    enable = true;
+                    plugins = [
+                        # Per-application audio capture, so the stream can take one
+                        # app without everything else on the default sink.
+                        "pipewire-audio-capture"
+                        # Intel iGPU encode path; NVENC comes from the driver.
+                        "vaapi"
+                    ];
+                };
+            };
             vpn.mullvad.enable = true;
             gaming.enable = false;
             revc.enable = true;
@@ -249,7 +262,6 @@ in
                 typst.enable = true;
                 ffmpeg.enable = true;
                 rclone.enable = true;
-                obs.enable = true;
                 odesli.enable = true;
                 ueberzugpp.enable = true;
                 yt-dlp.enable = true;

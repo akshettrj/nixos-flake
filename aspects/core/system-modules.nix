@@ -19,6 +19,7 @@
         ../revc/system.nix
         ../self-hosting/system.nix
         ../shell/system.nix
+        ../streaming/system.nix
         ../terminal/system.nix
         ../tools/system.nix
         ../torrent/system.nix
