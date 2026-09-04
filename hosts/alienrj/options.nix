@@ -26,7 +26,39 @@ in
             ];
         };
         primary_user = user.username;
-        users.${user.username} = { inherit (user) homedir; };
+        users = {
+            ${user.username} = { inherit (user) homedir; };
+
+            # Streaming account. Shares the dev setup but none of the accounts,
+            # tokens, or history that live in the primary user's home, and has
+            # no path to root. Log in on tty2; Ctrl+Alt+F1/F2 switches seats.
+            propheci = {
+                groups = [ "networkmanager" ];
+                sudo_without_password = false;
+                initial_password = "change-me";
+                overrides = {
+                    programs = {
+                        ai.enable = false;
+                        revc.enable = false;
+                        torrent.enable = false;
+                        social_media = {
+                            telegram.enable = false;
+                            discord.enable = false;
+                            teams.enable = false;
+                            beeper.enable = false;
+                            zulip.enable = false;
+                        };
+                        media = {
+                            audio.mpd.enable = false;
+                            video.jellyfin.enable = false;
+                        };
+                    };
+                    desktop_environments.defaults = {
+                        "/dev/tty2" = "hyprland";
+                    };
+                };
+            };
+        };
         security = {
             sudo_without_password = true;
             polkit.enable = true;
