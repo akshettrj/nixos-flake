@@ -34,6 +34,8 @@
             nvidia = {
                 enable = true;
                 package = config.boot.kernelPackages.nvidiaPackages.latest;
+                # Save/restore VRAM across suspend so resume doesn't black-screen.
+                powerManagement.enable = true;
                 prime = {
                     enable = true;
                     intelBusId = "PCI:00:02:0";

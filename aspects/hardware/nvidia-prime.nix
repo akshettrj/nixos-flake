@@ -17,6 +17,17 @@
             description = "NVIDIA driver package to use for this host.";
         };
 
+        powerManagement.enable = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = ''
+                Enable NVIDIA suspend/resume power management. Registers the
+                nvidia-suspend/-resume systemd services that save and restore
+                video memory across sleep. Required on laptops to avoid a black
+                screen on resume from suspend; keep it off on always-on desktops.
+            '';
+        };
+
         prime = {
             enable = lib.mkOption {
                 type = lib.types.bool;
@@ -65,7 +76,7 @@
                 modesetting.enable = true;
 
                 powerManagement = {
-                    enable = false;
+                    enable = biryani_hw.nvidia.powerManagement.enable;
                 };
 
                 open = false;
