@@ -27,33 +27,33 @@ let
             modules = entry.nixosModules;
         };
 
-    mkHomeConfiguration =
-        systemPkgs: nixosConfiguration:
-        import ../aspects/core/home-maker.nix {
-            inherit inputs;
-            pkgs = systemPkgs.unstable;
-            pkgs_stable = systemPkgs.stable;
-            config = nixosConfiguration.config;
-        };
+    # One Home Manager configuration per `biryani.users` entry that opts into
+    # one, keyed "<username>@<host>".
+    mkHomeConfigurations =
+        hostName: systemPkgs: nixosConfiguration:
+        lib.mapAttrs' (
+            _: user:
+            lib.nameValuePair "${user.username}@${hostName}" (
+                import ../aspects/core/home-maker.nix {
+                    inherit inputs user;
+                    pkgs = systemPkgs.unstable;
+                    pkgs_stable = systemPkgs.stable;
+                    config = nixosConfiguration.config;
+                }
+            )
+        ) (lib.filterAttrs (_: user: user.home.enable) nixosConfiguration.config.biryani.users);
 
     allConfigurations = lib.mapAttrs (
-        _: entry:
+        hostName: entry:
         let
             systemPkgs = mkSystemPkgs entry;
             nixosConfiguration = mkNixosConfiguration entry systemPkgs;
-            homeConfiguration = mkHomeConfiguration systemPkgs nixosConfiguration;
+            homeConfigurations = mkHomeConfigurations hostName systemPkgs nixosConfiguration;
         in
         {
-            inherit systemPkgs nixosConfiguration homeConfiguration;
+            inherit systemPkgs nixosConfiguration homeConfigurations;
         }
     ) config.flake.hosts;
-
-    homeConfigurationPairs = {
-        "akshettrj@alienrj" = "alienrj";
-        "akshettrj@oracleamd1ca" = "oracleamd1ca";
-        "akshettrj@oracleamperehyd" = "oracleamperehyd";
-        "akshettrj@raspi" = "raspi";
-    };
 in
 {
     options.flake.hosts = lib.mkOption {
@@ -67,8 +67,8 @@ in
 
         nixosConfigurations = lib.mapAttrs (_: value: value.nixosConfiguration) allConfigurations;
 
-        homeConfigurations = lib.mapAttrs (
-            _: hostName: allConfigurations.${hostName}.homeConfiguration
-        ) homeConfigurationPairs;
+        homeConfigurations = lib.foldl' (acc: entry: acc // entry.homeConfigurations) { } (
+            lib.attrValues allConfigurations
+        );
     };
 }

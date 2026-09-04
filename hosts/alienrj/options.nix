@@ -5,6 +5,12 @@
     pkgs,
     ...
 }:
+let
+    user = {
+        username = "akshettrj";
+        homedir = "/home/akshettrj";
+    };
+in
 {
     services.awcc.enable = true;
 
@@ -19,10 +25,8 @@
                 # }
             ];
         };
-        user = {
-            username = "akshettrj";
-            homedir = "/home/akshettrj";
-        };
+        primary_user = user.username;
+        users.${user.username} = { inherit (user) homedir; };
         security = {
             sudo_without_password = true;
             polkit.enable = true;

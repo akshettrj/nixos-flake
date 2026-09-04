@@ -4,6 +4,12 @@
     pkgs,
     ...
 }:
+let
+    user = {
+        username = "akshettrj";
+        homedir = "/home/akshettrj";
+    };
+in
 {
     biryani = rec {
         platform.oracle_cloud = {
@@ -15,10 +21,8 @@
             time_zone = "Asia/Kolkata";
             swap_devices = [ ];
         };
-        user = {
-            username = "akshettrj";
-            homedir = "/home/akshettrj";
-        };
+        primary_user = user.username;
+        users.${user.username} = { inherit (user) homedir; };
         security = {
             sudo_without_password = true;
             polkit.enable = true;
