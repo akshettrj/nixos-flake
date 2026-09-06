@@ -93,11 +93,16 @@ When changing options or module declarations:
 
 When changing host imports or private secrets:
 
-- The private secrets input is `private_secrets`.
-- Host imports use:
+- The private secrets input is `private_secrets`, a flake-parts flake at
+  `~/work/side_projects/nix/nixos_flake_secrets` that follows this flake's
+  `nixpkgs` and `flake-parts`.
+- It exposes one module per `hosts/<host>/` directory, so host imports use:
   ```nix
-  "${inputs.private_secrets}/hosts/<host>"
+  inputs.private_secrets.nixosModules.<host>
   ```
+- Secrets changes must be pushed before `nix flake update private_secrets` here
+  can see them; validate unpushed work with
+  `--override-input private_secrets <local path>`.
 
 When validating changes:
 
