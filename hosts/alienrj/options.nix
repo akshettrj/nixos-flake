@@ -53,6 +53,10 @@ in
                             video.jellyfin.enable = false;
                         };
                     };
+                    # Phone pairing pushes notifications and clipboard into the
+                    # session, so keep it off the streamed account.
+                    hardware.kdeconnect.enable = false;
+
                     desktop_environments.defaults = {
                         "/dev/tty2" = "hyprland";
                     };
@@ -83,6 +87,7 @@ in
                 enable = true;
                 usbmuxd_package = pkgs.usbmuxd;
             };
+            kdeconnect.enable = true;
         };
 
         # Various Services
