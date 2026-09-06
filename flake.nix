@@ -77,7 +77,8 @@
 
         private_secrets = {
             url = "git+ssh://git@github.com/akshettrj/nixos_flake_secrets.git?ref=feature/dendritic-nix";
-            flake = false;
+            inputs.nixpkgs.follows = "nixpkgs";
+            inputs.flake-parts.follows = "flake-parts";
         };
 
         watgbridge.url = "github:akshettrj/watgbridge";

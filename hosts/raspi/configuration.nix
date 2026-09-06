@@ -16,7 +16,7 @@ in
 
         inputs.nixos-hw.nixosModules.raspberry-pi-4
 
-        "${inputs.private_secrets}/hosts/raspi"
+        inputs.private_secrets.nixosModules.raspi
     ];
 
     boot.loader.grub.enable = lib.mkForce false;

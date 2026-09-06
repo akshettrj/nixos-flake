@@ -5,7 +5,7 @@
         ./hardware-configuration.nix
         ../../aspects/core/base-system.nix
 
-        "${inputs.private_secrets}/hosts/oracleamd1ca"
+        inputs.private_secrets.nixosModules.oracleamd1ca
     ];
 
     # DO NOT DELETE

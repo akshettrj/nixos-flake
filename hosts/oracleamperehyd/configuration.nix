@@ -5,7 +5,7 @@
         ./hardware-configuration.nix
         ../../aspects/core/base-system.nix
 
-        "${inputs.private_secrets}/hosts/oracleamperehyd"
+        inputs.private_secrets.nixosModules.oracleamperehyd
     ];
 
     # DO NOT DELETE
