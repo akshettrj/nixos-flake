@@ -97,11 +97,11 @@
         "nixpkgs": "nixpkgs_15"
       },
       "locked": {
-        "lastModified": 1788616276,
-        "narHash": "sha256-vck3d/FI9RVxVlbiIOE6WXdo2DkknPbbmA0Lp/JGHaQ=",
+        "lastModified": 1788708460,
+        "narHash": "sha256-oO4Dtg079VFPYhDqAyDkCtH+OiGBd4scqmcKffbd1gc=",
         "ref": "refs/heads/main",
-        "rev": "30ee586acb898dfdc6459711f83d45e75b618d88",
-        "revCount": 16,
+        "rev": "79130c6958a1d3be9f4262874b5ffbe9fa9a433a",
+        "revCount": 23,
         "type": "git",
         "url": "ssh://git@github.com/Propheci/bee.dl.git"
       },
@@ -1952,11 +1952,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788616328,
-        "narHash": "sha256-LVKnB34dOwp/0juPisxNKcJxQhwNB2BjoK0oTaM9tXU=",
+        "lastModified": 1788708524,
+        "narHash": "sha256-Nlk72tf5X4nnC37TiQv+wh8PU5l2DGCHJ4qhivqmBc4=",
         "ref": "feature/dendritic-nix",
-        "rev": "f87ec334375e5083c1c8fd241c765de8a4298b6f",
-        "revCount": 68,
+        "rev": "d97194fea106a97cf1969ef47c2366783d081e13",
+        "revCount": 74,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       },
