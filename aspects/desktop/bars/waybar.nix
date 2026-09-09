@@ -148,16 +148,28 @@
                             ;;
                     esac
                 '';
+
+            # Waybar's StatusNotifierWatcher only understands a bare bus name or a
+            # bare object path, but Chromium-based clients (Electron apps such as
+            # the Mullvad VPN GUI) register their tray item as the two concatenated.
+            # Waybar answers InvalidArgs and the icon never reaches the tray, so
+            # teach the watcher the same split its own host side already does.
+            waybar_pkg =
+                let
+                    base =
+                        if biryani_bars.waybar.use_official_package then
+                            inputs.waybar.packages."${pkgs.stdenv.hostPlatform.system}".waybar
+                        else
+                            pkgs.waybar;
+                in
+                base.overrideAttrs (previous: {
+                    patches = (previous.patches or [ ]) ++ [ ./waybar-sni-chromium-object-path.patch ];
+                });
         in
         lib.mkIf (biryani_bars.enable && biryani_bars.waybar.enable) {
             programs.waybar = {
                 enable = true;
-                package = (
-                    if biryani_bars.waybar.use_official_package then
-                        inputs.waybar.packages."${pkgs.stdenv.hostPlatform.system}".waybar
-                    else
-                        pkgs.waybar
-                );
+                package = waybar_pkg;
                 systemd = {
                     enable = true;
                     targets = [ biryani_bars.waybar.systemd_target ];
