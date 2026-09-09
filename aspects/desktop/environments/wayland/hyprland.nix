@@ -97,7 +97,7 @@
                     nm-applet = "${pkgs.networkmanagerapplet}/bin/nm-applet";
                     blueman-applet = "${pkgs.blueman}/bin/blueman-applet";
                     pasystray = "${pkgs.pasystray}/bin/pasystray";
-                    mullvad-gui = "${pkgs.mullvad-vpn}/bin/mullvad-gui";
+                    mullvad-gui = "${pkgs.mullvad-vpn}/bin/mullvad-vpn";
                 in
                 pkgs.writeShellScriptBin "start" ''
 
