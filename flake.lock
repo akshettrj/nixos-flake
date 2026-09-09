@@ -1391,6 +1391,26 @@
         "type": "github"
       }
     },
+    "merge_game": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788937123,
+        "narHash": "sha256-N31hpVAvXVEflexV4JK1oiHwj6QKRGueQgvkE8M0FrQ=",
+        "owner": "Propheci",
+        "repo": "merge_game",
+        "rev": "736b10cf884b9ee3e214deb12243143db00d79d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Propheci",
+        "repo": "merge_game",
+        "type": "github"
+      }
+    },
     "neovim": {
       "inputs": {
         "flake-parts": "flake-parts_3",
@@ -2071,6 +2091,7 @@
         "improve_skill": "improve_skill",
         "llm-agents": "llm-agents",
         "mcp_python": "mcp_python",
+        "merge_game": "merge_game",
         "neovim": "neovim",
         "nix-index-database": "nix-index-database",
         "nixos-hw": "nixos-hw",

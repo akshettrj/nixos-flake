@@ -88,6 +88,11 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
+        merge_game = {
+            url = "github:Propheci/merge_game";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+
         nixur.url = "github:Propheci/NixUR";
 
         rubikoid_base = {

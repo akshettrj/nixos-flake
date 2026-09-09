@@ -125,6 +125,15 @@ in
             };
             nginx.enable = true;
             self_hosted = {
+                beach_bar_merge = {
+                    enable = true;
+                    port = 4535;
+                    nginx = {
+                        enable = true;
+                        hostname = "merge.nfak.xyz";
+                        enable_ssl = true;
+                    };
+                };
                 firefly_iii = {
                     enable = true;
                     hostname = "ff.nfak.xyz";
