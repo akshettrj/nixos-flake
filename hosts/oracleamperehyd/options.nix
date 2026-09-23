@@ -126,7 +126,7 @@ in
             nginx.enable = true;
             self_hosted = {
                 beach_bar_merge = {
-                    enable = true;
+                    enable = false;
                     port = 4535;
                     nginx = {
                         enable = true;
