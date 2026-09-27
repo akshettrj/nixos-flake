@@ -32,7 +32,8 @@
 
         raspi = {
             system = "aarch64-linux";
-            allowUnfree = false;
+            # The assistant bot's AI runs the Claude Code CLI, which is unfree.
+            allowUnfree = true;
             stable = false;
             nixosModules = [ ../hosts/raspi/configuration.nix ];
         };
