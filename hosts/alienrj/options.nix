@@ -150,7 +150,7 @@ in
 
         # Nix/NixOS specific
         nix = {
-            garbage_collection.enable = true;
+            garbage_collection.enable = false;
             nix_community_cache = true;
             hyprland_cache = true;
             helix_cache = true;
