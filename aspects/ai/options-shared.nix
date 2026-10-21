@@ -39,6 +39,7 @@ in
         # TUI. It has no native `mcpServers` settings key (MCP is wired through
         # adapter packages), so unlike the other agents it carries no such field.
         pi.enable = lib.mkEnableOption "Pi coding agent (TUI).";
+        herdr.enable = lib.mkEnableOption "herdr terminal multiplexer for coding agents.";
         ollama = {
             enable = lib.mkEnableOption "Ollama service.";
             acceleration = lib.mkOption {

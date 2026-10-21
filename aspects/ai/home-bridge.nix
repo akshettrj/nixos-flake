@@ -7,6 +7,7 @@
         cursor = biryani.programs.ai.cursor;
         claude-code = biryani.programs.ai.claude-code;
         gemini = biryani.programs.ai.gemini;
+        herdr = biryani.programs.ai.herdr;
         mcpServers = biryani.programs.ai.mcpServers;
         ollama = biryani.programs.ai.ollama;
         pi = biryani.programs.ai.pi;

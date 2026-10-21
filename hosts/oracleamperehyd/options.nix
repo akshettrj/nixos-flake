@@ -327,6 +327,7 @@ in
                 enable = true;
                 mcpServers = { };
                 skills = import ../../aspects/ai/skills.nix { inherit inputs; };
+                herdr.enable = true;
                 claude-code = {
                     enable = true;
                     mcpServers = null;

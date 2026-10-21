@@ -316,6 +316,7 @@ in
                 flameshot.enable = mkIntegrationEnable "Flameshot";
                 ghostty.enable = mkIntegrationEnable "Ghostty";
                 gtk.enable = mkIntegrationEnable "GTK";
+                herdr.enable = mkIntegrationEnable "herdr";
                 hyprland.enable = mkIntegrationEnable "Hyprland";
                 hyprlock.enable = mkIntegrationEnable "Hyprlock";
                 ncmpcpp.enable = mkIntegrationEnable "ncmpcpp";

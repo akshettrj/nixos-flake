@@ -243,6 +243,7 @@ in
                 skills = import ../../aspects/ai/skills.nix { inherit inputs; };
                 cursor.enable = true;
                 pi.enable = true;
+                herdr.enable = true;
                 codex = {
                     enable = false;
                     mcpServers = null;
