@@ -1672,6 +1672,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable-small": {
+      "locked": {
+        "lastModified": 1792617723,
+        "narHash": "sha256-IyFA94SfEEqeru/RZyRRbmk8gtBejDTiojSReKzUOc8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "dce1caf58d1a943af38b376e824a0d036ec3eea7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable-small",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_10": {
       "locked": {
         "lastModified": 1788179007,
@@ -2053,16 +2069,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1791841099,
-        "narHash": "sha256-bSLXiZVG3+Kxqr8pt81kpsGLbwoOx2DxRoVsfR/CJ50=",
-        "ref": "feature/dendritic-nix",
-        "rev": "97300585840aef4d7d0fa47b0e9d6f44ae0888ac",
-        "revCount": 89,
+        "lastModified": 1792831827,
+        "narHash": "sha256-v4pmdRv4omkAUlEBX5rqYIjHCigRYqfFoVdnGy9ODqM=",
+        "ref": "refs/heads/main",
+        "rev": "47d78d47a2a718eb757bb406a41e90aa438cdeaf",
+        "revCount": 93,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       },
       "original": {
-        "ref": "feature/dendritic-nix",
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       }
@@ -2179,6 +2194,7 @@
         "nixpkgs": "nixpkgs_10",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable",
+        "nixpkgs-unstable-small": "nixpkgs-unstable-small",
         "nixur": "nixur",
         "nur": "nur",
         "odesli": "odesli",

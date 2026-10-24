@@ -135,7 +135,7 @@ in
                     };
                 };
                 firefly_iii = {
-                    enable = true;
+                    enable = false;
                     hostname = "ff.nfak.xyz";
                     nginx.enable_ssl = true;
                 };
@@ -157,7 +157,7 @@ in
                     ];
                 };
                 dokuwiki = {
-                    enable = true;
+                    enable = false;
                     disable_registration = true;
                     hostname = "wiki.nfak.xyz";
                     nginx.enable_ssl = true;

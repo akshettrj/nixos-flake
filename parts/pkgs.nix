@@ -27,6 +27,7 @@ in
                 unstable = importPkgs inputs.nixpkgs { inherit system allowUnfree overlays; };
                 stable = importPkgs inputs.nixpkgs-stable { inherit system allowUnfree overlays; };
                 master = importPkgs inputs.nixpkgs-master { inherit system allowUnfree overlays; };
+                unstable_small = importPkgs inputs.nixpkgs-unstable-small { inherit system allowUnfree overlays; };
             };
 
         mkPkgsFor =

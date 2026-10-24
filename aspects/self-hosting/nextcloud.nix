@@ -2,6 +2,7 @@
     config,
     lib,
     pkgs,
+    pkgs_unstable_small,
     ...
 }:
 {
@@ -19,6 +20,18 @@
                 Nextcloud cannot upgrade across more than one major version at a time,
                 so bump this one major release at a time on hosts that already hold an
                 instance, and let each upgrade finish before the next.
+            '';
+        };
+
+        php_package = lib.mkOption {
+            type = lib.types.package;
+            # TODO: return to the module default (`pkgs.php84`) once nixos-unstable
+            # ships PHP >= 8.4.27 (PHP2Shell, CVE-2026-109618/109619).
+            default = pkgs_unstable_small.php84;
+            defaultText = "pkgs_unstable_small.php84";
+            description = ''
+                PHP package for the Nextcloud FPM pool and `occ`. The Nextcloud
+                module builds its extension set from this package.
             '';
         };
 
@@ -122,6 +135,7 @@
                 services.nextcloud = {
                     enable = true;
                     package = biryani_nextcloud.package;
+                    phpPackage = biryani_nextcloud.php_package;
                     hostName = biryani_nextcloud.hostname;
                     https = true;
                     maxUploadSize = biryani_nextcloud.max_upload_size;
@@ -135,6 +149,10 @@
                         adminuser = biryani_nextcloud.admin_user;
                         adminpassFile = biryani_nextcloud.admin_pass_file;
                     };
+
+                    # Nextcloud does not use upload progress tracking; disabling it
+                    # closes the stale-global-state path of CVE-2026-109619.
+                    phpOptions."session.upload_progress.enabled" = "0";
 
                     settings = {
                         overwriteprotocol = "https";

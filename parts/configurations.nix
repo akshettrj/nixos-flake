@@ -22,6 +22,7 @@ let
                 inherit inputs;
                 pkgs_unstable = systemPkgs.unstable;
                 pkgs_stable = systemPkgs.stable;
+                pkgs_unstable_small = systemPkgs.unstable_small;
                 use_stable_pkgs = entry.stable;
             };
             modules = entry.nixosModules;
