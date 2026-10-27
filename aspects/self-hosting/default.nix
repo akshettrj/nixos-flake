@@ -7,6 +7,7 @@
         ./firefly_iii.nix
         ./freshrss.nix
         ./glance.nix
+        ./jellyfin.nix
         ./navidrome.nix
         ./nextcloud.nix
         ./overleaf_docker.nix

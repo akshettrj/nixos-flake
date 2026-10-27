@@ -64,6 +64,9 @@ in
                 # Bulk storage lives on the external HDD, alongside cmu_lectures.
                 data_dir = "/mnt/hdd/nextcloud";
             };
+            # Jellyfin's own state stays on the SD card; `media_dirs` (on the
+            # external HDD) is set in the private_secrets raspi module.
+            self_hosted.jellyfin.enable = true;
             openvpn.enable = false;
             backups = {
                 enable = true;

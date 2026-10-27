@@ -145,6 +145,12 @@ in
                     upstream_host = "raspi";
                     enable_ssl = true;
                 };
+                jellyfin.reverse_proxy = {
+                    enable = true;
+                    hostname = "jf.nfak.xyz";
+                    upstream_host = "raspi";
+                    enable_ssl = true;
+                };
                 postgresql = {
                     enable = true;
                     allowedLocalUsers = [ user.username ];
