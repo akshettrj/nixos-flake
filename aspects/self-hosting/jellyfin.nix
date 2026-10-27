@@ -18,6 +18,25 @@
             example = [ "/mnt/hdd/media" ];
         };
 
+        bind_dirs = lib.mkOption {
+            type = lib.types.attrsOf lib.types.str;
+            default = { };
+            description = ''
+                Directories Jellyfin cannot reach on its own (inside a private home
+                directory, or owned by a group that does not exist on this host),
+                keyed by the mount point that exposes each one to Jellyfin.
+
+                Each is mounted read-only through bindfs, presented with group
+                `jellyfin` and group read access added. The source keeps its own
+                ownership and permissions, so tools that sync or manage it are
+                unaffected. Like `media_dirs`, the Jellyfin unit is bound to these
+                mounts.
+            '';
+            example = {
+                "/srv/media/music" = "/home/alice/media/music";
+            };
+        };
+
         reverse_proxy = {
             enable = lib.mkEnableOption "public Nginx reverse-proxy virtual host for a remote Jellyfin";
 
@@ -71,6 +90,20 @@
                 ) biryani_jellyfin.media_dirs;
 
                 systemd.services.jellyfin.unitConfig.RequiresMountsFor = biryani_jellyfin.media_dirs;
+            })
+
+            (lib.mkIf (biryani_jellyfin.enable && biryani_jellyfin.bind_dirs != { }) {
+                fileSystems = lib.mapAttrs (_: source: {
+                    device = source;
+                    fsType = "fuse.bindfs";
+                    options = [
+                        "ro"
+                        "force-group=${config.services.jellyfin.group}"
+                        "perms=g+rX"
+                    ];
+                }) biryani_jellyfin.bind_dirs;
+
+                systemd.services.jellyfin.unitConfig.RequiresMountsFor = lib.attrNames biryani_jellyfin.bind_dirs;
             })
 
             (lib.mkIf rp.enable {
