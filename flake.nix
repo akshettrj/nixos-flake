@@ -28,8 +28,9 @@
         nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
         nixpkgs-master.url = "github:nixos/nixpkgs";
         # Temporary: nixos-unstable-small lands security fixes ahead of
-        # nixos-unstable (PHP2Shell, CVE-2026-109618/109619). Drop once
-        # nixos-unstable ships PHP >= 8.4.27.
+        # nixos-unstable (PHP2Shell, CVE-2026-109618/109619; NGINX2Root,
+        # CVE-2026-123007 and friends). Drop once
+        # nixos-unstable ships PHP >= 8.4.27 and nginx >= 1.30.7.
         nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
         flake-parts.url = "github:hercules-ci/flake-parts";
