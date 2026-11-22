@@ -1,6 +1,49 @@
-{ config, lib, ... }: {
+{
+    config,
+    lib,
+    pkgs,
+    ...
+}:
+{
     options.biryani.services.self_hosted.jellyfin = {
         enable = lib.mkEnableOption "Jellyfin media server on this host";
+
+        intro_skipper.enable = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = ''
+                Install the Intro Skipper plugin, which fingerprints episode audio to
+                find intros/credits and publishes them as media segments, so clients
+                show a "Skip Intro" button. Detection settings stay in the plugin's
+                page in the dashboard.
+            '';
+        };
+
+        backup.enable = lib.mkOption {
+            type = lib.types.bool;
+            default = config.biryani.services.backups.enable && config.biryani.services.backups.client.enable;
+            defaultText = "config.biryani.services.backups.enable && config.biryani.services.backups.client.enable";
+            description = ''
+                Back up Jellyfin's state (users, watch history, settings, plugins and
+                their databases, metadata) as the `jellyfin` Restic job. Jellyfin is
+                stopped for the snapshot so its SQLite databases are consistent, which
+                is why the job runs in the early morning, clear of the midnight
+                Intro Skipper scan. Media itself is not included.
+            '';
+        };
+
+        plugins = lib.mkOption {
+            type = lib.types.listOf lib.types.package;
+            default = [ ];
+            description = ''
+                Plugin packages copied into Jellyfin's plugin directory before it
+                starts. Each must set `passthru.jellyfinPlugin = { name; version;
+                targetAbi; }` (see `jellyfin-plugins/`). Copies are writable because
+                Jellyfin records its own metadata beside them; ones dropped from this
+                list are removed, while plugins installed from the dashboard are left
+                alone.
+            '';
+        };
 
         media_dirs = lib.mkOption {
             type = lib.types.listOf lib.types.str;
@@ -82,6 +125,75 @@
                 # Port 8096 is deliberately not opened: the server is reached over
                 # the trusted tailscale0 interface, publicly only via reverse_proxy.
                 services.jellyfin.enable = true;
+
+                biryani.services.self_hosted.jellyfin.plugins = lib.optional biryani_jellyfin.intro_skipper.enable (
+                    pkgs.callPackage ./jellyfin-plugins/intro-skipper.nix { }
+                );
+            })
+
+            (lib.mkIf (biryani_jellyfin.enable && biryani_jellyfin.backup.enable) {
+                biryani.services.backups.client.jobs.jellyfin = {
+                    # configDir sits inside dataDir by default; list it only if moved out.
+                    paths = [
+                        config.services.jellyfin.dataDir
+                    ]
+                    ++ lib.optional (
+                        !lib.hasPrefix "${config.services.jellyfin.dataDir}/" config.services.jellyfin.configDir
+                    ) config.services.jellyfin.configDir;
+                    exclude = [ config.services.jellyfin.logDir ];
+                    stopServices = [ "jellyfin.service" ];
+                    timerConfig = {
+                        OnCalendar = "*-*-* 04:00:00";
+                        Persistent = true;
+                    };
+                };
+            })
+
+            (lib.mkIf (biryani_jellyfin.enable && biryani_jellyfin.plugins != [ ]) {
+                assertions = map (
+                    plugin:
+                    let
+                        inherit (plugin.jellyfinPlugin) name targetAbi;
+                        server = config.services.jellyfin.package.version;
+                    in
+                    {
+                        assertion =
+                            lib.versions.majorMinor server == lib.versions.majorMinor targetAbi
+                            && lib.versionAtLeast server (lib.versions.pad 3 targetAbi);
+                        message = "Jellyfin plugin `${name}` targets ABI ${targetAbi}, which Jellyfin ${server} cannot load; bump it in aspects/self-hosting/jellyfin-plugins/";
+                    }
+                ) biryani_jellyfin.plugins;
+
+                # `.nix-managed` marks our copies (holding the store path they came
+                # from) so stale ones are pruned and dashboard installs are not.
+                systemd.services.jellyfin.preStart =
+                    let
+                        pluginsDir = "${config.services.jellyfin.dataDir}/plugins";
+                        dirName = plugin: "${plugin.jellyfinPlugin.name}_${plugin.jellyfinPlugin.version}";
+                        wanted = lib.escapeShellArgs (map dirName biryani_jellyfin.plugins);
+                    in
+                    ''
+                        plugins_dir=${lib.escapeShellArg pluginsDir}
+                        mkdir -p "$plugins_dir"
+
+                        for dir in "$plugins_dir"/*/; do
+                            dir=''${dir%/}
+                            [ -e "$dir/.nix-managed" ] || continue
+                            keep=
+                            for name in ${wanted}; do
+                                if [ "''${dir##*/}" = "$name" ]; then keep=1; fi
+                            done
+                            [ -n "$keep" ] || rm -rf -- "$dir"
+                        done
+                    ''
+                    + lib.concatMapStrings (plugin: ''
+                        dest="$plugins_dir"/${lib.escapeShellArg (dirName plugin)}
+                        if [ "$(cat "$dest/.nix-managed" 2>/dev/null)" != ${plugin} ]; then
+                            rm -rf -- "$dest"
+                            cp -r --no-preserve=mode ${plugin} "$dest"
+                            echo ${plugin} > "$dest/.nix-managed"
+                        fi
+                    '') biryani_jellyfin.plugins;
             })
 
             (lib.mkIf (biryani_jellyfin.enable && biryani_jellyfin.media_dirs != [ ]) {
