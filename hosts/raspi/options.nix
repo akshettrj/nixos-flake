@@ -75,6 +75,10 @@ in
                     # Keep incoming Restic repositories on the external HDD.
                     storagePath = "/mnt/hdd/restic";
                 };
+                # Back up raspi's own SD-card state (e.g. Jellyfin) to the HDD
+                # receiver above; repositoryHost defaults to "raspi", so the jobs
+                # write locally rather than over SFTP.
+                client.enable = true;
             };
             sync = {
                 enable = true;
