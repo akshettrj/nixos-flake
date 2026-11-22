@@ -50,6 +50,18 @@ let
                 ];
                 description = "Restic forget --prune retention options for this backup job.";
             };
+
+            stopServices = mkOption {
+                type = types.listOf types.str;
+                default = [ ];
+                description = ''
+                    Systemd units stopped for the duration of this job, so live databases
+                    under `paths` are captured in a consistent state. Only units that were
+                    running beforehand are started again afterwards, including when the
+                    backup fails.
+                '';
+                example = [ "jellyfin.service" ];
+            };
         };
     };
 
@@ -113,11 +125,21 @@ let
         };
     };
 
+    # A receiver backing up to itself writes straight to its own storage rather
+    # than looping SFTP through sshd, so it needs no SSH key or known_hosts entry.
+    localRepository =
+        backupCfg.receiver.enable && backupCfg.client.repositoryHost == config.networking.hostName;
+
     resticRepository =
         jobName:
-        "sftp:restic@${backupCfg.client.repositoryHost}:${backupCfg.client.repositoryPath}/${config.networking.hostName}/${jobName}";
+        if localRepository then
+            "${backupCfg.receiver.storagePath}/${config.networking.hostName}/${jobName}"
+        else
+            "sftp:restic@${backupCfg.client.repositoryHost}:${backupCfg.client.repositoryPath}/${config.networking.hostName}/${jobName}";
 
     resticSftpCommand = "sftp.command='ssh restic@${backupCfg.client.repositoryHost} -i ${backupCfg.client.sshKeyFile} -s sftp'";
+
+    stoppedUnitsFile = jobName: "/run/restic-backups-${jobName}.stopped-units";
 in
 {
     options.biryani.services = {
@@ -140,7 +162,12 @@ in
                 repositoryHost = mkOption {
                     type = types.str;
                     default = "raspi";
-                    description = "Host name of the Restic SFTP receiver.";
+                    description = ''
+                        Host name of the Restic SFTP receiver. When this is the host's own
+                        name and it is also the receiver, jobs write directly to
+                        `receiver.storagePath` instead (no SSH key needed, and
+                        `repositoryPath`/`sshKeyFile` are unused).
+                    '';
                 };
 
                 repositoryPath = mkOption {
@@ -236,16 +263,49 @@ in
         })
 
         (mkIf (backupCfg.enable && backupCfg.client.enable) {
-            services.restic.backups = lib.mapAttrs (jobName: job: {
-                paths = job.paths;
-                exclude = job.exclude;
-                repository = resticRepository jobName;
-                passwordFile = backupCfg.client.passwordFile;
-                timerConfig = job.timerConfig;
-                pruneOpts = job.pruneOpts;
-                initialize = true;
-                extraOptions = [ resticSftpCommand ];
-            }) backupCfg.client.jobs;
+            services.restic.backups = lib.mapAttrs (
+                jobName: job:
+                {
+                    paths = job.paths;
+                    exclude = job.exclude;
+                    repository = resticRepository jobName;
+                    passwordFile = backupCfg.client.passwordFile;
+                    timerConfig = job.timerConfig;
+                    pruneOpts = job.pruneOpts;
+                    initialize = true;
+                    extraOptions = lib.optional (!localRepository) resticSftpCommand;
+                }
+                // optionalAttrs (job.stopServices != [ ]) {
+                    backupPrepareCommand = ''
+                        : > ${stoppedUnitsFile jobName}
+                        for unit in ${lib.escapeShellArgs job.stopServices}; do
+                            if ${pkgs.systemd}/bin/systemctl is-active --quiet "$unit"; then
+                                echo "$unit" >> ${stoppedUnitsFile jobName}
+                                ${pkgs.systemd}/bin/systemctl stop "$unit"
+                            fi
+                        done
+                    '';
+                    backupCleanupCommand = ''
+                        if [ -f ${stoppedUnitsFile jobName} ]; then
+                            while read -r unit; do
+                                ${pkgs.systemd}/bin/systemctl start "$unit"
+                            done < ${stoppedUnitsFile jobName}
+                            rm -f ${stoppedUnitsFile jobName}
+                        fi
+                    '';
+                }
+            ) backupCfg.client.jobs;
+
+            # Fail (and trigger the automount) rather than write into an empty
+            # mountpoint when the receiver's storage is on a removable drive.
+            systemd.services = mkIf localRepository (
+                lib.mapAttrs' (
+                    jobName: _:
+                    lib.nameValuePair "restic-backups-${jobName}" {
+                        unitConfig.RequiresMountsFor = [ backupCfg.receiver.storagePath ];
+                    }
+                ) backupCfg.client.jobs
+            );
         })
 
         (mkIf syncCfg.enable {
