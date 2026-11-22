@@ -15,6 +15,12 @@
                     type = types.anything;
                     description = "Swap device declarations passed to NixOS swapDevices.";
                 };
+
+                zram_swap = mkOption {
+                    type = types.bool;
+                    default = false;
+                    description = "Compressed swap in RAM (zstd, up to half the memory), used before any swap device.";
+                };
             };
 
             security.polkit.enable = mkOption {
@@ -45,6 +51,13 @@
 
             time.timeZone = biryani_system.time_zone;
             swapDevices = biryani_system.swap_devices;
+            zramSwap = lib.mkIf biryani_system.zram_swap {
+                enable = true;
+                algorithm = "zstd";
+                memoryPercent = 50;
+                # Above the swap devices, so the SSD is the overflow only.
+                priority = 100;
+            };
 
             security.polkit.enable = lib.mkIf biryani_sec.polkit.enable true;
 

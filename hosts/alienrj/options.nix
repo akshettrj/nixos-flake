@@ -18,11 +18,15 @@ in
         system = {
             hostname = "alienrj";
             time_zone = "Asia/Kolkata";
+            # zram takes memory pressure first; the swapfile on the (encrypted)
+            # root is the overflow for build spikes.
+            zram_swap = true;
             swap_devices = [
-                # {
-                #   device = "/var/lib/swapfile";
-                #   size = 6 * 1024;
-                # }
+                {
+                    device = "/var/lib/swapfile";
+                    size = 8 * 1024;
+                    priority = 10;
+                }
             ];
         };
         primary_user = user.username;
