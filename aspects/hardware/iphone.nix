@@ -15,6 +15,18 @@
             type = lib.types.package;
             description = "usbmuxd package used for iOS device pairing and access.";
         };
+
+        sideloading = {
+            enable = lib.mkOption {
+                type = lib.types.bool;
+                description = "Enable tools for sideloading non-App Store apps (e.g. installing SideStore).";
+            };
+
+            iloader_package = lib.mkOption {
+                type = lib.types.package;
+                description = "iloader package used to sign and install SideStore and its pairing file.";
+            };
+        };
     };
 
     config =
@@ -27,9 +39,13 @@
                 package = biryani_hw.iphone.usbmuxd_package;
             };
 
-            environment.systemPackages = with pkgs; [
-                libimobiledevice
-                ifuse
-            ];
+            environment.systemPackages =
+                (with pkgs; [
+                    libimobiledevice
+                    ifuse
+                ])
+                ++ lib.optionals biryani_hw.iphone.sideloading.enable [
+                    biryani_hw.iphone.sideloading.iloader_package
+                ];
         };
 }

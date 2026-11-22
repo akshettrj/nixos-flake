@@ -3,6 +3,7 @@
     inputs,
     lib,
     pkgs,
+    pkgs_unstable_small,
     ...
 }:
 let
@@ -90,6 +91,11 @@ in
             iphone = {
                 enable = true;
                 usbmuxd_package = pkgs.usbmuxd;
+                sideloading = {
+                    enable = true;
+                    # 2.4.2+ needed for Apple's 2026-11-20 GSA login change.
+                    iloader_package = pkgs_unstable_small.iloader;
+                };
             };
             kdeconnect.enable = true;
         };
