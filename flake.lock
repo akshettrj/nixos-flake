@@ -77,11 +77,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791841045,
-        "narHash": "sha256-tdqjE5YLcdhrz+b02CoUIim3jpkOsAFvnbCYBjCn/0M=",
+        "lastModified": 1795387287,
+        "narHash": "sha256-aGXHskr595AHCDQ0PCEjjTF4xMrxsA80cUQE1Bv00mE=",
         "ref": "refs/heads/main",
-        "rev": "2ed09961d6c686ba5100c271441c97ff5b66aace",
-        "revCount": 58,
+        "rev": "fd70819557aca9e265abf772a7914a769dc3200e",
+        "revCount": 84,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/assistant_bot_rs.git"
       },
@@ -2069,11 +2069,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793104303,
-        "narHash": "sha256-RpcvJaUikfu+y+Lmz76ZFhutKOgGczJVX9UTX9vZj6M=",
+        "lastModified": 1795435694,
+        "narHash": "sha256-jmGWURhR+HKPv6KIbfTrBnja8jgKyyYoa1RprNr6Nm4=",
         "ref": "refs/heads/main",
-        "rev": "8d45755c7844e29a08cdb5e8d3b678b17915f0f9",
-        "revCount": 96,
+        "rev": "d6f948617bd1752284ccde12c1d4e431aa37b4dc",
+        "revCount": 98,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       },
