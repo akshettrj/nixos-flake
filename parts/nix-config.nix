@@ -2,6 +2,7 @@
     extra-substituters = [
         "https://propheci.cachix.org"
         "https://watgbridge.cachix.org"
+        "https://wuphf.cachix.org"
         "https://nix-community.cachix.org"
         "https://hyprland.cachix.org"
         "https://helix.cachix.org"
@@ -11,6 +12,7 @@
     extra-trusted-public-keys = [
         "propheci.cachix.org-1:CwV87KMySX+rhW88NhTx2hRzdNltV497nhXvWswFGDc="
         "watgbridge.cachix.org-1:KSfgmbSBvXQTpUnoCj21vST7zgwpy3SbNfk0/nesR1Y="
+        "wuphf.cachix.org-1:0wKZ0JgcUp5Vc3LxogpI7meKnQ8azk2qPeOQSYoUHZE="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="

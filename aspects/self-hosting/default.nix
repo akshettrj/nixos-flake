@@ -14,5 +14,6 @@
         ./postgresql.nix
         ./vikunja.nix
         ./watgbridge.nix
+        ./wuphf.nix
     ];
 }

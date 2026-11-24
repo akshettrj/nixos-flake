@@ -66,6 +66,7 @@
                     extra-substituters = [
                         "https://propheci.cachix.org"
                         "https://watgbridge.cachix.org"
+                        "https://wuphf.cachix.org"
                     ]
                     ++ lib.optionals biryani_nix.nix_community_cache [ "https://nix-community.cachix.org" ]
                     ++ lib.optionals biryani_nix.hyprland_cache [ "https://hyprland.cachix.org" ]
@@ -75,6 +76,7 @@
                     extra-trusted-public-keys = [
                         "propheci.cachix.org-1:CwV87KMySX+rhW88NhTx2hRzdNltV497nhXvWswFGDc="
                         "watgbridge.cachix.org-1:KSfgmbSBvXQTpUnoCj21vST7zgwpy3SbNfk0/nesR1Y="
+                        "wuphf.cachix.org-1:0wKZ0JgcUp5Vc3LxogpI7meKnQ8azk2qPeOQSYoUHZE="
                     ]
                     ++ lib.optionals biryani_nix.nix_community_cache [
                         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
