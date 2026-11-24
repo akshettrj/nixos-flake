@@ -211,8 +211,7 @@ in
                 };
                 # Its connectors, settings and chat ids live in private_secrets
                 # (hosts/oracleamperehyd/wuphf.nix); tokens in /etc/secrets/wuphf-*.env.
-                # Off until the server is set up (secrets, first logins).
-                wuphf.enable = false;
+                wuphf.enable = true;
                 glance = {
                     enable = true;
                     port = 4534;
