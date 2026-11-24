@@ -87,6 +87,9 @@
         };
 
         watgbridge.url = "github:akshettrj/watgbridge";
+        # No nixpkgs follows: its packages then match what its CI pushes to the
+        # wuphf Cachix cache, so hosts download them instead of building.
+        wuphf.url = "github:wuphf-rs/wuphf-ai";
 
         odesli = {
             url = "github:Propheci/odesli-rs?dir=nix";
