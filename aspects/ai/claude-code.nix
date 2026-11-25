@@ -39,7 +39,7 @@
                         enable = true;
                         package = pkgs.llm-agents.claude-code;
                         enableMcpIntegration = true;
-                        # configDir = "${config.xdg.configHome}/claude";
+                        configDir = "${config.xdg.configHome}/claude";
                         skills = biryani_ai.skills;
                         context = ''
                             - On every iteration, send the user a concise list of next steps, including progress updates and the final response.
