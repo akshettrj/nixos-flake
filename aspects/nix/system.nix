@@ -61,7 +61,11 @@
                     "nixpkgs-master=${inputs.nixpkgs-master}"
                 ];
                 settings = {
-                    experimental-features = "nix-command flakes pipe-operators";
+                    experimental-features = [
+                        "nix-command"
+                        "flakes"
+                        "pipe-operators"
+                    ];
                     auto-optimise-store = true;
                     extra-substituters = [
                         "https://propheci.cachix.org"
