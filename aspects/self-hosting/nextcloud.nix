@@ -40,21 +40,6 @@
             description = "Public FQDN of the Nextcloud instance (trusted domain and generated-link host).";
         };
 
-        admin_user = lib.mkOption {
-            type = lib.types.str;
-            default = "admin";
-            description = "Initial Nextcloud admin username.";
-        };
-
-        admin_pass_file = lib.mkOption {
-            type = lib.types.str;
-            default = "/var/lib/nextcloud-admin-pass";
-            description = ''
-                Path to a file holding the initial admin password. Must exist on the
-                host before first activation; only read on initial install.
-            '';
-        };
-
         data_dir = lib.mkOption {
             type = lib.types.nullOr lib.types.str;
             default = null;
@@ -144,11 +129,10 @@
 
                     database.createLocally = true;
 
-                    config = {
-                        dbtype = "pgsql";
-                        adminuser = biryani_nextcloud.admin_user;
-                        adminpassFile = biryani_nextcloud.admin_pass_file;
-                    };
+                    # The module installs with `--disable-admin-user`; on a fresh
+                    # host, create one with `nextcloud-occ user:add <name>` and
+                    # `nextcloud-occ group:adduser admin <name>`.
+                    config.dbtype = "pgsql";
 
                     # Nextcloud does not use upload progress tracking; disabling it
                     # closes the stale-global-state path of CVE-2026-109619.
