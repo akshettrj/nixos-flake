@@ -159,7 +159,7 @@
                     {
                         assertion =
                             lib.versions.majorMinor server == lib.versions.majorMinor targetAbi
-                            && lib.versionAtLeast server (lib.versions.pad 3 targetAbi);
+                            && lib.versionAtLeast (lib.versions.pad 3 server) (lib.versions.pad 3 targetAbi);
                         message = "Jellyfin plugin `${name}` targets ABI ${targetAbi}, which Jellyfin ${server} cannot load; bump it in aspects/self-hosting/jellyfin-plugins/";
                     }
                 ) biryani_jellyfin.plugins;

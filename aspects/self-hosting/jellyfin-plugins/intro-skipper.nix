@@ -1,20 +1,20 @@
 { fetchzip, lib }:
 let
-    version = "1.10.11.24";
+    version = "12.0.8.0";
 in
 # The release zip holds only the plugin assembly; Jellyfin writes its own
 # meta.json beside it on first load, so the installed copy must be writable.
 fetchzip {
     name = "jellyfin-plugin-intro-skipper-${version}";
-    url = "https://github.com/intro-skipper/intro-skipper/releases/download/10.11/v${version}/intro-skipper-v${version}.zip";
-    hash = "sha256-VQhJP9uMTJIzgj8gvwx34bPOYbe4+tizFH9mF/LxIEI=";
+    url = "https://github.com/intro-skipper/intro-skipper/releases/download/${lib.versions.majorMinor version}/v${version}/intro-skipper-v${version}.zip";
+    hash = "sha256-cX7ygtQOhJdvAcVrpMpdxpyOmZMPQeCAExswme5J18A=";
     stripRoot = false;
 
     passthru.jellyfinPlugin = {
         name = "Intro Skipper";
         inherit version;
         # Jellyfin ABI this build targets; it will not load on other minors.
-        targetAbi = "10.11.11.0";
+        targetAbi = "12.4.0.0";
     };
 
     meta = {
