@@ -2064,11 +2064,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795537122,
-        "narHash": "sha256-3Nvl9TsJKBEloN8W1hhpzLylkbNBYPz39MnkLc88Daw=",
+        "lastModified": 1795614233,
+        "narHash": "sha256-Z0FqXPf3Dy7+6kHgEtRhCvlAzrMI7Hb+WamKnI8tDoo=",
         "ref": "refs/heads/main",
-        "rev": "66620f275585817b599646315a2905e7f74f440b",
-        "revCount": 101,
+        "rev": "42d1185e29da27aecccf698b419b0c7faf774335",
+        "revCount": 102,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       },
@@ -2615,11 +2615,11 @@
         "nixpkgs": "nixpkgs_19"
       },
       "locked": {
-        "lastModified": 1795565991,
-        "narHash": "sha256-QHktv6/V+5nCpEoFrY4D3t7gYqVDbpeRGJ6djZ3JxZQ=",
+        "lastModified": 1795611777,
+        "narHash": "sha256-SZMAia9Xyo2TpV1imBqdghsCW5ysrwmlqwNURXsSu/4=",
         "owner": "wuphf-rs",
         "repo": "wuphf-ai",
-        "rev": "6da184cd5c79ff08c5df9aed094dd4b8b50f1a22",
+        "rev": "47cd402079b77b7acf3ff3b6a6c64c1c971ab168",
         "type": "github"
       },
       "original": {
