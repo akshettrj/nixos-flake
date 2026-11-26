@@ -8,11 +8,16 @@ let
     biryani_wuphf = config.biryani.services.self_hosted.wuphf;
     wuphf = config.services.wuphf;
 
-    # The units wuphf's module would run.
+    # The units wuphf's module would run here (a remote one runs on another
+    # machine, so it needs no gate on this one).
     running =
         lib.optional wuphf.core.enable "core"
         ++ lib.optional wuphf.misc.enable "misc"
-        ++ (wuphf.connectors // wuphf.providers |> lib.filterAttrs (_: unit: unit.enable) |> lib.attrNames);
+        ++ (
+            wuphf.connectors // wuphf.providers
+            |> lib.filterAttrs (_: unit: unit.enable && !unit.remote)
+            |> lib.attrNames
+        );
 in
 {
     # The core, connectors and providers are services.wuphf.* (wuphf's own

@@ -67,6 +67,10 @@ in
             # Jellyfin's own state stays on the SD card; `media_dirs` (on the
             # external HDD) is set in the private_secrets raspi module.
             self_hosted.jellyfin.enable = true;
+            # Only wuphf's Instagram connector, on a home IP, against the core on
+            # oracleamperehyd over Tailscale (private_secrets hosts/raspi/wuphf.nix);
+            # its tokens in /etc/secrets/wuphf-instagram-main.env.
+            self_hosted.wuphf.enable = true;
             openvpn.enable = false;
             backups = {
                 enable = true;
