@@ -2064,11 +2064,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795691943,
-        "narHash": "sha256-4Lsaktm6uPfqTMZb3XZSbIA8Ve+ObhMd9gUwd2EPoPQ=",
+        "lastModified": 1795695520,
+        "narHash": "sha256-fzZPZofw4a6+jiU08xSj+PhUqTVqKwHlGSwV1FIAU5g=",
         "ref": "refs/heads/main",
-        "rev": "e63f5226d92b21a51689e17e6b3579a356bb08c5",
-        "revCount": 107,
+        "rev": "6bae538b4f37ffa23781fe5aa620b8a0fc686273",
+        "revCount": 108,
         "type": "git",
         "url": "ssh://git@github.com/akshettrj/nixos_flake_secrets.git"
       },
